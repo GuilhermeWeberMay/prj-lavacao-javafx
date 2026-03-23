@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class DataBaseMySQL implements DataBase{
+public class DatabaseMySQL implements Database {
     private Connection connection;
 
     @Override
@@ -24,7 +24,7 @@ public class DataBaseMySQL implements DataBase{
             System.out.println("Conexão realizada com sucesso!");
             return this.connection;
         } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(DataBaseMySQL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseMySQL.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Falha na conexão com o banco de dados.");
             return null;
         }
@@ -35,7 +35,7 @@ public class DataBaseMySQL implements DataBase{
         try {
             connection.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DataBaseMySQL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseMySQL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -44,7 +44,7 @@ public class DataBaseMySQL implements DataBase{
         try {
             connection.commit();
         } catch (SQLException ex) {
-            Logger.getLogger(DataBaseMySQL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseMySQL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -53,7 +53,7 @@ public class DataBaseMySQL implements DataBase{
         try {
             connection.rollback();
         } catch (SQLException ex) {
-            Logger.getLogger(DataBaseMySQL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseMySQL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
