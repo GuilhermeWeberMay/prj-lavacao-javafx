@@ -10,14 +10,9 @@ import java.io.IOException;
 public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("hello-view.fxml"));
-<<<<<<< Updated upstream
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("/br/edu/ifsc/fln/view/hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
         stage.setTitle("Lavação dos Guri!");
-=======
-        Scene scene = new Scene(fxmlLoader.load(), 636, 630);
-        stage.setTitle("Hello!");
->>>>>>> Stashed changes
         stage.setScene(scene);
         stage.show();
     }
