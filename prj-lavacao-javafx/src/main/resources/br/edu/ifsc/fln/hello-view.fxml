@@ -7,19 +7,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifsc.fln.HelloController">
    <children>
       <MenuBar>
         <menus>
           <Menu mnemonicParsing="false" text="Cadastros">
             <items>
-              <MenuItem mnemonicParsing="false" text="Clientes" />
+              <MenuItem fx:id="menuItemClientes" mnemonicParsing="false" text="Clientes" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Veículos" />
-                  <MenuItem mnemonicParsing="false" text="Cor" />
-                  <MenuItem mnemonicParsing="false" text="Modelo" />
-                  <MenuItem mnemonicParsing="false" text="Marca" />
+                  <MenuItem fx:id="menuItemVeiculos" mnemonicParsing="false" text="Veículos" />
+                  <MenuItem fx:id="menuItemCores" mnemonicParsing="false" text="Cores" />
+                  <MenuItem mnemonicParsing="false" text="Marcas" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Processos">
