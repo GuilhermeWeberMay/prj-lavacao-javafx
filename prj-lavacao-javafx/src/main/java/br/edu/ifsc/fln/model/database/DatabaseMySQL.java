@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DatabaseMySQL implements Database {
+
     private Connection connection;
 
     @Override
@@ -14,7 +15,7 @@ public class DatabaseMySQL implements Database {
         try {
             final String DRIVER = "com.mysql.cj.jdbc.Driver";//MySQL 8
             //String driver = "com.mysql.jdbc.Driver"; //MySQL 5
-            final String URL = "jdbc:mysql://localhost:3306/db_lavacao?useTimezone=true&serverTimezone=UTC";//MySQL 8
+            final String URL = "jdbc:mysql://localhost:3306/db_vendas?createDatabaseIfNotExist=true&useTimezone=true&serverTimezone=UTC";//MySQL 8
             //String url = "jdbc:mysql://localhost:3306/db_vendas?useTimezone=true&serverTimezone=America/Sao_Paulo";
             //String url = "jdbc:mysql://localhost:3306/db_vendas";//MySQL 5
             final String USER = "root";
@@ -35,7 +36,7 @@ public class DatabaseMySQL implements Database {
         try {
             connection.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DatabaseMySQL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabasePostgreSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -44,7 +45,7 @@ public class DatabaseMySQL implements Database {
         try {
             connection.commit();
         } catch (SQLException ex) {
-            Logger.getLogger(DatabaseMySQL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabasePostgreSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -53,7 +54,8 @@ public class DatabaseMySQL implements Database {
         try {
             connection.rollback();
         } catch (SQLException ex) {
-            Logger.getLogger(DatabaseMySQL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabasePostgreSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    }  
+    
 }
