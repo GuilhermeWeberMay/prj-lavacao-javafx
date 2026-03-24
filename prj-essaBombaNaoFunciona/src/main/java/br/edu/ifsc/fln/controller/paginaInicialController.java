@@ -1,4 +1,4 @@
-package br.edu.ifsc.fln;
+package br.edu.ifsc.fln.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,8 +7,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
-public class HelloController {
-
+public class paginaInicialController {
     @FXML
     private MenuItem menuItemClientes;
 
@@ -23,7 +22,7 @@ public class HelloController {
 
     @FXML
     void handleMenuItemCadastroCategoria() throws IOException {
-        AnchorPane a = FXMLLoader.load(getClass().getResource("/br/edu/ifsc/fln/view/CadastroCor.fxml"));
+        AnchorPane a = FXMLLoader.load(getClass().getResource("/br/edu/ifsc/fln/CadastroCor.fxml"));
         anchorPane.getChildren().setAll(a);
     }
 }
