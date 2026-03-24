@@ -11,7 +11,4 @@ public class Cor {
     private int id;
     private String nome;
 
-    public Cor(String nome) {
-        this.nome = nome;
-    }
 }

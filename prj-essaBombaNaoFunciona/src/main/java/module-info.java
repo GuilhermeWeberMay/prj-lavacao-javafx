@@ -6,6 +6,7 @@ module br.edu.ifsc.fln.prjessabombanaofunciona {
     requires javafx.graphics;
     requires java.sql;
     requires static lombok;
+    requires javafx.base;
 
     opens br.edu.ifsc.fln to javafx.fxml;
     exports br.edu.ifsc.fln;
