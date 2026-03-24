@@ -47,6 +47,9 @@ public class CadastroCorController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 //        corDAO.setConnection(connection);
         carregarTableViewCor();
+
+        tableViewCores.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> selecionarItemTableViewCores(newValue));
     }
 
     private void carregarTableViewCor() {
@@ -56,6 +59,16 @@ public class CadastroCorController implements Initializable {
 
         ObservableList<Cor> observableListCores = FXCollections.observableArrayList(cores);
         tableViewCores.setItems(observableListCores);
+    }
+
+    public void selecionarItemTableViewCores (Cor cor) {
+        if (cor != null) {
+            labelDescCor.setText(cor.getNome());
+            labelIdCor.setText(String.valueOf(cor.getId()));
+        } else {
+            labelDescCor.setText("");
+            labelIdCor.setText("");
+        }
     }
 
     @FXML
