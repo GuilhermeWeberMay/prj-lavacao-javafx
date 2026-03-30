@@ -19,6 +19,8 @@ public class CadastroCorController {
     @FXML
     private TableView<Cor> tableViewCores;
 
+
+
     @FXML
     void buttonCreateCor() {
 
