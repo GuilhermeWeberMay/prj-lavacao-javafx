@@ -8,13 +8,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -27,7 +32,7 @@ public class CadastroCorController implements Initializable {
     private final Database database = DatabaseFactory.getDatabase("mysql");
     private final Connection connection = database.conectar();
     private final CorDAO corDAO = new CorDAO();
-    
+
     @FXML
     private Label labelDescCor;
 
@@ -49,10 +54,24 @@ public class CadastroCorController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         corDAO.setConnection(connection);
         carregarTableViewCor();
+
+        tableViewCores.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> selecionarItemTableViewCores(newValue));
+    }
+
+    private void selecionarItemTableViewCores(Cor cor) {
+        if (cor != null) {
+            labelIdCor.setText(String.valueOf(cor.getId()));
+            labelDescCor.setText(cor.getNome());
+        } else {
+            labelIdCor.setText("");
+            labelDescCor.setText("");
+        }
+
     }
 
     private void carregarTableViewCor() {
-        tableColumnCor.setCellValueFactory(new PropertyValueFactory<>("Cor"));
+        tableColumnCor.setCellValueFactory(new PropertyValueFactory<>("nome"));
 
         cores = corDAO.listar();
 
@@ -61,17 +80,61 @@ public class CadastroCorController implements Initializable {
     }
 
     @FXML
-    void buttonCreateCor(ActionEvent event) {
-
+    void buttonCreateCor(ActionEvent event) throws IOException {
+        Cor cor = new Cor();
+        boolean buttonConfirmarClicked = showDialogCadastroCor(cor);
+        if (buttonConfirmarClicked) {
+            corDAO.create(cor);
+            carregarTableViewCor();
+        }
     }
 
     @FXML
-    void buttonDeleteCor(ActionEvent event) {
-
+    void buttonDeleteCor(ActionEvent event) throws IOException {
+        Cor cor = tableViewCores.getSelectionModel().getSelectedItem();
+        if (cor != null) {
+            corDAO.remover(cor);
+            carregarTableViewCor();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(" Por favor escolha uma cor na tabela! ");
+            alert.showAndWait();
+        }
     }
 
     @FXML
-    void buttonUpdateCor(ActionEvent event) {
-
+    void buttonUpdateCor(ActionEvent event) throws IOException {
+        Cor cor = tableViewCores.getSelectionModel().getSelectedItem();
+        if (cor != null) {
+            boolean buttonCorfirmarClicked = showDialogCadastroCor(cor);
+            if (buttonCorfirmarClicked) {
+                corDAO.alterar(cor);
+                carregarTableViewCor();
+            }else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText(" Por favor escolha uma cor na tabela! ");
+                alert.showAndWait();
+            }
+        }
     }
+
+    private boolean showDialogCadastroCor(Cor cor) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/br/edu/ifsc/fln/view/DialogCadastroCor.fxml"));
+        AnchorPane page = loader.load();
+
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("Cadastro cor");
+        Scene scene = new Scene(page);
+        dialogStage.setScene(scene);
+
+        DialogCadastroCorController controller = loader.getController();
+        controller.setDialogStage(dialogStage);
+        controller.setCor(cor);
+
+        dialogStage.showAndWait();
+
+        return controller.isButtonConfirmarClicked();
+    }
+
 }

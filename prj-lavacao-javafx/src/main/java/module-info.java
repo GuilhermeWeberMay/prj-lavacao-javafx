@@ -8,5 +8,6 @@ module br.edu.ifsc.fln {
     requires java.logging;
 
     opens br.edu.ifsc.fln to javafx.fxml;
+    opens br.edu.ifsc.fln.model.domain to javafx.base;
     exports br.edu.ifsc.fln;
 }
