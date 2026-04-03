@@ -24,6 +24,7 @@
                   </Menu>
 
                   <SeparatorMenuItem mnemonicParsing="false" />
+                     <MenuItem fx:id="menuItemServicos" mnemonicParsing="false" onAction="#handleMenuItemCadastroServicos" text="Serviços" />
                   <MenuItem fx:id="menuItemVeiculos" mnemonicParsing="false" text="Veículos" />
                   <MenuItem fx:id="menuItemCores" mnemonicParsing="false" onAction="#handleMenuItemCadastroCores" text="Cores" />
                   <MenuItem fx:id="menuItemMarcas" mnemonicParsing="false" onAction="#handleMenuItemCadastroMarcas" text="Marcas" />

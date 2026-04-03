@@ -1,0 +1,161 @@
+package br.edu.ifsc.fln;
+
+import br.edu.ifsc.fln.model.dao.ServicoDAO;
+import br.edu.ifsc.fln.model.database.Database;
+import br.edu.ifsc.fln.model.database.DatabaseFactory;
+import br.edu.ifsc.fln.model.domain.Servico;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+
+public class CadastroServicoController implements Initializable {
+
+    // Atributos para manipulação de BDA
+    private final Database database = DatabaseFactory.getDatabase("mysql");
+    private final Connection connection = database.conectar();
+    private final ServicoDAO servicoDAO = new ServicoDAO();
+
+    @FXML
+    private AnchorPane anchorPaneCadastroServico;
+
+    @FXML
+    private Label labelDescServico;
+
+    @FXML
+    private Label labelIdServico;
+
+    @FXML
+    private Label labelPontosServico;
+
+    @FXML
+    private Label labelValorServico;
+
+    @FXML
+    private TableColumn<Servico, String> tableColumnDescricao;
+
+    @FXML
+    private TableColumn<Servico, Integer> tableColumnPontos;
+
+    @FXML
+    private TableColumn<Servico, Double> tableColumnValor;
+
+    @FXML
+    private TableView<Servico> tableViewServicos;
+
+    @FXML
+    private AnchorPane anchorPane;
+
+    private List<Servico> servicos = new ArrayList<>();
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        servicoDAO.setConnection(connection);
+        carregarTableViewServico();
+
+        tableViewServicos.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> selecionarItemTableViewServicos(newValue));
+    }
+
+    private void selecionarItemTableViewServicos(Servico servico) {
+        if (servico != null) {
+            labelIdServico.setText(String.valueOf(servico.getId()));
+            labelDescServico.setText(servico.getDescricao());
+            labelPontosServico.setText(String.valueOf(servico.getPontos()));
+            labelValorServico.setText(String.valueOf(servico.getValor()));
+        } else {
+            labelIdServico.setText("");
+            labelDescServico.setText("");
+            labelPontosServico.setText("");
+            labelValorServico.setText("");
+        }
+
+    }
+
+    private void carregarTableViewServico() {
+        tableColumnDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
+        tableColumnValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
+        tableColumnPontos.setCellValueFactory(new PropertyValueFactory<>("pontos"));
+
+        servicos = servicoDAO.listar();
+
+        ObservableList<Servico> observableListServicos = FXCollections.observableArrayList(servicos);
+        tableViewServicos.setItems(observableListServicos);
+    }
+
+    @FXML
+    void buttonCreateServico(ActionEvent event) throws IOException {
+        Servico servico = new Servico();
+        boolean buttonConfirmarClicked = showDialogCadastroServico(servico);
+        if (buttonConfirmarClicked) {
+            servicoDAO.create(servico);
+            carregarTableViewServico();
+        }
+    }
+
+    @FXML
+    void buttonDeleteServico(ActionEvent event) throws IOException {
+        Servico servico = tableViewServicos.getSelectionModel().getSelectedItem();
+        if (servico != null) {
+            servicoDAO.remover(servico);
+            carregarTableViewServico();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(" Por favor escolha uma servico na tabela! ");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    void buttonUpdateServico(ActionEvent event) throws IOException {
+        Servico servico = tableViewServicos.getSelectionModel().getSelectedItem();
+        if (servico != null) {
+            boolean buttonServicofirmarClicked = showDialogCadastroServico(servico);
+            if (buttonServicofirmarClicked) {
+                servicoDAO.alterar(servico);
+                carregarTableViewServico();
+            }else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText(" Por favor escolha uma servico na tabela! ");
+                alert.showAndWait();
+            }
+        }
+    }
+
+    private boolean showDialogCadastroServico(Servico servico) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/br/edu/ifsc/fln/view/DialogCadastroServico.fxml"));
+        AnchorPane page = loader.load();
+
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("Cadastro servico");
+        Scene scene = new Scene(page);
+        dialogStage.setScene(scene);
+
+        DialogCadastroServicoController controller = loader.getController();
+        controller.setDialogStage(dialogStage);
+        controller.setServico(servico);
+
+        dialogStage.showAndWait();
+
+        return controller.isButtonConfirmarClicked();
+    }
+
+}

@@ -19,6 +19,9 @@ public class HelloController {
     private MenuItem menuItemVeiculos;
 
     @FXML
+    private MenuItem menuItemServicos;
+
+    @FXML
     private AnchorPane anchorPane;
 
     @FXML
@@ -30,6 +33,12 @@ public class HelloController {
     @FXML
     void handleMenuItemCadastroMarcas() throws IOException {
         AnchorPane a = FXMLLoader.load(getClass().getResource("/br/edu/ifsc/fln/view/CadastroMarca.fxml"));
+        anchorPane.getChildren().setAll(a);
+    }
+
+    @FXML
+    void handleMenuItemCadastroServicos() throws IOException {
+        AnchorPane a = FXMLLoader.load(getClass().getResource("/br/edu/ifsc/fln/view/CadastroServico.fxml"));
         anchorPane.getChildren().setAll(a);
     }
 }
