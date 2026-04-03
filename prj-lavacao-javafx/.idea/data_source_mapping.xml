@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourcePerFileMappings">
-    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/ee1aa78b-7509-4958-a715-d875afbb1011/console.sql" value="ee1aa78b-7509-4958-a715-d875afbb1011" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/br/edu/ifsc/fln/bancoDeDados/db_lavacao.sql" value="ee1aa78b-7509-4958-a715-d875afbb1011" />
   </component>
 </project>

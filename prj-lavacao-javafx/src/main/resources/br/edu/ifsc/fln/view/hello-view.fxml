@@ -16,8 +16,6 @@
           <Menu mnemonicParsing="false" text="Cadastros">
             <items>
 
-              <MenuItem fx:id="menuItemClientes" mnemonicParsing="false" text="Clientes" />
-
                   <Menu mnemonicParsing="false" text="Clientes">
                     <items>
                       <MenuItem mnemonicParsing="false" text="PessoaFisica" />
@@ -27,8 +25,8 @@
 
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="menuItemVeiculos" mnemonicParsing="false" text="Veículos" />
-                  <MenuItem fx:id="menuItemCores" mnemonicParsing="false" onAction="#handleMenuItemCadastroCategoria" text="Cores" />
-                  <MenuItem mnemonicParsing="false" text="Marcas" />
+                  <MenuItem fx:id="menuItemCores" mnemonicParsing="false" onAction="#handleMenuItemCadastroCores" text="Cores" />
+                  <MenuItem fx:id="menuItemMarcas" mnemonicParsing="false" onAction="#handleMenuItemCadastroMarcas" text="Marcas" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Processos">

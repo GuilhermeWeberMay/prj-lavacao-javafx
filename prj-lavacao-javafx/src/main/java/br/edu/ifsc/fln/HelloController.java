@@ -22,8 +22,14 @@ public class HelloController {
     private AnchorPane anchorPane;
 
     @FXML
-    void handleMenuItemCadastroCategoria() throws IOException {
+    void handleMenuItemCadastroCores() throws IOException {
         AnchorPane a = FXMLLoader.load(getClass().getResource("/br/edu/ifsc/fln/view/CadastroCor.fxml"));
+        anchorPane.getChildren().setAll(a);
+    }
+
+    @FXML
+    void handleMenuItemCadastroMarcas() throws IOException {
+        AnchorPane a = FXMLLoader.load(getClass().getResource("/br/edu/ifsc/fln/view/CadastroMarca.fxml"));
         anchorPane.getChildren().setAll(a);
     }
 }
