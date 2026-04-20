@@ -23,7 +23,7 @@ public class ServicoDAO {
     }
 
     public boolean create(Servico servico) {
-        String sql = "INSERT INTO servico(descricao, valor, pontos) VALUES(?, ?, 10)";
+        String sql = "INSERT INTO servico(descricao, valor) VALUES(?, ?)";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, servico.getDescricao());
@@ -75,7 +75,6 @@ public class ServicoDAO {
                 servico.setId(resultado.getInt("id"));
                 servico.setDescricao(resultado.getString("descricao"));
                 servico.setValor(resultado.getDouble("valor"));
-                servico.setPontos(resultado.getInt("pontos"));
                 retorno.add(servico);
             }
         } catch (SQLException ex) {
@@ -100,7 +99,6 @@ public class ServicoDAO {
                 retorno.setId(resultado.getInt("id"));
                 retorno.setDescricao(resultado.getString("descricao"));
                 retorno.setValor(resultado.getDouble("valor"));
-                retorno.setPontos(resultado.getInt("pontos"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);

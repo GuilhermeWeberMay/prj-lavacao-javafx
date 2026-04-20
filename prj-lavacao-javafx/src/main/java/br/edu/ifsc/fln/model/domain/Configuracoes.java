@@ -11,9 +11,7 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
-public class Servico {
+public class Configuracoes {
     private int id;
-    private String descricao;
-    private Double valor;
-    private Configuracoes configuracoes;
+    private int pontos;
 }

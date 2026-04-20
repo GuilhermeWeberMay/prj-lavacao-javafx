@@ -20,9 +20,8 @@
                <children>
                   <TableView fx:id="tableViewServicos" prefHeight="400.0" prefWidth="232.0">
                     <columns>
-                      <TableColumn fx:id="tableColumnDescricao" prefWidth="77.3" text="Descrição" />
-                        <TableColumn fx:id="tableColumnPontos" prefWidth="77.3" text="pontos" />
-                        <TableColumn fx:id="tableColumnValor" prefWidth="77.3" text="Valor" />
+                      <TableColumn fx:id="tableColumnDescricao" prefWidth="115.0" text="Descrição" />
+                        <TableColumn fx:id="tableColumnValor" prefWidth="115.0" text="Valor" />
                     </columns>
                   </TableView>
                   <Group />

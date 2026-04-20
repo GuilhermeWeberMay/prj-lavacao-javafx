@@ -1,8 +1,10 @@
 package br.edu.ifsc.fln;
 
+import br.edu.ifsc.fln.model.dao.ConfiguracoesDAO;
 import br.edu.ifsc.fln.model.dao.ServicoDAO;
 import br.edu.ifsc.fln.model.database.Database;
 import br.edu.ifsc.fln.model.database.DatabaseFactory;
+import br.edu.ifsc.fln.model.domain.Configuracoes;
 import br.edu.ifsc.fln.model.domain.Servico;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,6 +34,8 @@ public class CadastroServicoController implements Initializable {
     private final Database database = DatabaseFactory.getDatabase("mysql");
     private final Connection connection = database.conectar();
     private final ServicoDAO servicoDAO = new ServicoDAO();
+    private final ConfiguracoesDAO configuracoesDAO = new ConfiguracoesDAO();
+    private int pontosGlobais;
 
     @FXML
     private AnchorPane anchorPaneCadastroServico;
@@ -52,7 +56,7 @@ public class CadastroServicoController implements Initializable {
     private TableColumn<Servico, String> tableColumnDescricao;
 
     @FXML
-    private TableColumn<Servico, Integer> tableColumnPontos;
+    private TableColumn<Configuracoes, Integer> tableColumnPontos;
 
     @FXML
     private TableColumn<Servico, Double> tableColumnValor;
@@ -64,21 +68,34 @@ public class CadastroServicoController implements Initializable {
     private AnchorPane anchorPane;
 
     private List<Servico> servicos = new ArrayList<>();
+    private List<Configuracoes> pontosServicos = new ArrayList<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         servicoDAO.setConnection(connection);
+        configuracoesDAO.setConnection(connection);
+//        carregarTableViewServico();
+//
+//        tableViewServicos.getSelectionModel().selectedItemProperty().addListener(
+//                (observable, oldValue, newValue)
+//                        -> selecionarItemTableViewServicos(newValue));
+        configurarTableView();
         carregarTableViewServico();
-
         tableViewServicos.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> selecionarItemTableViewServicos(newValue));
+                (obs, oldValue, newValue) -> selecionarItemTableViewServicos(newValue)
+        );
+    }
+
+    private void configurarTableView() {
+        tableColumnDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
+        tableColumnValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
     }
 
     private void selecionarItemTableViewServicos(Servico servico) {
         if (servico != null) {
             labelIdServico.setText(String.valueOf(servico.getId()));
             labelDescServico.setText(servico.getDescricao());
-            labelPontosServico.setText(String.valueOf(servico.getPontos()));
+            //labelPontosServico.setText(String.valueOf(configuracoes.getPontos()));
             labelValorServico.setText(String.valueOf(servico.getValor()));
         } else {
             labelIdServico.setText("");
@@ -90,14 +107,36 @@ public class CadastroServicoController implements Initializable {
     }
 
     private void carregarTableViewServico() {
-        tableColumnDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
-        tableColumnValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
-        tableColumnPontos.setCellValueFactory(new PropertyValueFactory<>("pontos"));
+//        Configuracoes configuracoes = configuracoesDAO.buscar();
+//        int pontosGlobais = configuracoes.getPontos();
+//        tableColumnDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
+//        tableColumnValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
+//        tableColumnPontos.setCellValueFactory(new PropertyValueFactory<>(String.valueOf(pontosGlobais)));
+//
+//        servicos = servicoDAO.listar();
+//
+//        ObservableList<Servico> observableListServicos = FXCollections.observableArrayList(servicos);
+//        tableViewServicos.setItems(observableListServicos);
+        try {
+            servicoDAO.setConnection(connection);
+            List<Servico> servicos = servicoDAO.listar();
+            tableViewServicos.setItems(FXCollections.observableArrayList(servicos));
 
-        servicos = servicoDAO.listar();
+            configuracoesDAO.setConnection(connection);
+            Configuracoes configuracao = configuracoesDAO.buscar();
 
-        ObservableList<Servico> observableListServicos = FXCollections.observableArrayList(servicos);
-        tableViewServicos.setItems(observableListServicos);
+            if (configuracao != null) {
+                pontosGlobais = configuracao.getPontos();
+                labelPontosServico.setText(String.valueOf(pontosGlobais));
+            } else {
+                labelPontosServico.setText("0");
+                pontosGlobais = 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            labelPontosServico.setText("0");
+            pontosGlobais = 0;
+        }
     }
 
     @FXML
