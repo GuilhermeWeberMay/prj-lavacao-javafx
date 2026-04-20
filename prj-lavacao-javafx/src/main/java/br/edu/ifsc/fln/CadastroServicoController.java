@@ -7,7 +7,6 @@ import br.edu.ifsc.fln.model.database.DatabaseFactory;
 import br.edu.ifsc.fln.model.domain.Configuracoes;
 import br.edu.ifsc.fln.model.domain.Servico;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +23,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -36,9 +34,6 @@ public class CadastroServicoController implements Initializable {
     private final ServicoDAO servicoDAO = new ServicoDAO();
     private final ConfiguracoesDAO configuracoesDAO = new ConfiguracoesDAO();
     private int pontosGlobais;
-
-    @FXML
-    private AnchorPane anchorPaneCadastroServico;
 
     @FXML
     private Label labelDescServico;
@@ -56,9 +51,6 @@ public class CadastroServicoController implements Initializable {
     private TableColumn<Servico, String> tableColumnDescricao;
 
     @FXML
-    private TableColumn<Configuracoes, Integer> tableColumnPontos;
-
-    @FXML
     private TableColumn<Servico, Double> tableColumnValor;
 
     @FXML
@@ -67,18 +59,11 @@ public class CadastroServicoController implements Initializable {
     @FXML
     private AnchorPane anchorPane;
 
-    private List<Servico> servicos = new ArrayList<>();
-    private List<Configuracoes> pontosServicos = new ArrayList<>();
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         servicoDAO.setConnection(connection);
         configuracoesDAO.setConnection(connection);
-//        carregarTableViewServico();
-//
-//        tableViewServicos.getSelectionModel().selectedItemProperty().addListener(
-//                (observable, oldValue, newValue)
-//                        -> selecionarItemTableViewServicos(newValue));
+
         configurarTableView();
         carregarTableViewServico();
         tableViewServicos.getSelectionModel().selectedItemProperty().addListener(
@@ -95,7 +80,6 @@ public class CadastroServicoController implements Initializable {
         if (servico != null) {
             labelIdServico.setText(String.valueOf(servico.getId()));
             labelDescServico.setText(servico.getDescricao());
-            //labelPontosServico.setText(String.valueOf(configuracoes.getPontos()));
             labelValorServico.setText(String.valueOf(servico.getValor()));
         } else {
             labelIdServico.setText("");
@@ -107,16 +91,6 @@ public class CadastroServicoController implements Initializable {
     }
 
     private void carregarTableViewServico() {
-//        Configuracoes configuracoes = configuracoesDAO.buscar();
-//        int pontosGlobais = configuracoes.getPontos();
-//        tableColumnDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
-//        tableColumnValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
-//        tableColumnPontos.setCellValueFactory(new PropertyValueFactory<>(String.valueOf(pontosGlobais)));
-//
-//        servicos = servicoDAO.listar();
-//
-//        ObservableList<Servico> observableListServicos = FXCollections.observableArrayList(servicos);
-//        tableViewServicos.setItems(observableListServicos);
         try {
             servicoDAO.setConnection(connection);
             List<Servico> servicos = servicoDAO.listar();

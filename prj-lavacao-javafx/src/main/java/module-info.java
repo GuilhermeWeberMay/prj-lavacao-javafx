@@ -7,6 +7,7 @@ module br.edu.ifsc.fln {
     requires static lombok;
     requires java.logging;
     requires mysql.connector.j;
+    requires javafx.graphics;
 
     opens br.edu.ifsc.fln to javafx.fxml;
     opens br.edu.ifsc.fln.model.domain to javafx.base;

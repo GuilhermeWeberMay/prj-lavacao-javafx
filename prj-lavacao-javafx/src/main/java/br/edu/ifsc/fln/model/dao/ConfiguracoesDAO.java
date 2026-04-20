@@ -55,11 +55,12 @@ public class ConfiguracoesDAO {
         return retorno;
     }
 
-    public boolean alterar(int pontos) {
+    public boolean alterar(Configuracoes configuracoes) {
         String sql = "UPDATE configuracoes set pontos_servico = ? where id = 1;";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, pontos);
+            stmt.setInt(1, configuracoes.getPontos());
+//            stmt.setInt(2, configuracoes.getId());
             stmt.execute();
             return true;
         } catch (SQLException ex) {
