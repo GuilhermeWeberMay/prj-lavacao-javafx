@@ -16,4 +16,5 @@ public class Servico {
     private Double valor;
     private int pontos;
     private int id;
+    private ECategoria categoria;
 }

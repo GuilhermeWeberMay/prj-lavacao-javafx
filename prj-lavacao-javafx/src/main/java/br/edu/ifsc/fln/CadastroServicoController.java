@@ -3,6 +3,7 @@ package br.edu.ifsc.fln;
 import br.edu.ifsc.fln.model.dao.ServicoDAO;
 import br.edu.ifsc.fln.model.database.Database;
 import br.edu.ifsc.fln.model.database.DatabaseFactory;
+import br.edu.ifsc.fln.model.domain.ECategoria;
 import br.edu.ifsc.fln.model.domain.Servico;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -58,6 +59,9 @@ public class CadastroServicoController implements Initializable {
     private TableColumn<Servico, Double> tableColumnValor;
 
     @FXML
+    private TableColumn<Servico, ECategoria> tableColumnCategoria;
+
+    @FXML
     private TableView<Servico> tableViewServicos;
 
     @FXML
@@ -93,6 +97,8 @@ public class CadastroServicoController implements Initializable {
         tableColumnDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
         tableColumnValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
         tableColumnPontos.setCellValueFactory(new PropertyValueFactory<>("pontos"));
+        tableColumnCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
+
 
         servicos = servicoDAO.listar();
 

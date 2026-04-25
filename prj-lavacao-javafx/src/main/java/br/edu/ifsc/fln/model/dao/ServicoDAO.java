@@ -1,5 +1,6 @@
 package br.edu.ifsc.fln.model.dao;
 
+import br.edu.ifsc.fln.model.domain.ECategoria;
 import br.edu.ifsc.fln.model.domain.Servico;
 
 import java.sql.Connection;
@@ -75,6 +76,7 @@ public class ServicoDAO {
                 servico.setId(resultado.getInt("id"));
                 servico.setDescricao(resultado.getString("descricao"));
                 servico.setValor(resultado.getDouble("valor"));
+                servico.setCategoria(Enum.valueOf(ECategoria.class, resultado.getString("categoria")));
                 servico.setPontos(resultado.getInt("pontos"));
                 retorno.add(servico);
             }

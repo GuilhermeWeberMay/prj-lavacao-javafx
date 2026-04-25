@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS db_lavacao;
+#DROP DATABASE IF EXISTS db_lavacao;
 
 CREATE DATABASE db_lavacao;
 
@@ -31,9 +31,10 @@ VALUES ('Volkswagen'),
 
 CREATE TABLE IF NOT EXISTS servico
 (
-    id        INT           NOT NULL AUTO_INCREMENT,
-    descricao VARCHAR(100)  NOT NULL,
-    valor     DECIMAL(5, 2) NOT NULL,
+    id        INT                                                   NOT NULL AUTO_INCREMENT,
+    descricao VARCHAR(100)                                          NOT NULL,
+    valor     DECIMAL(10, 2)                                        NOT NULL,
+    categoria ENUM ('PEQUENO', 'MEDIO', 'GRANDE', 'MOTO', 'PADRAO') NOT NULL,
     CONSTRAINT pk_servico PRIMARY KEY (id)
 ) ENGINE = InnoDB;
 
@@ -47,9 +48,9 @@ CREATE TABLE configuracoes
 INSERT INTO configuracoes (pontos_servico)
 VALUES (10);
 
-INSERT INTO servico (descricao, valor)
-VALUES ('lavagem simples', 50.00),
-       ('lavagem com cera', 70.00);
+INSERT INTO servico (descricao, valor, categoria)
+VALUES ('lavagem simples', 50.00, 'GRANDE'),
+       ('lavagem com cera', 70.00, 'MEDIO');
 
 CREATE TABLE IF NOT EXISTS motor
 (
@@ -103,22 +104,3 @@ INSERT INTO veiculo(placa, observacao, id_cor, id_modelo)
 VALUES ('SSF4B28', 'MEU CARRO', 1, 2);
 
 /* UPDATE configuracoes set pontos_servico = 20 where id = 1; */
-
-SELECT m.descricao, m.categoria, ma.nome, mo.potencia, mo.tipo_combustivel
-FROM modelo m
-         INNER JOIN marca ma ON m.id_marca = ma.id
-         INNER JOIN motor mo ON m.id_motor = mo.id;
-
-SELECT v.placa,
-       v.observacao,
-       c.nome  AS cor,
-       m.descricao,
-       m.categoria,
-       ma.nome AS marca,
-       mo.potencia,
-       mo.tipo_combustivel
-FROM veiculo v
-         INNER JOIN cor c ON v.id_cor = c.id
-         INNER JOIN modelo m ON v.id_modelo = m.id
-         INNER JOIN marca ma ON m.id_marca = ma.id
-         INNER JOIN motor mo ON m.id_motor = mo.id;
