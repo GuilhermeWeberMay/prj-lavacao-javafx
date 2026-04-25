@@ -1,10 +1,13 @@
 package br.edu.ifsc.fln;
 
+import br.edu.ifsc.fln.model.domain.ECategoria;
 import br.edu.ifsc.fln.model.domain.Servico;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lombok.Getter;
@@ -29,6 +32,9 @@ public class DialogCadastroServicoController implements Initializable {
     @FXML
     private TextField textFielServicoValor;
 
+    @FXML
+    private ChoiceBox<ECategoria> choiceBoxCategoria;
+
     private Stage dialogStage;
     private boolean buttonConfirmarClicked = false;
     private Servico servico;
@@ -37,10 +43,12 @@ public class DialogCadastroServicoController implements Initializable {
         this.servico = servico;
         textFielServicoDescricao.setText(servico.getDescricao());
         textFielServicoValor.setText(String.valueOf(servico.getValor()));
+        choiceBoxCategoria.setValue(servico.getCategoria());
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        carregarChoiceBoxCategoria();
     }
 
     @FXML
@@ -48,6 +56,7 @@ public class DialogCadastroServicoController implements Initializable {
         if (validarEntradaDeDados()) {
             servico.setDescricao(textFielServicoDescricao.getText());
             servico.setValor(Double.valueOf(textFielServicoValor.getText()));
+            servico.setCategoria(choiceBoxCategoria.getValue());
 
             buttonConfirmarClicked = true;
             dialogStage.close();
@@ -79,5 +88,8 @@ public class DialogCadastroServicoController implements Initializable {
         }
     }
 
+    public void carregarChoiceBoxCategoria() {
+        choiceBoxCategoria.setItems( FXCollections.observableArrayList( ECategoria.values()));
+    }
 }
 

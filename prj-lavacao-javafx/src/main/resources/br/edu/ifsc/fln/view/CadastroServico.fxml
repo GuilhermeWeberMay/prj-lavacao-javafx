@@ -21,7 +21,6 @@
                   <TableView fx:id="tableViewServicos" prefHeight="598.0" prefWidth="400.0">
                     <columns>
                       <TableColumn fx:id="tableColumnDescricao" prefWidth="77.3" text="Descrição" />
-                        <TableColumn fx:id="tableColumnPontos" prefWidth="77.3" text="pontos" />
                         <TableColumn fx:id="tableColumnValor" prefWidth="77.3" text="Valor" />
                         <TableColumn fx:id="tableColumnCategoria" prefWidth="77.3" text="Categoria" />
                     </columns>

@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ECategoria {
     PEQUENO("Pequeno"),
-    MEDIO("Medio"),
+    MEDIO("Médio"),
     GRANDE("Grande"),
     MOTO("Moto"),
     PADRAO("Padrão");

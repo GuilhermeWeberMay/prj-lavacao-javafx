@@ -1,8 +1,10 @@
 package br.edu.ifsc.fln;
 
+import br.edu.ifsc.fln.model.dao.ConfiguracoesDAO;
 import br.edu.ifsc.fln.model.dao.ServicoDAO;
 import br.edu.ifsc.fln.model.database.Database;
 import br.edu.ifsc.fln.model.database.DatabaseFactory;
+import br.edu.ifsc.fln.model.domain.Configuracoes;
 import br.edu.ifsc.fln.model.domain.ECategoria;
 import br.edu.ifsc.fln.model.domain.Servico;
 import javafx.collections.FXCollections;
@@ -12,10 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -33,6 +32,8 @@ public class CadastroServicoController implements Initializable {
     private final Database database = DatabaseFactory.getDatabase("mysql");
     private final Connection connection = database.conectar();
     private final ServicoDAO servicoDAO = new ServicoDAO();
+    private final ConfiguracoesDAO configuracoesDAO = new ConfiguracoesDAO();
+    private int pontosGlobais;
 
     @FXML
     private AnchorPane anchorPaneCadastroServico;
@@ -53,9 +54,6 @@ public class CadastroServicoController implements Initializable {
     private TableColumn<Servico, String> tableColumnDescricao;
 
     @FXML
-    private TableColumn<Servico, Integer> tableColumnPontos;
-
-    @FXML
     private TableColumn<Servico, Double> tableColumnValor;
 
     @FXML
@@ -69,10 +67,14 @@ public class CadastroServicoController implements Initializable {
 
     private List<Servico> servicos = new ArrayList<>();
 
+    @FXML
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         servicoDAO.setConnection(connection);
+        configuracoesDAO.setConnection(connection);
+
         carregarTableViewServico();
+        configurarTableView();
 
         tableViewServicos.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> selecionarItemTableViewServicos(newValue));
@@ -82,28 +84,42 @@ public class CadastroServicoController implements Initializable {
         if (servico != null) {
             labelIdServico.setText(String.valueOf(servico.getId()));
             labelDescServico.setText(servico.getDescricao());
-            labelPontosServico.setText(String.valueOf(servico.getPontos()));
             labelValorServico.setText(String.valueOf(servico.getValor()));
         } else {
             labelIdServico.setText("");
             labelDescServico.setText("");
-            labelPontosServico.setText("");
             labelValorServico.setText("");
         }
 
     }
 
-    private void carregarTableViewServico() {
+    private void configurarTableView() {
         tableColumnDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
         tableColumnValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
-        tableColumnPontos.setCellValueFactory(new PropertyValueFactory<>("pontos"));
         tableColumnCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
+    }
 
+    private void carregarTableViewServico() {
+        try {
+            servicoDAO.setConnection(connection);
+            List<Servico> servicos = servicoDAO.listar();
+            tableViewServicos.setItems(FXCollections.observableArrayList(servicos));
 
-        servicos = servicoDAO.listar();
+            configuracoesDAO.setConnection(connection);
+            Configuracoes configuracao = configuracoesDAO.buscar();
 
-        ObservableList<Servico> observableListServicos = FXCollections.observableArrayList(servicos);
-        tableViewServicos.setItems(observableListServicos);
+            if (configuracao != null) {
+                pontosGlobais = configuracao.getPontos();
+                labelPontosServico.setText(String.valueOf(pontosGlobais));
+            } else {
+                labelPontosServico.setText("0");
+                pontosGlobais = 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            labelPontosServico.setText("0");
+            pontosGlobais = 0;
+        }
     }
 
     @FXML
@@ -132,6 +148,7 @@ public class CadastroServicoController implements Initializable {
     @FXML
     void buttonUpdateServico(ActionEvent event) throws IOException {
         Servico servico = tableViewServicos.getSelectionModel().getSelectedItem();
+        System.out.println(servico);
         if (servico != null) {
             boolean buttonServicofirmarClicked = showDialogCadastroServico(servico);
             if (buttonServicofirmarClicked) {

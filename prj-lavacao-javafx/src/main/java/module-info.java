@@ -6,6 +6,7 @@ module br.edu.ifsc.fln {
     requires java.sql;
     requires static lombok;
     requires java.logging;
+    requires javafx.base;
 
     opens br.edu.ifsc.fln to javafx.fxml;
     opens br.edu.ifsc.fln.model.domain to javafx.base;
