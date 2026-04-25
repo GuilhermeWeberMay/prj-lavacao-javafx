@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum ECategoria {
-    PEQUENO("Pequeno"),MEDIO("Médio"), GRANDE("Grande"), MOTO("Moto"), PADRAO("Padrão");
+public enum ETipoCombustivel {
+    GASOLINA("Gasolina"), ETANOL("Etanol"), FLEX("Flex"), DIESEL("Diesel"), GNV("GNV"), OUTRO("Outro");
     private String descricao;
 }
