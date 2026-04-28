@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -79,11 +80,6 @@ public class CadastroServicoController implements Initializable {
         tableViewServicos.getSelectionModel().selectedItemProperty().addListener(
                 (obs, oldValue, newValue) -> selecionarItemTableViewServicos(newValue)
         );
-    }
-
-    private void configurarTableView() {
-        tableColumnDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
-        tableColumnValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
     }
 
     private void selecionarItemTableViewServicos(Servico servico) {
@@ -160,7 +156,7 @@ public class CadastroServicoController implements Initializable {
             if (buttonServicofirmarClicked) {
                 servicoDAO.alterar(servico);
                 carregarTableViewServico();
-            }else {
+            } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText(" Por favor escolha uma servico na tabela! ");
                 alert.showAndWait();
@@ -186,5 +182,4 @@ public class CadastroServicoController implements Initializable {
 
         return controller.isButtonConfirmarClicked();
     }
-
 }

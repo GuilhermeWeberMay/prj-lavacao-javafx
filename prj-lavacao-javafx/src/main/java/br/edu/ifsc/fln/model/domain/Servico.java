@@ -15,6 +15,5 @@ public class Servico {
     private int id;
     private String descricao;
     private Double valor;
-    private int id;
     private ECategoria categoria;
 }

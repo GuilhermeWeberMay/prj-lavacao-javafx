@@ -24,7 +24,6 @@
                         <TableColumn fx:id="tableColumnCategoria" prefWidth="77.3" text="Categoria" />
                     </columns>
                   </TableView>
-                  <Group />
                   <Button layoutX="613.0" layoutY="338.0" mnemonicParsing="false" onAction="#buttonUpdateServico" prefHeight="26.0" prefWidth="66.0" text="Editar" />
                   <Button layoutX="693.0" layoutY="338.0" mnemonicParsing="false" onAction="#buttonDeleteServico" prefHeight="26.0" prefWidth="66.0" text="Excluir" />
                   <Button layoutX="531.0" layoutY="339.0" mnemonicParsing="false" onAction="#buttonCreateServico" text="Adicionar" />
