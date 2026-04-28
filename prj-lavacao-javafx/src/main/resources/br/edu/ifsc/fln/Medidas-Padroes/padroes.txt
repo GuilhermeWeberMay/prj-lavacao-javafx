@@ -1,0 +1,16 @@
+Padrão de tamanho para todas as telas
+    800 de largura
+    600 de altura
+
+Titulos tamanho
+    18
+
+Botão de confirmar/adicionar
+    -fx-background-color #008000
+    -fx-text-fill        ffffff
+    -fx-font-weight      bold
+
+Botão de cancelar/excluir
+    -fx-background-color #cc0000
+    -fx-text-fill        ffffff
+    -fx-font-weight      bold

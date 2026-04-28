@@ -41,7 +41,9 @@ public class DialogCadastroServicoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+//        public void carregarChoiceBoxSituacao() {
+//            cbSituacao.setItems( FXCollections.observableArrayList( ESituacao.values()));
+//        }
     }
 
     @FXML

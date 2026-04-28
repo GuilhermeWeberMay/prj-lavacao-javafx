@@ -12,41 +12,77 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPaneCadastroMarca" prefHeight="300.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifsc.fln.CadastroMarcaController">
+<AnchorPane fx:id="anchorPaneCadastroMarca" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifsc.fln.CadastroMarcaController">
    <children>
-      <SplitPane prefHeight="402.0" prefWidth="473.0">
+      <SplitPane prefHeight="600.0" prefWidth="800.0">
          <items>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <AnchorPane layoutX="500.0" layoutY="530.0" prefHeight="515.0" prefWidth="712.0">
                <children>
-                  <TableView fx:id="tableViewMarcas" prefHeight="400.0" prefWidth="232.0">
+                  <TableView fx:id="tableViewMarcas" prefHeight="600.0" prefWidth="400.0">
                     <columns>
-                      <TableColumn fx:id="tableColumnMarca" prefWidth="229.6000366806984" text="MARCAS" />
+                      <TableColumn fx:id="tableColumnMarca" prefWidth="400.0" style="-fx-font-size: 16;" text="MARCAS" />
                     </columns>
                   </TableView>
                   <Group />
-                  <Button layoutX="318.0" layoutY="317.0" mnemonicParsing="false" onAction="#buttonUpdateMarca" prefHeight="26.0" prefWidth="66.0" text="Editar" />
-                  <Button layoutX="398.0" layoutY="317.0" mnemonicParsing="false" onAction="#buttonDeleteMarca" prefHeight="26.0" prefWidth="66.0" text="Excluir" />
-                  <Button layoutX="236.0" layoutY="318.0" mnemonicParsing="false" onAction="#buttonCreateMarca" text="Adicionar" />
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="258.0" layoutY="14.0" prefHeight="18.0" prefWidth="186.0" text="Informações da Marca">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="488.0" layoutY="14.0" prefHeight="27.0" prefWidth="222.0" style="-fx-font-weight: bold;" text="Informações da Marca">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <GridPane layoutX="251.0" layoutY="80.0">
+                  <GridPane layoutX="488.0" layoutY="74.0" prefHeight="54.0" prefWidth="222.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.199951171875" minWidth="10.0" prefWidth="71.199951171875" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="128.800048828125" minWidth="10.0" prefWidth="128.800048828125" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="24.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label alignment="CENTER" text="ID: " GridPane.halignment="RIGHT">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                        <Label alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="98.0" text="Descrição: " GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                        <Label fx:id="labelIdMarca" prefHeight="18.0" prefWidth="135.0" GridPane.columnIndex="1">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                        <Label fx:id="labelDescMarca" prefHeight="18.0" prefWidth="147.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                     </children>
+                  </GridPane>
+                  <Group layoutX="530.0" layoutY="500.0" />
+                  <GridPane layoutX="433.0" layoutY="506.0" prefHeight="30.0" prefWidth="316.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label alignment="CENTER" text="ID: " GridPane.halignment="RIGHT" />
-                        <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="61.0" text="Descrição:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                        <Label fx:id="labelIdMarca" prefHeight="18.0" prefWidth="135.0" GridPane.columnIndex="1" />
-                        <Label fx:id="labelDescMarca" prefHeight="18.0" prefWidth="131.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Button mnemonicParsing="false" onAction="#buttonCreateMarca" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #008000; -fx-text-fill: ffffff; -fx-font-weight: bold;" text="Adicionar">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#buttonUpdateMarca" prefHeight="30.0" prefWidth="100.0" text="Editar" GridPane.columnIndex="1">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#buttonDeleteMarca" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #cc0000; -fx-text-fill: ffffff; -fx-font-weight: bold;" text="Excluir" GridPane.columnIndex="2">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
                      </children>
                   </GridPane>
                </children>

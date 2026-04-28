@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
@@ -12,28 +11,25 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPaneCadastroServico" prefHeight="300.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifsc.fln.CadastroServicoController">
+<AnchorPane fx:id="anchorPaneCadastroServico" prefHeight="590.0" prefWidth="790.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifsc.fln.CadastroServicoController">
    <children>
-      <SplitPane prefHeight="402.0" prefWidth="473.0">
+      <SplitPane prefHeight="590.0" prefWidth="790.0">
          <items>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <AnchorPane prefHeight="590.0" prefWidth="790.0">
                <children>
-                  <TableView fx:id="tableViewServicos" prefHeight="400.0" prefWidth="232.0">
+                  <TableView fx:id="tableViewServicos" prefHeight="590.0" prefWidth="402.0">
                     <columns>
-                      <TableColumn fx:id="tableColumnDescricao" prefWidth="115.0" text="Descrição" />
-                        <TableColumn fx:id="tableColumnValor" prefWidth="115.0" text="Valor" />
+                      <TableColumn fx:id="tableColumnDescricao" maxWidth="133.0" minWidth="133.0" prefWidth="133.0" style="-fx-font-size: 16;" text="Descrição" />
+                        <TableColumn fx:id="tableColumnValor" maxWidth="133.0" minWidth="133.0" prefWidth="133.0" style="-fx-font-size: 16;" text="Valor" />
+                        <TableColumn fx:id="tableColumnCategoria" maxWidth="133.0" minWidth="133.0" prefWidth="133.0" style="-fx-font-size: 16;" text="Categoria" />
                     </columns>
                   </TableView>
-                  <Group />
-                  <Button layoutX="318.0" layoutY="317.0" mnemonicParsing="false" onAction="#buttonUpdateServico" prefHeight="26.0" prefWidth="66.0" text="Editar" />
-                  <Button layoutX="398.0" layoutY="317.0" mnemonicParsing="false" onAction="#buttonDeleteServico" prefHeight="26.0" prefWidth="66.0" text="Excluir" />
-                  <Button layoutX="236.0" layoutY="318.0" mnemonicParsing="false" onAction="#buttonCreateServico" text="Adicionar" />
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="258.0" layoutY="14.0" prefHeight="18.0" prefWidth="186.0" text="Informações de Serviço">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="523.0" layoutY="14.0" prefHeight="18.0" prefWidth="186.0" text="Informações de Serviço">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <GridPane layoutX="251.0" layoutY="80.0" prefHeight="133.0" prefWidth="201.0">
+                  <GridPane layoutX="503.0" layoutY="69.0" prefHeight="134.0" prefWidth="226.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.199951171875" minWidth="10.0" prefWidth="71.199951171875" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="128.800048828125" minWidth="10.0" prefWidth="128.800048828125" />
@@ -43,16 +39,78 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label alignment="CENTER" text="ID: " GridPane.halignment="RIGHT" />
-                        <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="61.0" text="Descrição:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                        <Label fx:id="labelIdServico" prefHeight="18.0" prefWidth="135.0" GridPane.columnIndex="1" />
-                        <Label fx:id="labelDescServico" prefHeight="18.0" prefWidth="131.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="61.0" text="Valor:" GridPane.rowIndex="2" />
-                        <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="61.0" text="Pontos:" GridPane.rowIndex="3" />
-                        <Label fx:id="labelValorServico" prefHeight="18.0" prefWidth="131.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label fx:id="labelPontosServico" prefHeight="18.0" prefWidth="131.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label alignment="CENTER" text="ID:  " GridPane.halignment="RIGHT">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                        <Label alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="104.0" text="Descrição: " GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                        <Label fx:id="labelIdServico" prefHeight="18.0" prefWidth="135.0" GridPane.columnIndex="1">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                        <Label fx:id="labelDescServico" prefHeight="18.0" prefWidth="131.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                        <Label alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="116.0" text="Valor: " GridPane.rowIndex="2">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                        <Label alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="103.0" text="Pontos: " GridPane.rowIndex="3">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                        <Label fx:id="labelValorServico" prefHeight="18.0" prefWidth="131.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                        <Label fx:id="labelPontosServico" prefHeight="18.0" prefWidth="131.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                        <Label alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="106.0" text="Categoria: " GridPane.rowIndex="4">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelCategoriaServico" prefHeight="18.0" prefWidth="131.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </GridPane>
+                  <GridPane layoutX="456.0" layoutY="538.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#buttonCreateServico" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #008000; -fx-text-fill: ffffff; -fx-font-weight: bold;" text="Adicionar">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#buttonUpdateServico" prefHeight="30.0" prefWidth="100.0" text="Editar" GridPane.columnIndex="1">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#buttonDeleteServico" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #cc0000; -fx-text-fill: ffffff; -fx-font-weight: bold;" text="Excluir" GridPane.columnIndex="2">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
                      </children>
                   </GridPane>
                </children>
