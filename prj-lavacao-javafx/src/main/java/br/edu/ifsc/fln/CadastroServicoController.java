@@ -5,6 +5,7 @@ import br.edu.ifsc.fln.model.dao.ServicoDAO;
 import br.edu.ifsc.fln.model.database.Database;
 import br.edu.ifsc.fln.model.database.DatabaseFactory;
 import br.edu.ifsc.fln.model.domain.Configuracoes;
+import br.edu.ifsc.fln.model.domain.ECategoria;
 import br.edu.ifsc.fln.model.domain.Servico;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -12,10 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -36,6 +34,9 @@ public class CadastroServicoController implements Initializable {
     private int pontosGlobais;
 
     @FXML
+    private AnchorPane anchorPaneCadastroServico;
+
+    @FXML
     private Label labelDescServico;
 
     @FXML
@@ -54,15 +55,24 @@ public class CadastroServicoController implements Initializable {
     private TableColumn<Servico, Double> tableColumnValor;
 
     @FXML
+    private TableColumn<Servico, ECategoria> tableColumnCategoria;
+
+    @FXML
     private TableView<Servico> tableViewServicos;
 
     @FXML
     private AnchorPane anchorPane;
 
+    private List<Servico> servicos = new ArrayList<>();
+
+    @FXML
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         servicoDAO.setConnection(connection);
         configuracoesDAO.setConnection(connection);
+
+        carregarTableViewServico();
+        configurarTableView();
 
         configurarTableView();
         carregarTableViewServico();
@@ -84,10 +94,15 @@ public class CadastroServicoController implements Initializable {
         } else {
             labelIdServico.setText("");
             labelDescServico.setText("");
-            labelPontosServico.setText("");
             labelValorServico.setText("");
         }
 
+    }
+
+    private void configurarTableView() {
+        tableColumnDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
+        tableColumnValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
+        tableColumnCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
     }
 
     private void carregarTableViewServico() {
@@ -139,6 +154,7 @@ public class CadastroServicoController implements Initializable {
     @FXML
     void buttonUpdateServico(ActionEvent event) throws IOException {
         Servico servico = tableViewServicos.getSelectionModel().getSelectedItem();
+        System.out.println(servico);
         if (servico != null) {
             boolean buttonServicofirmarClicked = showDialogCadastroServico(servico);
             if (buttonServicofirmarClicked) {

@@ -1,5 +1,6 @@
 package br.edu.ifsc.fln.model.dao;
 
+import br.edu.ifsc.fln.model.domain.ECategoria;
 import br.edu.ifsc.fln.model.domain.Servico;
 
 import java.sql.Connection;
@@ -23,11 +24,12 @@ public class ServicoDAO {
     }
 
     public boolean create(Servico servico) {
-        String sql = "INSERT INTO servico(descricao, valor) VALUES(?, ?)";
+        String sql = "INSERT INTO servico(descricao, valor, categoria) VALUES(?, ?, ?)";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, servico.getDescricao());
             stmt.setDouble(2, servico.getValor());
+            stmt.setString(3, servico.getCategoria().getDescricao());
             stmt.execute();
             return true;
         } catch (SQLException ex) {
@@ -37,12 +39,13 @@ public class ServicoDAO {
     }
 
     public boolean alterar(Servico servico) {
-        String sql = "UPDATE servico SET descricao=?,valor=? WHERE id=?";
+        String sql = "UPDATE servico SET descricao=?,valor=?, categoria=? WHERE id=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, servico.getDescricao());
             stmt.setDouble(2, servico.getValor());
-            stmt.setInt(3, servico.getId());
+            stmt.setString(3, servico.getCategoria().getDescricao());
+            stmt.setInt(4, servico.getId());
             stmt.execute();
             return true;
         } catch (SQLException ex) {
@@ -75,6 +78,7 @@ public class ServicoDAO {
                 servico.setId(resultado.getInt("id"));
                 servico.setDescricao(resultado.getString("descricao"));
                 servico.setValor(resultado.getDouble("valor"));
+                servico.setCategoria(Enum.valueOf(ECategoria.class, resultado.getString("categoria")));
                 retorno.add(servico);
             }
         } catch (SQLException ex) {
@@ -99,6 +103,7 @@ public class ServicoDAO {
                 retorno.setId(resultado.getInt("id"));
                 retorno.setDescricao(resultado.getString("descricao"));
                 retorno.setValor(resultado.getDouble("valor"));
+                retorno.setCategoria(Enum.valueOf(ECategoria.class, resultado.getString("categoria")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
