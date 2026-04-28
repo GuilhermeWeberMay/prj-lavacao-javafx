@@ -70,6 +70,7 @@ public class CadastroModeloController implements Initializable {
         Modelo modelo = new Modelo();
         boolean buttonConfirmarClicked = showFXMLAnchorPaneCadastrosModelosDialog(modelo);
         if (buttonConfirmarClicked) {
+            System.out.println(modelo);
             modeloDAO.create(modelo);
             carregarTableView();
         }
@@ -91,19 +92,19 @@ public class CadastroModeloController implements Initializable {
     }
 
     @FXML
-    void buttonUpdateModelo(ActionEvent event) {
-//        Modelo modelo = tableViewModelos.getSelectionModel().getSelectedItem();
-//        if (modelo != null) {
-//            boolean buttonConfirmarClicked = showFXMLAnchorPaneCadastrosModelosDialog(modelo);
-//            if (buttonConfirmarClicked) {
-//                modeloDAO.alterar(modelo);
-//                carregarTableView();
-//            }
-//        } else {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setContentText("Por favor, escolha um modelo na Tabela.");
-//            alert.show();
-//        }
+    void buttonUpdateModelo(ActionEvent event) throws  IOException {
+        Modelo modelo = tableViewModelos.getSelectionModel().getSelectedItem();
+        if (modelo != null) {
+            boolean buttonConfirmarClicked = showFXMLAnchorPaneCadastrosModelosDialog(modelo);
+            if (buttonConfirmarClicked) {
+                modeloDAO.alterar(modelo);
+                carregarTableView();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Por favor, escolha um modelo na Tabela.");
+            alert.show();
+        }
 
     }
     

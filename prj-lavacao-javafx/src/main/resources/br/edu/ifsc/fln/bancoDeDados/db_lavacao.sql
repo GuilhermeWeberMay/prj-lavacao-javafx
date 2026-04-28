@@ -52,55 +52,42 @@ INSERT INTO servico (descricao, valor, categoria)
 VALUES ('lavagem simples', 50.00, 'GRANDE'),
        ('lavagem com cera', 70.00, 'MEDIO');
 
-CREATE TABLE IF NOT EXISTS motor
-(
-    id               INT                                                           NOT NULL AUTO_INCREMENT,
-    potencia         VARCHAR(100)                                                  NOT NULL,
-    tipo_combustivel ENUM ('GASOLINA', 'ETANOL', 'FLEX', 'DIESEL', 'GNV', 'OUTRO') NOT NULL,
-    CONSTRAINT pk_motor PRIMARY KEY (id)
-) ENGINE = InnoDB;
-
-CREATE TABLE IF NOT EXISTS modelo
+CREATE TABLE if not exists modelo
 (
     id        INT                                                   NOT NULL AUTO_INCREMENT,
     descricao VARCHAR(100)                                          NOT NULL,
     categoria ENUM ('PEQUENO', 'MEDIO', 'GRANDE', 'MOTO', 'PADRAO') NOT NULL,
     id_marca  INT                                                   NOT NULL,
-/*    id_motor  INT                                                   NOT NULL, */
     CONSTRAINT pk_modelo PRIMARY KEY (id),
     CONSTRAINT fk_modelo_marca
         FOREIGN KEY (id_marca)
             REFERENCES marca (id)
-#     CONSTRAINT fk_modelo_motor
-#         FOREIGN KEY (id_motor)
-#             REFERENCES motor (id) ON DELETE CASCADE
+) ENGINE = InnoDB;
+
+INSERT INTO modelo (descricao, categoria, id_marca)
+VALUES ('pulse', 'PADRAO', 3),
+       ('versa', 'MEDIO', 2);
+
+CREATE TABLE IF NOT EXISTS motor
+(
+    id_modelo        INT                                                           NOT NULL AUTO_INCREMENT,
+    potencia         VARCHAR(100)                                                  NOT NULL,
+    tipo_combustivel ENUM ('GASOLINA', 'ETANOL', 'FLEX', 'DIESEL', 'GNV', 'OUTRO') NOT NULL,
+    CONSTRAINT pk_motor PRIMARY KEY (id_modelo),
+    CONSTRAINT fk_motor_modelo foreign key (id_modelo)
+        references modelo (id) on delete cascade on update cascade
 ) ENGINE = InnoDB;
 
 INSERT INTO motor (potencia, tipo_combustivel)
 VALUES ('1.0', 'FLEX'),
        ('1.6', 'DIESEL');
 
-INSERT INTO modelo (descricao, categoria, id_marca)
-VALUES ('pulse', 'PADRAO', 3),
-       ('versa', 'MEDIO', 2);
-
-CREATE TABLE IF NOT EXISTS veiculo
-(
-    id         INT          NOT NULL AUTO_INCREMENT,
-    placa      CHAR(7)      NOT NULL UNIQUE,
-    observacao VARCHAR(500) NOT NULL,
-    id_cor     INT          NOT NULL,
-    id_modelo  INT          NOT NULL,
-    CONSTRAINT pk_veiculo PRIMARY KEY (id),
-    CONSTRAINT fk_veiculo_cor
-        FOREIGN KEY (id_cor)
-            REFERENCES cor (id),
-    CONSTRAINT fk_veiculo_modelo
-        FOREIGN KEY (id_modelo)
-            REFERENCES modelo (id)
-) ENGINE = InnoDB;
-
-INSERT INTO veiculo(placa, observacao, id_cor, id_modelo)
-VALUES ('SSF4B28', 'MEU CARRO', 1, 2);
-
 /* UPDATE configuracoes set pontos_servico = 20 where id = 1; */
+
+-- Ver qual motor está sendo referenciado
+##
+-- Veiculo vai ter chave extrangeira de cliente
+##
+-- Motor vai ter id_modelo
+-- Id de motor é o mesmo de modelo
+##

@@ -5,6 +5,7 @@ import br.edu.ifsc.fln.model.dao.ModeloDAO;
 import br.edu.ifsc.fln.model.database.Database;
 import br.edu.ifsc.fln.model.database.DatabaseFactory;
 import br.edu.ifsc.fln.model.domain.ECategoria;
+import br.edu.ifsc.fln.model.domain.ETipoCombustivel;
 import br.edu.ifsc.fln.model.domain.Marca;
 import br.edu.ifsc.fln.model.domain.Modelo;
 import javafx.collections.FXCollections;
@@ -12,10 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,13 +40,13 @@ public class DialogCadastroModeloController implements Initializable {
     private Button btConfirmar;
 
     @FXML
-    private ComboBox<Modelo> cbCategoria;
+    private ChoiceBox<ECategoria> cbCategoria;
 
     @FXML
     private ComboBox<Marca> cbMarca;
 
     @FXML
-    private ComboBox<?> cbTipoCombustivel;
+    private ChoiceBox<ETipoCombustivel> cbTipoCombustivel;
 
     @FXML
     private TextField textFielModeloDesc;
@@ -71,6 +69,8 @@ public class DialogCadastroModeloController implements Initializable {
         marcaDAO.setConnection(connection);
         modeloDAO.setConnection(connection);
         carregarComboBoxMarcas();
+        carregarChoiceBoxCategoria();
+        carregarChoiceBoxCombustivel();
     }
 
 //    private void setFocusLostHandle() {
@@ -108,12 +108,12 @@ public class DialogCadastroModeloController implements Initializable {
         observableListMarcas =
                 FXCollections.observableArrayList(listaMarcas);
         cbMarca.setItems(observableListMarcas);
-
-        listaModelos = modeloDAO.listar();
-        listaModelos.getFirst().getCategoria().name();
-        observableListModelos =
-                FXCollections.observableArrayList(listaModelos);
-        cbCategoria.setItems(observableListModelos);
+    }
+    public void carregarChoiceBoxCategoria() {
+        cbCategoria.setItems( FXCollections.observableArrayList(ECategoria.values()));
+    }
+    public void carregarChoiceBoxCombustivel(){
+        cbTipoCombustivel.setItems(FXCollections.observableArrayList(ETipoCombustivel.values()));
     }
 
     public Stage getDialogStage() {
@@ -169,7 +169,8 @@ public class DialogCadastroModeloController implements Initializable {
             modelo.setDescricao(textFielModeloDesc.getText());
             modelo.setMarca(
                     cbMarca.getSelectionModel().getSelectedItem());
-
+            modelo.setCategoria(cbCategoria.getValue());
+            modelo.setMotor(Integer.parseInt(textFielModeloPotencia.getText()), cbTipoCombustivel.getValue());
             buttonConfirmarClicked = true;
             dialogStage.close();
         }

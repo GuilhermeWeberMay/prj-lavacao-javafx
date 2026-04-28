@@ -4,11 +4,19 @@ import lombok.*;
 
 @Getter
 @Setter
-@ToString
 @EqualsAndHashCode
 @NoArgsConstructor
+@AllArgsConstructor
 public class Motor {
     private int potencia;
-    private ETipoCombustivel tipoCombustivel = ETipoCombustivel.GASOLINA;
-    private Modelo modelo;
+    private ETipoCombustivel tipoCombustivel;
+    //private Modelo modelo; Por que isso existe? Se é unidirecional?
+
+    @Override
+    public String toString() {
+        return "Motor{" +
+                "potencia=" + potencia +
+                ", tipoCombustivel=" + tipoCombustivel +
+                '}';
+    }
 }

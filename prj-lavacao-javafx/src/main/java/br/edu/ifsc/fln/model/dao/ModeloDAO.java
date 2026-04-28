@@ -4,10 +4,7 @@ import br.edu.ifsc.fln.model.domain.ECategoria;
 import br.edu.ifsc.fln.model.domain.Marca;
 import br.edu.ifsc.fln.model.domain.Modelo;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -25,12 +22,25 @@ public class ModeloDAO {
     }
 
     public boolean create(Modelo modelo){
-        String sql = "INSERT INTO modelo (descricao, id_marca, categoria) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO modelo (descricao, id_marca, categoria) VALUES (?, ?, ?);";
+        String sqlMotor = "INSERT INTO motor(potencia, tipo_combustivel, id_modelo) values ( ?, ?, ?);";
         try{
-            PreparedStatement stmt = connection.prepareStatement(sql);
+            PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, modelo.getDescricao());
             stmt.setInt(2, modelo.getMarca().getId());
             stmt.setString(3, modelo.getCategoria().name());
+
+            stmt.execute();
+
+            // Pegando o id de motor
+            ResultSet rs = stmt.getGeneratedKeys();
+            rs.next();
+            int idModelo = rs.getInt(1);
+
+            stmt = connection.prepareStatement(sqlMotor);
+            stmt.setInt(1, modelo.getMotor().getPotencia());
+            stmt.setString(2, modelo.getMotor().getTipoCombustivel().name());
+            stmt.setInt(3, idModelo);
             stmt.execute();
             return true;
         } catch (SQLException ex) {
@@ -41,6 +51,7 @@ public class ModeloDAO {
 
     public boolean alterar(Modelo modelo) {
         String sql = "UPDATE modelo SET descricao=?, id_marca=?, categoria=? WHERE id=?";
+        String sqlMotor = "UPDATE motor SET potencia=?, tipo_combustivel=? where id_modelo=?;";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, modelo.getDescricao());
@@ -48,6 +59,13 @@ public class ModeloDAO {
             stmt.setString(3, modelo.getCategoria().name());
             stmt.setInt(4, modelo.getId());
             stmt.execute();
+
+            stmt = connection.prepareStatement(sqlMotor);
+            stmt.setInt(1, modelo.getMotor().getPotencia());
+            stmt.setString(2, modelo.getMotor().getTipoCombustivel().name());
+            stmt.setInt(3, modelo.getId());
+            stmt.execute();
+
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(ModeloDAO.class.getName()).log(Level.SEVERE, null, ex);

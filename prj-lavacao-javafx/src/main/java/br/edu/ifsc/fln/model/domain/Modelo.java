@@ -5,29 +5,27 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode
-@NoArgsConstructor
 public class Modelo {
     private int id;
     private String descricao;
     private Marca marca;
-    // private Motor motor;
+     private Motor motor;
     private ECategoria categoria;
 
-    public Modelo(int id, String descricao) {
-        this.id = id;
-        this.descricao = descricao;
+    public Modelo(){
+        this.motor = new Motor();
     }
 
-    public Modelo(int id, String descricao, Marca marca) {
+    public Modelo(int id, String descricao, Marca marca, Motor motor, ECategoria categoria, int potencia, ETipoCombustivel tipoCombustivel) {
         this.id = id;
         this.descricao = descricao;
         this.marca = marca;
+        this.motor = motor;
+        this.categoria = categoria;
+        this.motor = new Motor(potencia, tipoCombustivel);
     }
 
-//    private void createMotor(ETipoCombustivel tipoCombustivel, int potencia) {
-//        this.motor = new Motor();
-//        this.motor.setTipoCombustivel(tipoCombustivel);
-//        this.motor.setPotencia(potencia);
-//    }
+    public void setMotor(int potencia, ETipoCombustivel tipoCombustivel) {
+        this.motor = new  Motor(potencia,  tipoCombustivel);
+    }
 }
