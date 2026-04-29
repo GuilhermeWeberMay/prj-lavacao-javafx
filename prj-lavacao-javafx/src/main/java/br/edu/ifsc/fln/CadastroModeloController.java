@@ -70,7 +70,6 @@ public class CadastroModeloController implements Initializable {
         Modelo modelo = new Modelo();
         boolean buttonConfirmarClicked = showFXMLAnchorPaneCadastrosModelosDialog(modelo);
         if (buttonConfirmarClicked) {
-            System.out.println(modelo);
             modeloDAO.create(modelo);
             carregarTableView();
         }
