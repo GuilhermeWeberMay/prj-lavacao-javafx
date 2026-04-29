@@ -51,5 +51,6 @@ public class HelloController {
     @FXML
     void handleMenuItemCadastroModelos() throws IOException {
         AnchorPane a = FXMLLoader.load(getClass().getResource("/br/edu/ifsc/fln/view/CadastroModelo.fxml"));
+        anchorPane.getChildren().setAll(a);
     }
 }
