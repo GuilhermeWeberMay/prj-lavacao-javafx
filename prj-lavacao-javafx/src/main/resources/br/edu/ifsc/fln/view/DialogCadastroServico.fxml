@@ -35,12 +35,12 @@
                </font>
             </Label>
             <TextField fx:id="textFielServicoValor" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <ComboBox maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label alignment="CENTER_RIGHT" graphicTextGap="10.0" lineSpacing="10.0" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" text="Categoria: " textAlignment="CENTER" GridPane.rowIndex="2">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
+            <ChoiceBox fx:id="choiceBoxCategoria" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <GridPane layoutX="150.0" layoutY="324.0">

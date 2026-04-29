@@ -150,7 +150,6 @@ public class CadastroServicoController implements Initializable {
     @FXML
     void buttonUpdateServico(ActionEvent event) throws IOException {
         Servico servico = tableViewServicos.getSelectionModel().getSelectedItem();
-        System.out.println(servico);
         if (servico != null) {
             boolean buttonServicofirmarClicked = showDialogCadastroServico(servico);
             if (buttonServicofirmarClicked) {
