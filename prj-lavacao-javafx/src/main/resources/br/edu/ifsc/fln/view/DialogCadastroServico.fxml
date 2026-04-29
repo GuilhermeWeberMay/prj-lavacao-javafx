@@ -40,7 +40,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="choiceBoxCategoria" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ChoiceBox fx:id="choiceBoxCategoria" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <GridPane layoutX="150.0" layoutY="324.0">

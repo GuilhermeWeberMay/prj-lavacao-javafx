@@ -37,6 +37,9 @@ public class CadastroServicoController implements Initializable {
     private AnchorPane anchorPaneCadastroServico;
 
     @FXML
+    private Label labelCategoriaServico;
+
+    @FXML
     private Label labelDescServico;
 
     @FXML
@@ -84,10 +87,12 @@ public class CadastroServicoController implements Initializable {
             labelIdServico.setText(String.valueOf(servico.getId()));
             labelDescServico.setText(servico.getDescricao());
             labelValorServico.setText(String.valueOf(servico.getValor()));
+            labelCategoriaServico.setText(String.valueOf(servico.getCategoria().getDescricao()));
         } else {
             labelIdServico.setText("");
             labelDescServico.setText("");
             labelValorServico.setText("");
+            labelCategoriaServico.setText("");
         }
 
     }
