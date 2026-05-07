@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS pessoa_juridica
 (
     id_cliente        int         not null,
     cnpj              varchar(14) not null,
-    incricao_estadual varchar(15) not null,
+    inscricao_estadual varchar(15) not null,
     CONSTRAINT pk_pessoa_juridica primary key (id_cliente),
     CONSTRAINT pk_pessoa_juridica_cliente FOREIGN KEY (id_cliente) REFERENCES cliente (id)
         ON DELETE CASCADE
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS pessoa_juridica
 
 INSERT INTO cliente (nome, celular, email, data_cadastro)
 VALUES ('Rockembach Construções LTDA', '00000000000', 'rockcontrucoes@contato.com.br', '2026-05-04');
-INSERT INTO pessoa_juridica (id_cliente, cnpj, incricao_estadual)
+INSERT INTO pessoa_juridica (id_cliente, cnpj, inscricao_estadual)
 VALUES (2, '99999999999999', '123456');
 
 CREATE TABLE IF NOT EXISTS cor

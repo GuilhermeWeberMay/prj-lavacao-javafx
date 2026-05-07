@@ -53,4 +53,9 @@ public class HelloController {
         AnchorPane a = FXMLLoader.load(getClass().getResource("/br/edu/ifsc/fln/view/CadastroModelo.fxml"));
         anchorPane.getChildren().setAll(a);
     }
+    @FXML
+    void handleMenuItemCadastroClientes() throws IOException {
+        AnchorPane a = FXMLLoader.load(getClass().getResource("/br/edu/ifsc/fln/view/CadastroCliente.fxml"));
+        anchorPane.getChildren().setAll(a);
+    }
 }

@@ -1,5 +1,6 @@
 package br.edu.ifsc.fln.model.domain;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
