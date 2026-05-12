@@ -13,14 +13,14 @@
    <children>
       <GridPane layoutX="72.0" layoutY="64.0" prefHeight="30.0" prefWidth="310.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="150.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="200.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField fx:id="textFielPontosQuantidade" prefHeight="26.0" prefWidth="374.0" GridPane.columnIndex="1">
+            <TextField fx:id="textFielPontosQuantidade" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1">
                <font>
                   <Font size="16.0" />
                </font></TextField>
@@ -33,14 +33,14 @@
       </GridPane>
       <GridPane layoutX="150.0" layoutY="327.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="btConfirmar" mnemonicParsing="false" onAction="#handleButtonConfirmar" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #008000; -fx-text-fill: ffffff; -fx-font-weight: bold;" text="Confirmar">
+            <Button fx:id="btConfirmar" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#handleButtonConfirmar" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #008000; -fx-text-fill: ffffff; -fx-font-weight: bold;" text="Confirmar">
                <font>
                   <Font size="16.0" />
                </font>
