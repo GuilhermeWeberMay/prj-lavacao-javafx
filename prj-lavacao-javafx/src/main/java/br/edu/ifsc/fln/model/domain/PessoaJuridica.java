@@ -12,4 +12,9 @@ import lombok.ToString;
 public class PessoaJuridica extends Cliente {
     private String cnpj;
     private String inscricaoEstadual;
+
+    @Override
+    public String toString() {
+        return nome;
+    }
 }

@@ -29,4 +29,9 @@ public abstract class Cliente {
         this.veiculos.remove(veiculo);
         veiculo.setCliente(null);
     }
+
+    @Override
+    public String toString() {
+        return nome;
+    }
 }

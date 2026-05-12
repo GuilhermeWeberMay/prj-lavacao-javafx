@@ -14,4 +14,9 @@ import java.time.LocalDate;
 public class PessoaFisica extends Cliente{
     private String cpf;
     private LocalDate dataNascimento;
+
+    @Override
+    public String toString() {
+        return nome;
+    }
 }

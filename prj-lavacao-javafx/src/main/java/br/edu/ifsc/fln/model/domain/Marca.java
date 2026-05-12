@@ -10,7 +10,9 @@ import lombok.ToString;
 @Setter
 @EqualsAndHashCode
 @NoArgsConstructor
+@ToString
 public class Marca {
+    @ToString.Exclude
     private int id;
     private String nome;
 
