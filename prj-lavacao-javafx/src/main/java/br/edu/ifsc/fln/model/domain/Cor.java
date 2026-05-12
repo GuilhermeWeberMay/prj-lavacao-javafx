@@ -7,10 +7,15 @@ import lombok.ToString;
 
 @Setter
 @Getter
-@ToString
 @EqualsAndHashCode
+@ToString
 public class Cor {
+    @ToString.Exclude
     private int id;
     private String nome;
 
+    @Override
+    public String toString() {
+        return nome;
+    }
 }

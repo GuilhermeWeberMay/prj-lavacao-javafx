@@ -6,13 +6,18 @@ import lombok.*;
 @Setter
 @ToString
 public class Modelo {
+    @ToString.Exclude
     private int id;
     private String descricao;
+    @ToString.Exclude
     private Marca marca;
-     private Motor motor;
+    @ToString.Exclude
+    @Setter(AccessLevel.NONE)
+    private Motor motor;
+    @ToString.Exclude
     private ECategoria categoria;
 
-    public Modelo(){
+    public Modelo() {
         this.motor = new Motor();
     }
 
@@ -26,6 +31,12 @@ public class Modelo {
     }
 
     public void setMotor(int potencia, ETipoCombustivel tipoCombustivel) {
-        this.motor = new  Motor(potencia,  tipoCombustivel);
+        this.motor = new Motor(potencia, tipoCombustivel);
+    }
+
+    @Override
+    public String toString() {
+        return descricao;
+
     }
 }

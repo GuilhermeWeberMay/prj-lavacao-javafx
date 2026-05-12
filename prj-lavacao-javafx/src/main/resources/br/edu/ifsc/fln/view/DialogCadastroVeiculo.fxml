@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifsc.fln.DialogCadastroVeiculoController">
+    <children>
+        <GridPane layoutX="72.0" layoutY="49.0" prefHeight="91.0" prefWidth="402.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <TextField fx:id="textFielPlacaVeiculo" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" />
+                <Label alignment="CENTER_RIGHT" graphicTextGap="10.0" lineSpacing="10.0" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="122.0" prefHeight="30.0" prefWidth="122.0" text="Placa: " textAlignment="CENTER">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Label>
+                <Label alignment="CENTER_RIGHT" graphicTextGap="10.0" lineSpacing="10.0" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="98.0" prefHeight="30.0" prefWidth="98.0" text="Observação: " textAlignment="CENTER" GridPane.rowIndex="1">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="textFielObservacaoVeiculo" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Cor: " GridPane.rowIndex="2" />
+            <Label text="Modelo:" GridPane.rowIndex="3" />
+            <Label text="Cliente: " GridPane.rowIndex="4" />
+            <ChoiceBox fx:id="cbCorVeiculo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ChoiceBox fx:id="cbModeloVeiculo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <ChoiceBox fx:id="cbClienteVeiculo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            </children>
+        </GridPane>
+        <GridPane layoutX="150.0" layoutY="324.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Button fx:id="btConfirmar" contentDisplay="CENTER" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#handleButtonConfirmar" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #008000; -fx-text-fill: ffffff; -fx-font-weight: bold;" text="Confirmar" textAlignment="CENTER">
+                    <font>
+                        <Font size="16.0" />
+                    </font></Button>
+                <Button fx:id="btCancelar" contentDisplay="CENTER" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#handleButtonCancelar" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #cc0000; -fx-text-fill: ffffff; -fx-font-weight: bold;" text="Cancelar" textAlignment="CENTER" GridPane.columnIndex="1">
+                    <font>
+                        <Font size="16.0" />
+                    </font></Button>
+            </children>
+        </GridPane>
+        <Group layoutX="221.0" layoutY="25.0" />
+    </children>
+</AnchorPane>
