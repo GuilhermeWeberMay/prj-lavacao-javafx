@@ -20,7 +20,7 @@ Botão de cancelar/excluir
 
 Grid Pane
     Linha:
-        Min Height : 10
+        Min Height : 30
         Pref Height: 30
         Max Height : 30
 
@@ -28,3 +28,24 @@ Grid Pane
         Min Width  : 195
         Pref Width : 195
         Max Width  : 195
+
+Grid Pane Dialog
+    Linha Label :
+        Min Height : 30
+        Pref Height: 30
+        Max Height : 30
+
+    Coluna Label:
+        Min Width  : 150
+        Pref Width : 150
+        Max Width  : 150
+
+    Linha Input :
+        Min Height : 30
+        Pref Height: 30
+        Max Height : 30
+
+    Coluna Input:
+        Min Width  : 200
+        Pref Width : 200
+        Max Width  : 200
