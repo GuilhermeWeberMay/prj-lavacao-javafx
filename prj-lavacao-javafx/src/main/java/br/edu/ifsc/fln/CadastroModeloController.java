@@ -3,6 +3,7 @@ package br.edu.ifsc.fln;
 import br.edu.ifsc.fln.model.dao.ModeloDAO;
 import br.edu.ifsc.fln.model.database.Database;
 import br.edu.ifsc.fln.model.database.DatabaseFactory;
+import br.edu.ifsc.fln.model.domain.ECategoria;
 import br.edu.ifsc.fln.model.domain.Marca;
 import br.edu.ifsc.fln.model.domain.Modelo;
 import javafx.collections.FXCollections;
@@ -52,6 +53,12 @@ public class CadastroModeloController implements Initializable {
 
     @FXML
     private Label labelCategoriaModelo;
+
+    @FXML
+    private Label labelPotenciaModelo;
+
+    @FXML
+    private Label labelTipoCombustModelo;
 
     @FXML
     private TableColumn<Modelo, String> tableColumnCategoria;
@@ -124,7 +131,7 @@ public class CadastroModeloController implements Initializable {
         tableColumnCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
 
 
-        listaModelos = modeloDAO.listar();
+        listaModelos = modeloDAO.listar(); // Melhorar a instrução SQL
 
         observableListModelos = FXCollections.observableArrayList(listaModelos);
         tableViewModelos.setItems(observableListModelos);
@@ -136,6 +143,8 @@ public class CadastroModeloController implements Initializable {
             labelDescModelo.setText(modelo.getDescricao());
             labelMarcaModelo.setText(modelo.getMarca().getNome());
             labelCategoriaModelo.setText(modelo.getCategoria().getDescricao());
+            labelPotenciaModelo.setText(String.valueOf(modelo.getMotor().getPotencia()));
+            labelTipoCombustModelo.setText(String.valueOf(modelo.getMotor().getTipoCombustivel()));
         } else {
             labelIdModelo.setText("");
             labelDescModelo.setText("");
