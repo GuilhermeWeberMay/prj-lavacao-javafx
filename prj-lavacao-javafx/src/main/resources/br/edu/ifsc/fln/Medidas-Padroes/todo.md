@@ -1,5 +1,5 @@
 - Colocar motor dentro do modelo e a instrução sql - CadastroModeloController linha 134
-- Arrumar valor null no cadastrar serviço
+- Arrumar valor null no cadastrar serviço e formatar o valor
 - Tirar radio button de cliente
 - Aumentar tamanho dos labels de cliente
 - Update das especializações de Cliente não estão atualizando (Professor)
