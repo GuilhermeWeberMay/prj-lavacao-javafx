@@ -1,0 +1,14 @@
+package br.edu.ifsc.fln.model.domain;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class ItemOS {
+    private double valorServico;
+    private String observacoes;
+    // Classe associativa com as duas classes
+    private OrdemServico ordemServico;
+    private Servico servico;
+}
