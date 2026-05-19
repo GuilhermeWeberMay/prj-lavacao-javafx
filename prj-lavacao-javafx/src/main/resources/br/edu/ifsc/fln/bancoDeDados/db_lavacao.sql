@@ -1,3 +1,5 @@
+DROP DATABASE IF EXISTS db_lavacao;
+
 CREATE DATABASE db_lavacao;
 
 USE db_lavacao;
@@ -24,14 +26,24 @@ CREATE TABLE IF NOT EXISTS pessoa_fisica
 ) Engine InnoDB;
 
 INSERT INTO cliente (nome, celular, email, data_cadastro)
-VALUES ('Guilherme', '99999999999', 'guilherme.wm@aluno.ifsc.edu.br', '2026-05-04');
+VALUES ('Ana Silva', '98888888888', 'ana.silva@email.com', '2026-05-01'),
+       ('Bruno Santos', '97777777777', 'bruno.santos@email.com', '2026-05-02'),
+       ('Carla Oliveira', '96666666666', 'carla.oliveira@email.com', '2026-05-03'),
+       ('Diego Costa', '95555555555', 'diego.costa@email.com', '2026-05-04'),
+       ('Elaine Mendes', '94444444444', 'elaine.mendes@email.com', '2026-05-05');
+
+
 INSERT INTO pessoa_fisica (id_cliente, cpf, data_nascimento)
-VALUES (1, '00000000000', '2006-10-24');
+VALUES (1, '12345678901', '2005-03-15'),
+       (2, '23456789012', '2004-07-22'),
+       (3, '34567890123', '2003-11-10'),
+       (4, '45678901234', '2002-05-18'),
+       (5, '56789012345', '2001-09-30');
 
 CREATE TABLE IF NOT EXISTS pessoa_juridica
 (
-    id_cliente        int         not null,
-    cnpj              varchar(14) not null,
+    id_cliente         int         not null,
+    cnpj               varchar(14) not null,
     inscricao_estadual varchar(15) not null,
     CONSTRAINT pk_pessoa_juridica primary key (id_cliente),
     CONSTRAINT pk_pessoa_juridica_cliente FOREIGN KEY (id_cliente) REFERENCES cliente (id)
@@ -40,9 +52,18 @@ CREATE TABLE IF NOT EXISTS pessoa_juridica
 ) Engine InnoDB;
 
 INSERT INTO cliente (nome, celular, email, data_cadastro)
-VALUES ('Rockembach Construções LTDA', '00000000000', 'rockcontrucoes@contato.com.br', '2026-05-04');
+VALUES ('Felipe Rocha', '93333333333', 'felipe.rocha@email.com', '2026-05-06'),
+       ('Gisele Martins', '92222222222', 'gisele.martins@email.com', '2026-05-07'),
+       ('Henrique Lima', '91111111111', 'henrique.lima@email.com', '2026-05-08'),
+       ('Isabela Gomes', '90000000000', 'isabela.gomes@email.com', '2026-05-09'),
+       ('João Pedro', '99999999998', 'joao.pedro@email.com', '2026-05-10');
+
 INSERT INTO pessoa_juridica (id_cliente, cnpj, inscricao_estadual)
-VALUES (2, '99999999999999', '123456');
+VALUES (6, '55566677000188', '456123'),
+       (7, '88899900000155', '741852'),
+       (8, '11223344000199', '123456'),
+       (9, '44556677000166', '789012'),
+       (10, '99887766000144', '345678');
 
 CREATE TABLE IF NOT EXISTS cor
 (
@@ -55,7 +76,13 @@ INSERT INTO cor (nome)
 VALUES ('Azul'),
        ('Preto'),
        ('Branco'),
-       ('Vermelho');
+       ('Vermelho'),
+       ('Verde'),
+       ('Amarelo'),
+       ('Laranja'),
+       ('Rosa'),
+       ('Roxo'),
+       ('Cinza');
 
 CREATE TABLE IF NOT EXISTS marca
 (
@@ -67,7 +94,19 @@ CREATE TABLE IF NOT EXISTS marca
 INSERT INTO marca (nome)
 VALUES ('Volkswagen'),
        ('Nissan'),
-       ('Fiat');
+       ('Fiat'),
+       ('Toyota'),
+       ('Honda'),
+       ('Ford'),
+       ('Chevrolet'),
+       ('BMW'),
+       ('Mercedes-Benz'),
+       ('Audi'),
+       ('Hyundai'),
+       ('Kia'),
+       ('Renault'),
+       ('Peugeot'),
+       ('Citroën');
 
 CREATE TABLE IF NOT EXISTS servico
 (
@@ -89,8 +128,25 @@ INSERT INTO configuracoes (pontos_servico)
 VALUES (10);
 
 INSERT INTO servico (descricao, valor, categoria)
-VALUES ('lavagem simples', 50.00, 'GRANDE'),
-       ('lavagem com cera', 70.00, 'MEDIO');
+VALUES
+-- Lavagem Simples
+('lavagem simples', 35.00, 'PEQUENO'),
+('lavagem simples', 50.00, 'MEDIO'),
+('lavagem simples', 70.00, 'GRANDE'),
+('lavagem simples', 25.00, 'MOTO'),
+('lavagem simples', 45.00, 'PADRAO'),
+
+('lavagem com cera', 55.00, 'PEQUENO'),
+('lavagem com cera', 75.00, 'MEDIO'),
+('lavagem com cera', 100.00, 'GRANDE'),
+('lavagem com cera', 40.00, 'MOTO'),
+('lavagem com cera', 65.00, 'PADRAO'),
+
+('lavagem premium', 80.00, 'PEQUENO'),
+('lavagem premium', 110.00, 'MEDIO'),
+('lavagem premium', 150.00, 'GRANDE'),
+('lavagem premium', 60.00, 'MOTO'),
+('lavagem premium', 95.00, 'PADRAO');
 
 CREATE TABLE modelo
 (
@@ -103,9 +159,46 @@ CREATE TABLE modelo
         REFERENCES marca (id)
 ) ENGINE = INNODB;
 
-INSERT INTO modelo (descricao, categoria, id_marca)
-VALUES ('pulse', 'PADRAO', 3),
-       ('versa', 'MEDIO', 2);
+INSERT INTO modelo
+    (descricao, categoria, id_marca)
+VALUES ('Voyage', 'PEQUENO', 1),
+       ('Frontier', 'GRANDE', 2),
+       ('Argo', 'PEQUENO', 3),
+       ('Cronos', 'MEDIO', 3),
+       ('Virtus', 'MEDIO', 1);
+
+INSERT INTO modelo
+    (descricao, categoria, id_marca)
+VALUES
+-- PEQUENO
+('Gol', 'PEQUENO', 1),
+('Uno', 'PEQUENO', 3),
+('Kwid', 'PEQUENO', 13),
+('March', 'PEQUENO', 2),
+
+-- MEDIO
+('Cronos', 'MEDIO', 3),
+('Virtus', 'MEDIO', 1),
+('Civic', 'MEDIO', 5),
+('Corolla', 'MEDIO', 4),
+
+-- GRANDE
+('Frontier', 'GRANDE', 2),
+('Amarok', 'GRANDE', 1),
+('Ranger', 'GRANDE', 6),
+('Hilux', 'GRANDE', 4),
+
+-- MOTO
+('CB 500', 'MOTO', 5),
+('XJ6', 'MOTO', 14),
+('MT-07', 'MOTO', 4),
+('Rebel 500', 'MOTO', 5),
+
+-- PADRAO
+('Scenic', 'PADRAO', 13),
+('Duster', 'PADRAO', 13),
+('Sportage', 'PADRAO', 12),
+('Sportage', 'PADRAO', 12);
 
 CREATE TABLE IF NOT EXISTS motor
 (
@@ -118,9 +211,28 @@ CREATE TABLE IF NOT EXISTS motor
         ON DELETE CASCADE
 ) ENGINE = INNODB;
 
-INSERT INTO motor (potencia, tipo_combustivel)
-VALUES ('1.0', 'FLEX'),
-       ('1.6', 'DIESEL');
+INSERT INTO motor
+    (potencia, tipo_combustivel)
+VALUES (82, 'FLEX'),
+       (82, 'FLEX'),
+       (110, 'FLEX'),
+       (120, 'FLEX'),
+       (140, 'FLEX'),
+       (150, 'FLEX'),
+       (180, 'FLEX'),
+       (203, 'FLEX'),
+       (160, 'DIESEL'),
+       (163, 'DIESEL'),
+       (213, 'FLEX'),
+       (163, 'DIESEL'),
+       (50, 'GASOLINA'),
+       (60, 'GASOLINA'),
+       (75, 'GASOLINA'),
+       (46, 'GASOLINA'),
+       (140, 'FLEX'),
+       (160, 'FLEX'),
+       (168, 'FLEX'),
+       (190, 'FLEX');
 
 CREATE TABLE IF NOT EXISTS veiculo
 (
@@ -139,8 +251,77 @@ CREATE TABLE IF NOT EXISTS veiculo
         REFERENCES cliente (id)
 ) ENGINE = INNODB;
 
-INSERT INTO veiculo(placa, observacao, id_cor, id_modelo, id_cliente)
-VALUES ('SSF4B28', 'MEU CARRO', 1, 2, 1);
+INSERT INTO veiculo (placa, observacao, id_cor, id_modelo, id_cliente)
+VALUES ('ABC1D23', 'Carro novo', 1, 1, 1),
+       ('DEF4G56', 'Utilizado para entregas', 2, 2, 2),
+       ('GHI7J89', 'Veículo familiar', 3, 3, 3),
+       ('JKL0M12', 'Sedan executivo', 4, 4, 4),
+       ('NOP3Q45', 'Motor recém revisado', 5, 5, 5),
+       ('RST6U78', 'Carro novo', 6, 6, 6),
+       ('VWX9Y01', 'Utilizado para entregas', 7, 7, 7),
+       ('ZAB2C34', 'Veículo familiar', 8, 8, 8),
+       ('DEF5G67', 'Sedan executivo', 9, 9, 9),
+       ('GHI8J90', 'Motor recém revisado', 10, 10, 10),
+       ('JKL1M23', 'Carro novo', 1, 11, 1),
+       ('NOP4Q56', 'Utilizado para entregas', 2, 12, 2),
+       ('RST7U89', 'Veículo familiar', 3, 13, 3),
+       ('VWX0Y12', 'Sedan executivo', 4, 14, 4),
+       ('ZAB3C45', 'Motor recém revisado', 5, 15, 5),
+       ('DEF6G78', 'Carro novo', 6, 16, 6),
+       ('GHI9J01', 'Utilizado para entregas', 7, 17, 7),
+       ('JKL2M34', 'Veículo familiar', 8, 18, 8),
+       ('NOP5Q67', 'Sedan executivo', 9, 19, 9),
+       ('RST8U90', 'Motor recém revisado', 10, 20, 10);
 
-INSERT INTO veiculo(placa, observacao, id_cor, id_modelo, id_cliente)
-VALUES ('GOL1234', 'GOL DA ALEMANHA', 2, 1, 2);
+CREATE TABLE IF NOT EXISTS ordem_servico
+(
+    id         INT            NOT NULL AUTO_INCREMENT,
+    numero     LONG           NOT NULL,
+    total      DECIMAL(10, 2) NOT NULL,
+    agenda     DATE           NOT NULL,
+    desconto   DECIMAL(3, 1),
+    status     ENUM ('ABERTA', 'FECHADA', 'CANCELADA') DEFAULT ('ABERTA'),
+    id_veiculo INT            NOT NULL,
+    CONSTRAINT pk_ordem_servico PRIMARY KEY (id),
+    CONSTRAINT fk_veiculo FOREIGN KEY (id_veiculo)
+        REFERENCES veiculo (id)
+) ENGINE = InnoDB;
+
+INSERT INTO ordem_servico
+    (numero, total, agenda, desconto, status, id_veiculo)
+VALUES (1001, 80.00, '2026-05-10', 0.0, 'ABERTA', 1),
+       (1002, 110.00, '2026-05-11', 5.0, 'FECHADA', 2),
+       (1003, 150.00, '2026-05-12', 10.0, 'FECHADA', 3),
+       (1004, 90.00, '2026-05-13', NULL, 'ABERTA', 4),
+       (1005, 185.00, '2026-05-14', 15.0, 'FECHADA', 5),
+       (1006, 70.00, '2026-05-15', 0.0, 'ABERTA', 6),
+       (1007, 115.00, '2026-05-16', 8.0, 'ABERTA', 7),
+       (1008, 160.00, '2026-05-17', 12.0, 'FECHADA', 8),
+       (1009, 100.00, '2026-05-18', 5.0, 'ABERTA', 9),
+       (1010, 200.00, '2026-05-19', 20.0, 'FECHADA', 10);
+
+CREATE TABLE IF NOT EXISTS item_os
+(
+    valor_servico    DECIMAL(10, 2) NOT NULL,
+    observacoes      VARCHAR(300),
+    id_servico       INT            NOT NULL,
+    id_ordem_servico INT            NOT NULL,
+    CONSTRAINT pk_item_os PRIMARY KEY (id_ordem_servico),
+    CONSTRAINT fk_ordem_servico FOREIGN KEY (id_ordem_servico)
+        REFERENCES ordem_servico (id),
+    CONSTRAINT fk_servico FOREIGN KEY (id_servico)
+        REFERENCES servico (id)
+) ENGINE = InnoDB;
+
+INSERT INTO item_os
+    (valor_servico, observacoes, id_servico, id_ordem_servico)
+VALUES (80.00, 'Lavagem simples + cera', 1, 1),
+       (110.00, 'Lavagem premium com polimento', 3, 2),
+       (150.00, 'Lavagem completa e proteção', 3, 3),
+       (90.00, 'Lavagem rápida', 1, 4),
+       (185.00, 'Serviço premium com wax', 3, 5),
+       (70.00, 'Lavagem simples', 1, 6),
+       (115.00, 'Lavagem com cera e polimento', 2, 7),
+       (160.00, 'Serviço completo premium', 3, 8),
+       (100.00, 'Lavagem + cera', 2, 9),
+       (200.00, 'Lavagem premium com tratamento especial', 3, 10);
