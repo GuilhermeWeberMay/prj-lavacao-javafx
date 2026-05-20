@@ -13,6 +13,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class OrdemServico {
+    private int id;
     private long  numero;
     private double  total;
     private LocalDate agenda;

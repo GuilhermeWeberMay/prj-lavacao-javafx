@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ItemOS {
+    private int id;
     private double valorServico;
     private String observacoes;
     // Classe associativa com as duas classes

@@ -110,5 +110,26 @@ public class ServicoDAO {
         }
         return retorno;
     }
+
+    public List<Servico> listarCategoria(ECategoria categoria) {
+        String sql = "SELECT * FROM servico where  categoria=?";
+        List<Servico> retorno = new ArrayList<>();
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, categoria.getDescricao());
+            ResultSet resultado = stmt.executeQuery();
+            while (resultado.next()) {
+                Servico servico = new Servico();
+                servico.setId(resultado.getInt("id"));
+                servico.setDescricao(resultado.getString("descricao"));
+                servico.setValor(resultado.getDouble("valor"));
+                servico.setCategoria(Enum.valueOf(ECategoria.class, resultado.getString("categoria")));
+                retorno.add(servico);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return retorno;
+    }
 }
 
