@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -108,7 +109,8 @@ public class CadastroClienteController implements Initializable {
             labelNomeCliente.setText(cliente.getNome());
             labelCelularCliente.setText(cliente.getCelular());
             labelEmailCliente.setText(cliente.getEmail());
-            labelDataCadastroCliente.setText(String.valueOf(cliente.getDataCadastro()));
+            labelDataCadastroCliente.setText(
+                cliente.getDataCadastro().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             if (cliente instanceof PessoaFisica) {
                 labelDocumentoCliente.setText(((PessoaFisica) cliente).getCpf());
                 labelDataInsCliente.setText(String.valueOf(((PessoaFisica) cliente).getDataNascimento()));
