@@ -161,19 +161,19 @@ public class VeiculoDAO {
                 "SELECT v.id as id_veiculo, v.placa as placa, v.observacao as observacoes, " +
                         "cor.id as id_cor, cor.nome as nome_cor, " +
                         "mdl.id as id_modelo, mdl.descricao as desc_modelo, mdl.categoria as categoria_modelo, " +
-                        "mot.potencia as potencia, mot.tipo_combustivel as combustivel," +
-                        "mrc.id as id_marca, mrc.nome as nome_marca," +
-                        "c.id as id_cliente, c.nome as nome_cliente, c.celular as celular_cliente, c.email as email_cliente," +
-                        "c.data_cadastro as  data_cadastro," +
-                        "pf.cpf as cpf, pf.data_nascimento as data_nasc," +
-                        "pj.cnpj as cnpj, pj.incricao_estadual as inscricao_estadual" +
-                        "FROM veiculo v INNER JOIN cor ON v.id_cor = cor.id" +
-                        "INNER JOIN modelo mdl ON v.id_modelo = mdl.id" +
-                        "INNER JOIN marca mrc ON mdl.id = mrc.id" +
-                        "INNER JOIN motor mot ON mdl.id = mot.id_modelo" +
-                        "INNER JOIN cliente c ON c.id= v.id_cliente" +
-                        "LEFT JOIN pessoa_fisica pf on pf.id_cliente = c.id" +
-                        "LEFT JOIN pessoa_juridica pj on pj.id_cliente = c.id WHERE v.id = ?;";
+                        "mot.potencia as potencia, mot.tipo_combustivel as combustivel, " +
+                        "mrc.id as id_marca, mrc.nome as nome_marca, " +
+                        "c.id as id_cliente, c.nome as nome_cliente, c.celular as celular_cliente, c.email as email_cliente, " +
+                        "c.data_cadastro as  data_cadastro, " +
+                        "pf.cpf as cpf, pf.data_nascimento as data_nasc, " +
+                        "pj.cnpj as cnpj, pj.inscricao_estadual as inscricao_estadual " +
+                        "FROM veiculo v INNER JOIN cor ON v.id_cor = cor.id " +
+                        "INNER JOIN modelo mdl ON v.id_modelo = mdl.id " +
+                        "INNER JOIN marca mrc ON mdl.id = mrc.id " +
+                        "INNER JOIN motor mot ON mdl.id = mot.id_modelo " +
+                        "INNER JOIN cliente c ON c.id= v.id_cliente " +
+                        "LEFT JOIN pessoa_fisica pf on pf.id_cliente = c.id " +
+                        "LEFT JOIN pessoa_juridica pj on pj.id_cliente = c.id WHERE v.id = ?; ";
         Veiculo retorno = new Veiculo();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -196,9 +196,9 @@ public class VeiculoDAO {
         veiculo.setModelo(modelo);
 
         // Atributos que estão somente na tabela de veículo
-        veiculo.setId(rs.getInt("id"));
+        veiculo.setId(rs.getInt("id_veiculo"));
         veiculo.setPlaca(rs.getString("placa"));
-        veiculo.setObservacao(rs.getString("observacao"));
+        veiculo.setObservacao(rs.getString("observacoes"));
         // Atributos que vem dos relacionamentos de veículo
         cor.setId(rs.getInt("id_cor"));
         modelo.setId(rs.getInt("id_modelo"));

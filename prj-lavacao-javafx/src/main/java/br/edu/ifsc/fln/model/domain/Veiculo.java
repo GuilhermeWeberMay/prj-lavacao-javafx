@@ -22,4 +22,8 @@ public class Veiculo {
     @ToString.Exclude
     private Cliente cliente;
 
+    @Override
+    public String toString() {
+        return placa;
+    }
 }

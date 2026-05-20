@@ -26,10 +26,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class CadastroOrdemServicoController implements Initializable {
@@ -98,26 +101,11 @@ public class CadastroOrdemServicoController implements Initializable {
         DateTimeFormatter myDateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         tableColumnNumero.setCellValueFactory(new PropertyValueFactory<>("numero"));
-        //tableColumnOrdemServicoData.setCellValueFactory(new PropertyValueFactory<>("data"));
-//        tableColumnOrdemServicoData.setCellFactory(column -> {
-//            return new TableCell<OrdemServico, LocalDate>() {
-//                @Override
-//                protected void updateItem(LocalDate item, boolean empty) {
-//                    super.updateItem(item, empty);
-//
-//                    if (item == null || empty) {
-//                        setText(null);
-//                    } else {
-//                        setText(myDateFormatter.format(item));
-//                    }
-//                }
-//            };
-//        });
-
+        tableColumnTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
         tableColumnTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
         tableColumnAgenda.setCellValueFactory(new PropertyValueFactory<>("agenda"));
         tableColumnStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-        tableColumnVeiculo.setCellValueFactory(new PropertyValueFactory<>("id_veiculo"));
+        tableColumnVeiculo.setCellValueFactory(new PropertyValueFactory<>("veiculo"));
 
         listaOrdemServicos = ordemServicoDAO.listar();
 
