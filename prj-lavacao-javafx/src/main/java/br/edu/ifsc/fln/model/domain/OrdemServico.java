@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class OrdemServico {
-    private long  id;
+    private long  numero;
     private double  total;
     private LocalDate agenda;
     private double desconto;
