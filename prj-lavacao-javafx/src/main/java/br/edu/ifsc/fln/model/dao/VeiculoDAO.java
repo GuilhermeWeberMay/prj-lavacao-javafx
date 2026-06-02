@@ -188,6 +188,23 @@ public class VeiculoDAO {
         return retorno;
     }
 
+    public List<Veiculo> listarSimples() {
+        String sql =
+                "select id as id_veiculo, placa, observacao as observacoes, id_cor, id_modelo, id_cliente from veiculo;";
+        List<Veiculo> retorno = new ArrayList<>();
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet resultado = stmt.executeQuery();
+            while (resultado.next()) {
+                Veiculo veiculo = populateVO(resultado);
+                retorno.add(veiculo);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(VeiculoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return retorno;
+    }
+
     private Veiculo populateVO(ResultSet rs) throws SQLException {
         Veiculo veiculo = new Veiculo();
         Cor cor = new Cor();

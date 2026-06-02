@@ -26,13 +26,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.NumberFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class CadastroOrdemServicoController implements Initializable {
@@ -98,10 +95,7 @@ public class CadastroOrdemServicoController implements Initializable {
     }
 
     public void carregarTableView() {
-        DateTimeFormatter myDateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
         tableColumnNumero.setCellValueFactory(new PropertyValueFactory<>("numero"));
-        tableColumnTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
         tableColumnTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
         tableColumnAgenda.setCellValueFactory(new PropertyValueFactory<>("agenda"));
         tableColumnStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
@@ -210,7 +204,7 @@ public class CadastroOrdemServicoController implements Initializable {
 
     public boolean showFXMLAnchorPaneProcessoOrdemServicoDialog(OrdemServico os) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(DialogOrdemServico.class.getResource(
+        loader.setLocation(DialogOrdemServicoController.class.getResource(
                 "/br/edu/ifsc/fln/view/DialogCadastroOrdemServico.fxml"));
         AnchorPane page = (AnchorPane) loader.load();
 
@@ -221,7 +215,7 @@ public class CadastroOrdemServicoController implements Initializable {
         dialogStage.setScene(scene);
 
         //Setando o venda ao controller
-        DialogOrdemServico controller = loader.getController();
+        DialogOrdemServicoController controller = loader.getController();
         controller.setDialogStage(dialogStage);
         controller.setOrdemServico(os);
 

@@ -16,4 +16,9 @@ public class Servico {
     private String descricao;
     private Double valor;
     private ECategoria categoria;
+
+    @Override
+    public String toString() {
+        return descricao + " - " + categoria + " - " + valor;
+    }
 }

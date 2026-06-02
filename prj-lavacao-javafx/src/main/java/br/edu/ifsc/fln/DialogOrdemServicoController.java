@@ -5,78 +5,83 @@ import br.edu.ifsc.fln.model.dao.VeiculoDAO;
 import br.edu.ifsc.fln.model.domain.*;
 import javafx.fxml.Initializable;
 
-import br.edu.ifsc.fln.model.dao.ClienteDAO;
 import br.edu.ifsc.fln.model.database.Database;
 import br.edu.ifsc.fln.model.database.DatabaseFactory;
 
 import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Connection;
-import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class DialogOrdemServico implements Initializable {
-    @FXML
-    private ComboBox<Veiculo> comboBoxClientes;
-    @FXML
-    private DatePicker datePickerData;
-    @FXML
-    private CheckBox checkBoxPago;
-    @FXML
-    private TableView<ItemOS> tableViewItensDeOrdemServico;
-    @FXML
-    private TableColumn<ItemOS, Servico> tableColumnProduto;
-    @FXML
-    private TableColumn<ItemOS, Integer> tableColumnQuantidade;
-    @FXML
-    private TableColumn<ItemOS, Double> tableColumnValor;
-    @FXML
-    private TextField textFieldValor;
-    @FXML
-    private ComboBox<Servico> comboBoxProduto;
-    @FXML
-    private TextField textFieldQuantidadeProduto;
+public class DialogOrdemServicoController implements Initializable {
+
     @FXML
     private Button buttonAdicionar;
-    @FXML
-    private Button buttonConfirmar;
+
     @FXML
     private Button buttonCancelar;
+
     @FXML
-    private ContextMenu contextMenuTableView;
+    private Button buttonConfirmar;
+
+    @FXML
+    private ChoiceBox<EStatus> choiceBoxStatus;
+
+    @FXML
+    private ComboBox<Servico> comboBoxServicos;
+
+    @FXML
+    private ComboBox<Veiculo> comboBoxVeiculos;
+
     @FXML
     private MenuItem contextMenuItemAtualizarQtd;
+
     @FXML
     private MenuItem contextMenuItemRemoverItem;
+
     @FXML
-    private ChoiceBox choiceBoxSituacao;
+    private ContextMenu contextMenuTableView;
+
+    @FXML
+    private DatePicker datePickerAgenda;
+
+    @FXML
+    private TableColumn<ItemOS, Integer> tableColumnId;
+
+    @FXML
+    private TableColumn<ItemOS, String> tableColumnProduto;
+
+    @FXML
+    private TableColumn<ItemOS, Float> tableColumnValor;
+
+    @FXML
+    private TableView<ItemOS> tableViewItensDeVenda;
+
     @FXML
     private TextField textFieldDesconto;
+
+    @FXML
+    private TextField textFieldObserItemOs;
+
+    @FXML
+    private TextField textFieldValor;
+
+    @FXML
+    private TextField tfNumeroOrdemServico;
 
 
     private List<Veiculo> listaVeiculos;
@@ -93,8 +98,8 @@ public class DialogOrdemServico implements Initializable {
 
     private Stage dialogStage;
     private boolean buttonConfirmarClicked = false;
-    private OrdemServico  ordemServico;
-    
+    private OrdemServico ordemServico;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         veiculoDAO.setConnection(connection);
@@ -104,28 +109,28 @@ public class DialogOrdemServico implements Initializable {
         carregarComboBoxProdutos();
         carregarChoiceBoxSituacao();
         //setFocusLostHandle();
-        tableColumnProduto.setCellValueFactory(new PropertyValueFactory<>("produto"));
-        tableColumnQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
-        tableColumnValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
+        tableColumnProduto.setCellValueFactory(new PropertyValueFactory<>("servico"));
+        tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tableColumnValor.setCellValueFactory(new PropertyValueFactory<>("valorServico"));
     }
 
     private void carregarComboBoxVeiculos() {
-        listaVeiculos = veiculoDAO.listar();
+        listaVeiculos = veiculoDAO.listarSimples();
         observableListVeiculos = FXCollections.observableArrayList(listaVeiculos);
-        comboBoxClientes.setItems(observableListVeiculos);
+        comboBoxVeiculos.setItems(observableListVeiculos);
     }
 
     private void carregarComboBoxProdutos() {
         /* carrega apenas os produtos  com estoque cuja SITUACAO está em ATIVO para operações */
         listaServicos = servicoDAO.listar();
         observableListServicos = FXCollections.observableArrayList(listaServicos);
-        comboBoxProduto.setItems(observableListServicos);
+        comboBoxServicos.setItems(observableListServicos);
     }
 
 
     public void carregarChoiceBoxSituacao() {
-        choiceBoxSituacao.setItems( FXCollections.observableArrayList(EStatus.values()));
-        choiceBoxSituacao.getSelectionModel().select(0);
+        choiceBoxStatus.setItems(FXCollections.observableArrayList(EStatus.values()));
+        choiceBoxStatus.getSelectionModel().select(0);
     }
 
     private void setFocusLostHandle() {
@@ -142,59 +147,65 @@ public class DialogOrdemServico implements Initializable {
     }
 
     public void setOrdemServico(OrdemServico os) {
-//        this.ordemServico = os;
-//        if (os.getId() != 0) {
-//            comboBoxClientes.getSelectionModel().select(this.ordemServico.getVeiculo());
-//            datePickerData.setValue(this.venda.getData());
-//            checkBoxPago.setSelected(this.venda.isPago());
-//            observableListItensDeOrdemServico = FXCollections.observableArrayList(
-//                    this.venda.getItensDeOrdemServico());
-//            tableViewItensDeOrdemServico.setItems(observableListItensDeOrdemServico);
-//            textFieldValor.setText(String.format("%.2f", this.venda.getTotal()));
-//            textFieldDesconto.setText(String.format("%.2f", this.venda.getTaxaDesconto()));
-//            choiceBoxSituacao.getSelectionModel().select(this.venda.getStatusOrdemServico());
-//
-//        }
+        this.ordemServico = os;
+        if (os.getId() != 0) {
+            tfNumeroOrdemServico.setText(String.valueOf(os.getNumero()));
+
+            comboBoxVeiculos.getSelectionModel().select(this.ordemServico.getVeiculo());
+            datePickerAgenda.setValue(this.ordemServico.getAgenda());
+
+            observableListItensOs = FXCollections.observableArrayList(
+                    this.ordemServico.getItensOS());
+            tableViewItensDeVenda.setItems(observableListItensOs);
+
+            textFieldValor.setText(String.format("%.2f", this.ordemServico.getTotal()));
+            textFieldDesconto.setText(String.format("%.2f", this.ordemServico.getDesconto()));
+            choiceBoxStatus.getSelectionModel().select(this.ordemServico.getStatus());
+
+        }
     }
 
-    @FXML
+    @FXML // Adicionar do ItemOS
     public void handleButtonAdicionar() {
-//        Produto produto;
-//        ItemDeOrdemServico itemDeOrdemServico = new ItemDeOrdemServico();
-//        if (comboBoxProduto.getSelectionModel().getSelectedItem() != null) {
-//            //o comboBox possui dados sintetizados de Produto para evitar carga desnecessária de informação
-//            produto = comboBoxProduto.getSelectionModel().getSelectedItem();
-//            //a instrução a seguir busca detalhes do produto selecionado
-//            produto = produtoDAO.buscar(produto);
-//            if (produto.getEstoque().getQuantidade() >= Integer.parseInt(textFieldQuantidadeProduto.getText())) {
-//                itemDeOrdemServico.setProduto(produto);
-//                itemDeOrdemServico.setQuantidade(Integer.parseInt(textFieldQuantidadeProduto.getText()));
-//                itemDeOrdemServico.setValor(produto.getPreco().multiply(BigDecimal.valueOf(itemDeOrdemServico.getQuantidade())));
-//                itemDeOrdemServico.setOrdemServico(venda);
-//                venda.getItensDeOrdemServico().add(itemDeOrdemServico);
-//                observableListItensDeOrdemServico = FXCollections.observableArrayList(venda.getItensDeOrdemServico());
-//                tableViewItensDeOrdemServico.setItems(observableListItensDeOrdemServico);
-//                textFieldValor.setText(String.format("%.2f", venda.getTotal()));
-//            } else {
-//                Alert alert = new Alert(Alert.AlertType.ERROR);
-//                alert.setHeaderText("Problemas na escolha do produto");
-//                alert.setContentText("Não existe quantidade suficiente de produtos para venda.");
-//                alert.show();
-//            }
-//        }
+        Servico servico;
+        ItemOS itemOS = new ItemOS();
+        if (comboBoxServicos.getSelectionModel().getSelectedItem() != null) {
+            //o comboBox possui dados sintetizados de Produto para evitar carga desnecessária de informação
+            servico = comboBoxServicos.getSelectionModel().getSelectedItem();
+            if (tableColumnProduto.getColumns() != servico) {
+                // Criação do ItemOS
+                itemOS.setServico(servico);
+                itemOS.setObservacoes(textFieldObserItemOs.getText());
+                itemOS.setOrdemServico(ordemServico);
+                ordemServico.add(itemOS);
+
+                observableListItensOs = FXCollections.observableArrayList(ordemServico.getItensOS());
+                tableViewItensDeVenda.setItems(observableListItensOs);
+
+                textFieldValor.setText(String.format("%.2f", ordemServico.getTotal()));
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText("Problemas na escolha do produto");
+                alert.setContentText("Não existe quantidade suficiente de produtos para venda.");
+                alert.show();
+            }
+        }
     }
 
     @FXML
     private void handleButtonConfirmar() {
-//        if (validarEntradaDeDados()) {
-//            venda.setCliente(comboBoxClientes.getSelectionModel().getSelectedItem());
-//            venda.setPago(checkBoxPago.isSelected());
-//            venda.setData(datePickerData.getValue());
-//            venda.setStatusOrdemServico((EStatusOrdemServico)choiceBoxSituacao.getSelectionModel().getSelectedItem());
-//            venda.setTaxaDesconto(Double.parseDouble(textFieldDesconto.getText()));
-//            buttonConfirmarClicked = true;
-//            dialogStage.close();
-//        }
+        if (validarEntradaDeDados()) {
+            ordemServico.setNumero(Integer.parseInt(tfNumeroOrdemServico.getText()));
+            ordemServico.setVeiculo(comboBoxVeiculos.getSelectionModel().getSelectedItem());
+            ordemServico.setAgenda(datePickerAgenda.getValue());
+            ordemServico.setStatus((choiceBoxStatus.getSelectionModel().getSelectedItem()));
+            ordemServico.setDesconto(Double.parseDouble(textFieldDesconto.getText()));
+            ordemServico.setItensOS(observableListItensOs);
+
+
+            buttonConfirmarClicked = true;
+            dialogStage.close();
+        }
     }
 
     @FXML
@@ -251,8 +262,8 @@ public class DialogOrdemServico implements Initializable {
 
     @FXML
     private void handleContextMenuItemRemoverItem() {
-//        ItemDeOrdemServico itemDeOrdemServico
-//                = tableViewItensDeOrdemServico.getSelectionModel().getSelectedItem();
+//        ItemOS itemOS
+//                = tableViewItensDeVenda.getSelectionModel().getSelectedItem();
 //        int index = tableViewItensDeOrdemServico.getSelectionModel().getSelectedIndex();
 //        venda.getItensDeOrdemServico().remove(index);
 //        observableListItensDeOrdemServico = FXCollections.observableArrayList(venda.getItensDeOrdemServico());
@@ -292,7 +303,7 @@ public class DialogOrdemServico implements Initializable {
 //            alert.setHeaderText("Campos inválidos, por favor corrija...");
 //            alert.setContentText(errorMessage);
 //            alert.show();
-            return false;
+        return true;
 //        }
     }
 }

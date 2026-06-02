@@ -160,7 +160,7 @@ CREATE TABLE modelo
 ) ENGINE = INNODB;
 
 INSERT INTO modelo
-    (descricao, categoria, id_marca)
+(descricao, categoria, id_marca)
 VALUES ('Voyage', 'PEQUENO', 1),
        ('Frontier', 'GRANDE', 2),
        ('Argo', 'PEQUENO', 3),
@@ -168,7 +168,7 @@ VALUES ('Voyage', 'PEQUENO', 1),
        ('Virtus', 'MEDIO', 1);
 
 INSERT INTO modelo
-    (descricao, categoria, id_marca)
+(descricao, categoria, id_marca)
 VALUES
 -- PEQUENO
 ('Gol', 'PEQUENO', 1),
@@ -212,7 +212,7 @@ CREATE TABLE IF NOT EXISTS motor
 ) ENGINE = INNODB;
 
 INSERT INTO motor
-    (potencia, tipo_combustivel)
+(potencia, tipo_combustivel)
 VALUES (82, 'FLEX'),
        (82, 'FLEX'),
        (110, 'FLEX'),
@@ -288,25 +288,28 @@ CREATE TABLE IF NOT EXISTS ordem_servico
 ) ENGINE = InnoDB;
 
 INSERT INTO ordem_servico
-    (numero, total, agenda, desconto, status, id_veiculo)
-VALUES (1001, 80.00, '2026-05-10', 0.0, 'ABERTA', 1),
-       (1002, 110.00, '2026-05-11', 5.0, 'FECHADA', 2),
-       (1003, 150.00, '2026-05-12', 10.0, 'FECHADA', 3),
+(numero, total, agenda, desconto, status, id_veiculo)
+VALUES (1001, 80.00, '2026-05-10', NULL, 'ABERTA', 1),
+       (1002, 110.00, '2026-05-11', NULL, 'FECHADA', 2),
+       (1003, 150.00, '2026-05-12', NULL, 'FECHADA', 3),
        (1004, 90.00, '2026-05-13', NULL, 'ABERTA', 4),
-       (1005, 185.00, '2026-05-14', 15.0, 'FECHADA', 5),
-       (1006, 70.00, '2026-05-15', 0.0, 'ABERTA', 6),
-       (1007, 115.00, '2026-05-16', 8.0, 'ABERTA', 7),
-       (1008, 160.00, '2026-05-17', 12.0, 'FECHADA', 8),
-       (1009, 100.00, '2026-05-18', 5.0, 'ABERTA', 9),
-       (1010, 200.00, '2026-05-19', 20.0, 'FECHADA', 10);
+       (1005, 185.00, '2026-05-14', NULL, 'FECHADA', 5),
+       (1006, 70.00, '2026-05-15', NULL, 'ABERTA', 6),
+       (1007, 115.00, '2026-05-16', NULL, 'ABERTA', 7),
+       (1008, 160.00, '2026-05-17', NULL, 'FECHADA', 8),
+       (1009, 100.00, '2026-05-18', NULL, 'ABERTA', 9),
+       (1010, 200.00, '2026-05-19', NULL, 'FECHADA', 10);
+
+select * from ordem_servico where id =1;
 
 CREATE TABLE IF NOT EXISTS item_os
 (
+    id 				 INT NOT NULL AUTO_INCREMENT,
     valor_servico    DECIMAL(10, 2) NOT NULL,
     observacoes      VARCHAR(300),
     id_servico       INT            NOT NULL,
     id_ordem_servico INT            NOT NULL,
-    CONSTRAINT pk_item_os PRIMARY KEY (id_ordem_servico),
+    CONSTRAINT pk_item_os PRIMARY KEY (id),
     CONSTRAINT fk_ordem_servico FOREIGN KEY (id_ordem_servico)
         REFERENCES ordem_servico (id),
     CONSTRAINT fk_servico FOREIGN KEY (id_servico)
@@ -314,7 +317,7 @@ CREATE TABLE IF NOT EXISTS item_os
 ) ENGINE = InnoDB;
 
 INSERT INTO item_os
-    (valor_servico, observacoes, id_servico, id_ordem_servico)
+(valor_servico, observacoes, id_servico, id_ordem_servico)
 VALUES (80.00, 'Lavagem simples + cera', 1, 1),
        (110.00, 'Lavagem premium com polimento', 3, 2),
        (150.00, 'Lavagem completa e proteção', 3, 3),
@@ -325,3 +328,6 @@ VALUES (80.00, 'Lavagem simples + cera', 1, 1),
        (160.00, 'Serviço completo premium', 3, 8),
        (100.00, 'Lavagem + cera', 2, 9),
        (200.00, 'Lavagem premium com tratamento especial', 3, 10);
+
+
+select * from ordem_servico;

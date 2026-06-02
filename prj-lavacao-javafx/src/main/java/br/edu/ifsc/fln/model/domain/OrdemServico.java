@@ -64,4 +64,18 @@ public class OrdemServico {
             itensOS.add(itemOS);
         }
     }
+
+//    @Override
+//    public String toString() {
+//        return "OrdemServico{" +
+//                "id=" + id +
+//                ", numero=" + numero +
+//                ", total=" + total +
+//                ", agenda=" + agenda +
+//                ", desconto=" + desconto +
+//                ", status=" + status +
+//                ", veiculo=" + veiculo +
+//                ", itensOS=" + itensOS +
+//                '}';
+//    }
 }
