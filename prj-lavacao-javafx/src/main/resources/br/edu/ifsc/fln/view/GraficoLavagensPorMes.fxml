@@ -5,10 +5,9 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="385.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="br.edu.ifsc.fln.GraficosLavagensMesController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifsc.fln.GraficosLavagensMesController">
     <children>
-        <BarChart fx:id="barChart" layoutX="33.0" layoutY="14.0" prefHeight="342.0" prefWidth="500.0" title="Vendas por Mês">
+        <BarChart fx:id="barChart" layoutX="25.0" layoutY="50.0" prefHeight="500.0" prefWidth="750.0" title="Lavagens por Mês">
             <xAxis>
                 <CategoryAxis fx:id="categoryAxis" side="BOTTOM" />
             </xAxis>
