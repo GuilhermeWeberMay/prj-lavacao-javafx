@@ -72,4 +72,10 @@ public class HelloController {
         AnchorPane a = FXMLLoader.load(getClass().getResource("/br/edu/ifsc/fln/view/CadastroOrdemServico.fxml"));
         anchorPane.getChildren().setAll(a);
     }
+
+    @FXML
+    void handleMenuItemGrafico() throws IOException {
+        AnchorPane a = FXMLLoader.load(getClass().getResource("/br/edu/ifsc/fln/view/GraficoLavagensPorMes.fxml"));
+        anchorPane.getChildren().setAll(a);
+    }
 }
