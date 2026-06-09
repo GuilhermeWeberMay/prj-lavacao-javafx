@@ -36,6 +36,7 @@
             <Menu mnemonicParsing="false" text="Relatórios">
               <items>
                 <MenuItem mnemonicParsing="false" text="Serviços" />
+                     <MenuItem mnemonicParsing="false" onAction="#handleMenuRelatorioCliente" text="Clientes" />
               </items>
             </Menu>
         </menus>

@@ -9,6 +9,7 @@ module br.edu.ifsc.fln {
     requires mysql.connector.j;
     requires javafx.graphics;
     requires javafx.base;
+    requires jasperreports;
 
     opens br.edu.ifsc.fln to javafx.fxml;
     opens br.edu.ifsc.fln.model.domain to javafx.base;

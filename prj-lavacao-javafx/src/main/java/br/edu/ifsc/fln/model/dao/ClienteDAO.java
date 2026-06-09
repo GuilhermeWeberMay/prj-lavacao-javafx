@@ -138,6 +138,25 @@ public class ClienteDAO {
         return retorno;
     }
 
+    public List<Cliente> listarClienteEstoque(){
+        String sql =  "SELECT * FROM cliente;";
+        List<Cliente> retorno = new ArrayList<>();
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet resultado = stmt.executeQuery();
+            while (resultado.next()) {
+                Cliente cliente = populateSingleVO(resultado);
+                retorno.add(cliente);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+//        } catch (DAOException ex) {
+//            throw new DAOException("Falha na pesquisa!", ex);
+//        }
+        return retorno;
+    }
+
     public Cliente buscar(Cliente cliente) {
         String sql = "SELECT * FROM cliente c "
                 + "LEFT JOIN pessoa_fisica pf on pf.id_cliente = c.id "
@@ -192,6 +211,17 @@ public class ClienteDAO {
         cliente.setEmail(rs.getString("email"));
         cliente.setCelular(rs.getString("celular"));
         cliente.setDataCadastro(rs.getDate("data_cadastro").toLocalDate());
+        return cliente;
+    }
+
+    private Cliente populateSingleVO(ResultSet rs) throws SQLException {
+        Cliente cliente = new PessoaFisica();
+        //dados do cliente
+        cliente.setId(rs.getInt("id"));
+        cliente.setNome(rs.getString("nome"));
+        cliente.setCelular(rs.getString("celular"));
+        cliente.setEmail(rs.getString("email"));
+
         return cliente;
     }
 }
