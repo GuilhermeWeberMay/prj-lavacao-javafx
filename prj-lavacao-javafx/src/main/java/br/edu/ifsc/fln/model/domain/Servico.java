@@ -19,6 +19,6 @@ public class Servico {
 
     @Override
     public String toString() {
-        return descricao + " - " + categoria + " - " + valor;
+        return id + " " + descricao + " - " + categoria + " - " + valor;
     }
 }
