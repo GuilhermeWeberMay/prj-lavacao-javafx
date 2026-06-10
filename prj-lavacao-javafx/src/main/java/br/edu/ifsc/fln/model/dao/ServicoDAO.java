@@ -1,5 +1,6 @@
 package br.edu.ifsc.fln.model.dao;
 
+import br.edu.ifsc.fln.exception.DAOException;
 import br.edu.ifsc.fln.model.domain.ECategoria;
 import br.edu.ifsc.fln.model.domain.Servico;
 
@@ -23,7 +24,7 @@ public class ServicoDAO {
         this.connection = connection;
     }
 
-    public boolean create(Servico servico) {
+    public void create(Servico servico) throws DAOException {
         String sql = "INSERT INTO servico(descricao, valor, categoria) VALUES(?, ?, ?)";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -31,14 +32,13 @@ public class ServicoDAO {
             stmt.setDouble(2, servico.getValor());
             stmt.setString(3, servico.getCategoria().getDescricao());
             stmt.execute();
-            return true;
         } catch (SQLException ex) {
             Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            throw new DAOException("Não foi possivel cadastrar o serviço "+ex);
         }
     }
 
-    public boolean alterar(Servico servico) {
+    public void alterar(Servico servico) throws DAOException {
         String sql = "UPDATE servico SET descricao=?,valor=?, categoria=? WHERE id=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -47,27 +47,26 @@ public class ServicoDAO {
             stmt.setString(3, servico.getCategoria().getDescricao());
             stmt.setInt(4, servico.getId());
             stmt.execute();
-            return true;
         } catch (SQLException ex) {
             Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            throw new DAOException("Não foi possivel alterar o serviço "+ex);
         }
     }
 
-    public boolean remover(Servico servico) {
+    public void remover(Servico servico) throws DAOException {
         String sql = "DELETE FROM servico WHERE id=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, servico.getId());
             stmt.execute();
-            return true;
+
         } catch (SQLException ex) {
             Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            throw new DAOException("Não foi possivel deletar o serviço "+ex);
         }
     }
 
-    public List<Servico> listar() {
+    public List<Servico> listar() throws DAOException {
         String sql = "SELECT * FROM servico";
         List<Servico> retorno = new ArrayList<>();
         try {
@@ -83,16 +82,22 @@ public class ServicoDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DAOException("Não foi possivel listar o serviço "+ex);
         }
         return retorno;
     }
 
-    public Servico buscar(Servico servico) {
-        Servico retorno = buscar(servico.getId());
-        return retorno;
+    public Servico buscar(Servico servico) throws DAOException {
+        try {
+            Servico retorno = buscar(servico.getId());
+            return retorno;
+        }catch (DAOException ex) {
+            Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DAOException("Não foi possivel cadastrar o serviço "+ex);
+        }
     }
 
-    public Servico buscar(int id) {
+    public Servico buscar(int id) throws DAOException {
         String sql = "SELECT * FROM servico WHERE id=?";
         Servico retorno = new Servico();
         try {
@@ -107,11 +112,12 @@ public class ServicoDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DAOException("Não foi possivel buscar o serviço "+ex);
         }
         return retorno;
     }
 
-    public List<Servico> listarCategoria(ECategoria categoria) {
+    public List<Servico> listarCategoria(ECategoria categoria) throws DAOException {
         String sql = "SELECT * FROM servico where  categoria=?";
         List<Servico> retorno = new ArrayList<>();
         try {
@@ -128,6 +134,7 @@ public class ServicoDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DAOException("Não foi possivel listar o serviço "+ex);
         }
         return retorno;
     }

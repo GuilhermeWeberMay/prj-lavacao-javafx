@@ -1,5 +1,6 @@
 package br.edu.ifsc.fln;
 
+import br.edu.ifsc.fln.exception.DAOException;
 import br.edu.ifsc.fln.model.dao.ConfiguracoesDAO;
 import br.edu.ifsc.fln.model.dao.ServicoDAO;
 import br.edu.ifsc.fln.model.database.Database;
@@ -131,7 +132,11 @@ public class CadastroServicoController implements Initializable {
         Servico servico = new Servico();
         boolean buttonConfirmarClicked = showDialogCadastroServico(servico);
         if (buttonConfirmarClicked) {
-            servicoDAO.create(servico);
+            try {
+                servicoDAO.create(servico);
+            } catch (DAOException e) {
+                throw new RuntimeException(e);
+            }
             carregarTableViewServico();
         }
     }
@@ -140,7 +145,11 @@ public class CadastroServicoController implements Initializable {
     void buttonDeleteServico(ActionEvent event) throws IOException {
         Servico servico = tableViewServicos.getSelectionModel().getSelectedItem();
         if (servico != null) {
-            servicoDAO.remover(servico);
+            try {
+                servicoDAO.remover(servico);
+            } catch (DAOException e) {
+                throw new RuntimeException(e);
+            }
             carregarTableViewServico();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -155,7 +164,11 @@ public class CadastroServicoController implements Initializable {
         if (servico != null) {
             boolean buttonServicofirmarClicked = showDialogCadastroServico(servico);
             if (buttonServicofirmarClicked) {
-                servicoDAO.alterar(servico);
+                try {
+                    servicoDAO.alterar(servico);
+                } catch (DAOException e) {
+                throw new RuntimeException(e);
+            }
                 carregarTableViewServico();
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
