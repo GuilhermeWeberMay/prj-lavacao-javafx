@@ -86,9 +86,9 @@ public class RelatorioClientesController implements Initializable {
         tableViewCliente.setItems(observableListClientes);
     }
 
-    //@FXML
+    @FXML
     public void handleImprimir() throws JRException {
-        URL url = getClass().getResource("/report/PrjSistemaVendasRelEstoque.jasper");
+        URL url = getClass().getResource("/br/edu/ifsc/fln/reports/relatorioClientes.jasper");
         JasperReport jasperReport = (JasperReport)JRLoader.loadObject(url);
 
         //null: caso não existam filtros
