@@ -1,5 +1,6 @@
 package br.edu.ifsc.fln;
 
+import br.edu.ifsc.fln.exception.DAOException;
 import br.edu.ifsc.fln.model.dao.MarcaDAO;
 import br.edu.ifsc.fln.model.database.Database;
 import br.edu.ifsc.fln.model.database.DatabaseFactory;
@@ -72,9 +73,11 @@ public class CadastroMarcaController implements Initializable {
 
     private void carregarTableViewMarca() {
         tableColumnMarca.setCellValueFactory(new PropertyValueFactory<>("nome"));
-
+        try{
         marcas = marcaDAO.listar();
-
+        } catch (DAOException e) {
+            throw new RuntimeException(e);
+        }
         ObservableList<Marca> observableListMarcas = FXCollections.observableArrayList(marcas);
         tableViewMarcas.setItems(observableListMarcas);
     }
@@ -84,7 +87,11 @@ public class CadastroMarcaController implements Initializable {
         Marca marca = new Marca();
         boolean buttonConfirmarClicked = showDialogCadastroMarca(marca);
         if (buttonConfirmarClicked) {
-            marcaDAO.create(marca);
+            try {
+                marcaDAO.create(marca);
+            } catch (DAOException e) {
+                throw new RuntimeException(e);
+            }
             carregarTableViewMarca();
         }
     }
@@ -93,7 +100,11 @@ public class CadastroMarcaController implements Initializable {
     void buttonDeleteMarca(ActionEvent event) throws IOException {
         Marca marca = tableViewMarcas.getSelectionModel().getSelectedItem();
         if (marca != null) {
-            marcaDAO.remover(marca);
+            try {
+                marcaDAO.remover(marca);
+            } catch (DAOException e) {
+                throw new RuntimeException(e);
+            }
             carregarTableViewMarca();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -108,9 +119,13 @@ public class CadastroMarcaController implements Initializable {
         if (marca != null) {
             boolean buttonMarcafirmarClicked = showDialogCadastroMarca(marca);
             if (buttonMarcafirmarClicked) {
+                try{
                 marcaDAO.alterar(marca);
+                } catch (DAOException e) {
+                    throw new RuntimeException(e);
+                }
                 carregarTableViewMarca();
-            }else {
+            } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText(" Por favor escolha uma marca na tabela! ");
                 alert.showAndWait();

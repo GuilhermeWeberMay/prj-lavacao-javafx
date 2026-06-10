@@ -1,5 +1,6 @@
 package br.edu.ifsc.fln.model.dao;
 
+import br.edu.ifsc.fln.exception.DAOException;
 import br.edu.ifsc.fln.model.domain.Marca;
 import br.edu.ifsc.fln.model.domain.Marca;
 
@@ -23,47 +24,44 @@ public class MarcaDAO {
         this.connection = connection;
     }
 
-    public boolean create(Marca marca) {
+    public void create(Marca marca) throws DAOException {
         String sql = "INSERT INTO marca(nome) VALUES(?)";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, marca.getNome());
             stmt.execute();
-            return true;
         } catch (SQLException ex) {
             Logger.getLogger(MarcaDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            throw new DAOException("Não foi possivel registar a marca",ex);
         }
     }
 
-    public boolean alterar(Marca marca) {
+    public void alterar(Marca marca) throws DAOException {
         String sql = "UPDATE marca SET nome=? WHERE id=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, marca.getNome());
             stmt.setInt(2, marca.getId());
             stmt.execute();
-            return true;
         } catch (SQLException ex) {
             Logger.getLogger(MarcaDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            throw new DAOException("Não foi possivel alterar a marca",ex);
         }
     }
 
-    public boolean remover(Marca marca) {
+    public void remover(Marca marca) throws DAOException{
         String sql = "DELETE FROM marca WHERE id=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, marca.getId());
             stmt.execute();
-            return true;
         } catch (SQLException ex) {
             Logger.getLogger(MarcaDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            throw new DAOException("Não foi possivel deletar a marca",ex);
         }
     }
 
-    public List<Marca> listar() {
+    public List<Marca> listar() throws DAOException {
         String sql = "SELECT * FROM marca";
         List<Marca> retorno = new ArrayList<>();
         try {
@@ -77,16 +75,17 @@ public class MarcaDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(MarcaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DAOException("Não foi possivel listar as marcas",ex);
         }
         return retorno;
     }
 
-    public Marca buscar(Marca marca) {
+    public Marca buscar(Marca marca) throws DAOException {
         Marca retorno = buscar(marca.getId());
         return retorno;
     }
 
-    public Marca buscar(int id) {
+    public Marca buscar(int id) throws DAOException {
         String sql = "SELECT * FROM marca WHERE id=?";
         Marca retorno = new Marca();
         try {
@@ -99,6 +98,7 @@ public class MarcaDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(MarcaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DAOException("Não foi possivel buscar a marca",ex);
         }
         return retorno;
     }
