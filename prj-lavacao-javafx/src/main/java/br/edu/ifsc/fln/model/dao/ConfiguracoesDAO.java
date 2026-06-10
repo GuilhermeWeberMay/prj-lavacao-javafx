@@ -1,5 +1,6 @@
 package br.edu.ifsc.fln.model.dao;
 
+import br.edu.ifsc.fln.exception.DAOException;
 import br.edu.ifsc.fln.model.domain.Configuracoes;
 import br.edu.ifsc.fln.model.domain.Servico;
 
@@ -23,21 +24,7 @@ public class ConfiguracoesDAO {
         this.connection = connection;
     }
 
-//    public boolean create(Servico servico) {
-//        String sql = "INSERT INTO servico(descricao, valor) VALUES(?, ?)";
-//        try {
-//            PreparedStatement stmt = connection.prepareStatement(sql);
-//            stmt.setString(1, servico.getDescricao());
-//            stmt.setDouble(2, servico.getValor());
-//            stmt.execute();
-//            return true;
-//        } catch (SQLException ex) {
-//            Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
-//            return false;
-//        }
-//    }
-
-    public List<Configuracoes> listar() {
+    public List<Configuracoes> listar() throws DAOException {
         String sql = "SELECT * FROM configuracoes";
         List<Configuracoes> retorno = new ArrayList<>();
         try {
@@ -51,25 +38,24 @@ public class ConfiguracoesDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DAOException("Não foi possível listar a potuação ",ex);
         }
         return retorno;
     }
 
-    public boolean alterar(Configuracoes configuracoes) {
+    public void alterar(Configuracoes configuracoes) throws DAOException {
         String sql = "UPDATE configuracoes set pontos_servico = ? where id = 1;";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, configuracoes.getPontos());
-//            stmt.setInt(2, configuracoes.getId());
             stmt.execute();
-            return true;
         } catch (SQLException ex) {
             Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            throw new DAOException("Não foi possível alterar a pontuação ",ex);
         }
     }
 
-    public Configuracoes buscar() {
+    public Configuracoes buscar() throws DAOException {
         String sql = "SELECT * FROM configuracoes WHERE id=1";
         Configuracoes retorno = new Configuracoes();
         try {
@@ -81,6 +67,7 @@ public class ConfiguracoesDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DAOException("Não foi possível alterar a pontuação ",ex);
         }
         return retorno;
     }
