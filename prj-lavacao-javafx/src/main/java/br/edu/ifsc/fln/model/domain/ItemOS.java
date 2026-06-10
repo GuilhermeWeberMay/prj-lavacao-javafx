@@ -16,7 +16,6 @@ public class ItemOS {
     @Override
     public String toString() {
         return "ItemOS{" +
-                "id=" + id +
                 ", valorServico=" + valorServico +
                 ", observacoes='" + observacoes + '\'' +
                 ", servico=" + servico +

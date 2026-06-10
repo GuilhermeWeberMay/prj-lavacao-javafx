@@ -1,5 +1,6 @@
 package br.edu.ifsc.fln.model.dao;
 
+import br.edu.ifsc.fln.exception.DAOException;
 import br.edu.ifsc.fln.model.domain.ECategoria;
 import br.edu.ifsc.fln.model.domain.Marca;
 import br.edu.ifsc.fln.model.domain.Modelo;
@@ -151,7 +152,11 @@ public class ModeloDAO {
             marca.setId(rs.getInt("marca_id"));
             MarcaDAO marcaDAO = new MarcaDAO();
             marcaDAO.setConnection(connection);
+            try{
             marca = marcaDAO.buscar(marca);
+            } catch (DAOException e) {
+                throw new RuntimeException(e);
+            }
             modelo.setMarca(marca);
         }
 
@@ -169,7 +174,11 @@ public class ModeloDAO {
         marca.setId(rs.getInt("marca_id"));
         MarcaDAO marcaDAO = new MarcaDAO();
         marcaDAO.setConnection(connection);
+        try{
         marca = marcaDAO.buscar(marca);
+        } catch (DAOException e) {
+            throw new RuntimeException(e);
+        }
         modelo.setMarca(marca);
 
         return modelo;

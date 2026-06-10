@@ -1,5 +1,6 @@
 package br.edu.ifsc.fln.model.dao;
 
+import br.edu.ifsc.fln.exception.DAOException;
 import br.edu.ifsc.fln.model.domain.ItemOS;
 import br.edu.ifsc.fln.model.domain.OrdemServico;
 import br.edu.ifsc.fln.model.domain.Servico;
@@ -24,14 +25,14 @@ public class ItemOsDAO {
         this.connection = connection;
     }
 
-    public boolean inserir(ItemOS itemDeVenda) {
-        String sql = "INSERT INTO item_os(valor_servico, observaocoes, id_servico, id_ordem_servico) VALUES(?,?,?,?)";
+    public boolean inserir(ItemOS itemOS) {
+        String sql = "INSERT INTO item_os(valor_servico, observacoes, id_servico, id_ordem_servico) VALUES(?,?,?,?)";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setDouble(1, itemDeVenda.getValorServico());
-            stmt.setString(2, itemDeVenda.getObservacoes());
-            stmt.setInt(3, itemDeVenda.getServico().getId());
-            stmt.setInt(4, itemDeVenda.getOrdemServico().getId());
+            stmt.setDouble(1, itemOS.getValorServico());
+            stmt.setString(2, itemOS.getObservacoes());
+            stmt.setInt(3, itemOS.getServico().getId());
+            stmt.setInt(4, itemOS.getOrdemServico().getId());
 
             stmt.execute();
             return true;
@@ -79,7 +80,11 @@ public class ItemOsDAO {
                 //Obtendo os dados completos do Serviço associado ao Item da OS
                 ServicoDAO servicoDAO = new ServicoDAO();
                 servicoDAO.setConnection(connection);
-                servico = servicoDAO.buscar(servico.getId());
+                try {
+                    servico = servicoDAO.buscar(servico.getId());
+                } catch (DAOException e) {
+                    throw new RuntimeException(e);
+                }
 
                 OrdemServicoDAO ordemServicoDAO = new OrdemServicoDAO();
                 ordemServicoDAO.setConnection(connection);
@@ -118,8 +123,11 @@ public class ItemOsDAO {
                 //Obtendo os dados completos do Serviço associado ao Item da OS
                 ServicoDAO servicoDAO = new ServicoDAO();
                 servicoDAO.setConnection(connection);
-                servico = servicoDAO.buscar(servico.getId());
-
+                try {
+                    servico = servicoDAO.buscar(servico.getId());
+                } catch (DAOException e) {
+                    throw new RuntimeException(e);
+                }
                 OrdemServicoDAO ordemServicoDAO = new OrdemServicoDAO();
                 ordemServicoDAO.setConnection(connection);
                 ordemServico = ordemServicoDAO.buscar(ordemServico.getId());
@@ -157,8 +165,11 @@ public class ItemOsDAO {
                 //Obtendo os dados completos do Cliente associado à Venda
                 ServicoDAO servicoDAO = new ServicoDAO();
                 servicoDAO.setConnection(connection);
-                servico = servicoDAO.buscar(servico.getId());
-
+                try {
+                    servico = servicoDAO.buscar(servico.getId());
+                } catch (DAOException e) {
+                    throw new RuntimeException(e);
+                }
                 OrdemServicoDAO ordemServicoDAO = new OrdemServicoDAO();
                 ordemServicoDAO.setConnection(connection);
                 ordemServico = ordemServicoDAO.buscar(ordemServico.getId());

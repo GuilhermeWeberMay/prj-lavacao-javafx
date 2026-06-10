@@ -22,8 +22,8 @@
     <children>
         <GridPane layoutX="28.0" layoutY="14.0" prefHeight="410.0" prefWidth="554.0">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="147.0" minWidth="10.0" prefWidth="77.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="349.0" minWidth="10.0" prefWidth="337.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="147.0" minWidth="10.0" prefWidth="10.399981689453114" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="486.4000183105469" minWidth="10.0" prefWidth="486.4000183105469" />
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints maxHeight="38.0" minHeight="0.0" prefHeight="21.0" vgrow="SOMETIMES" />
@@ -64,11 +64,11 @@
                     </GridPane.margin>
                 </Label>
                 <ComboBox fx:id="comboBoxVeiculos" prefHeight="25.0" prefWidth="365.0" promptText="Selecione o veículo..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <TableView fx:id="tableViewItensDeVenda" onMouseClicked="#handleTableViewMouseClicked" prefHeight="200.0" prefWidth="367.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                <TableView fx:id="tableViewItensDeVenda" onMouseClicked="#handleTableViewMouseClicked" prefHeight="126.0" prefWidth="377.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                     <columns>
-                        <TableColumn fx:id="tableColumnId" prefWidth="50.0" text="Id" />
-                        <TableColumn fx:id="tableColumnProduto" prefWidth="211.0" text="Observação" />
-                        <TableColumn fx:id="tableColumnValor" prefWidth="77.0" text="Valor" />
+                        <TableColumn fx:id="tableColumnId" prefWidth="240.79999387264252" text="Observaçãço" />
+                        <TableColumn fx:id="tableColumnProduto" prefWidth="176.0" text="Servico" />
+                        <TableColumn fx:id="tableColumnValor" prefWidth="67.199951171875" text="Valor" />
                     </columns>
                     <contextMenu>
                         <ContextMenu fx:id="contextMenuTableView">

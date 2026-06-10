@@ -1,5 +1,6 @@
 package br.edu.ifsc.fln;
 
+import br.edu.ifsc.fln.exception.DAOException;
 import br.edu.ifsc.fln.model.dao.MarcaDAO;
 import br.edu.ifsc.fln.model.dao.ModeloDAO;
 import br.edu.ifsc.fln.model.database.Database;
@@ -104,7 +105,11 @@ public class DialogCadastroModeloController implements Initializable {
     private ObservableList<Modelo> observableListModelos;
 
     public void carregarComboBoxMarcas() {
+        try{
         listaMarcas = marcaDAO.listar();
+        } catch (DAOException e) {
+            throw new RuntimeException(e);
+        }
         observableListMarcas =
                 FXCollections.observableArrayList(listaMarcas);
         cbMarca.setItems(observableListMarcas);

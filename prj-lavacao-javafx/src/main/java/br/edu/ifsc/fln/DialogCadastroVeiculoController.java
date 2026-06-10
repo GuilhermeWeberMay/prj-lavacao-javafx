@@ -1,5 +1,6 @@
 package br.edu.ifsc.fln;
 
+import br.edu.ifsc.fln.exception.DAOException;
 import br.edu.ifsc.fln.model.dao.ClienteDAO;
 import br.edu.ifsc.fln.model.dao.CorDAO;
 import br.edu.ifsc.fln.model.dao.ModeloDAO;
@@ -89,14 +90,17 @@ public class DialogCadastroVeiculoController implements Initializable {
         clienteDAO.setConnection(connection);
         corDAO.setConnection(connection);
         modeloDAO.setConnection(connection);
+        try {
+            List<Cliente> clientes = clienteDAO.listar();
+            List<Cor> cores = corDAO.listar();
+            List<Modelo> modelos = modeloDAO.listar();
 
-        List<Cliente> clientes = clienteDAO.listar();
-        List<Cor> cores = corDAO.listar();
-        List<Modelo> modelos = modeloDAO.listar();
-
-        //Adicionando os tipos de enum aos itens do ChoiceBox
-        cbClienteVeiculo.getItems().addAll(clientes);
-        cbCorVeiculo.getItems().addAll(cores);
-        cbModeloVeiculo.getItems().addAll(modelos);
+            //Adicionando os tipos de enum aos itens do ChoiceBox
+            cbClienteVeiculo.getItems().addAll(clientes);
+            cbCorVeiculo.getItems().addAll(cores);
+            cbModeloVeiculo.getItems().addAll(modelos);
+        } catch (DAOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

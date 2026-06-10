@@ -1,5 +1,6 @@
 package br.edu.ifsc.fln;
 
+import br.edu.ifsc.fln.exception.DAOException;
 import br.edu.ifsc.fln.model.dao.ServicoDAO;
 import br.edu.ifsc.fln.model.dao.VeiculoDAO;
 import br.edu.ifsc.fln.model.domain.*;
@@ -60,7 +61,7 @@ public class DialogOrdemServicoController implements Initializable {
     private DatePicker datePickerAgenda;
 
     @FXML
-    private TableColumn<ItemOS, Integer> tableColumnId;
+    private TableColumn<ItemOS, String> tableColumnId;
 
     @FXML
     private TableColumn<ItemOS, String> tableColumnProduto;
@@ -110,7 +111,7 @@ public class DialogOrdemServicoController implements Initializable {
         carregarChoiceBoxSituacao();
         //setFocusLostHandle();
         tableColumnProduto.setCellValueFactory(new PropertyValueFactory<>("servico"));
-        tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tableColumnId.setCellValueFactory(new PropertyValueFactory<>("observacoes"));
         tableColumnValor.setCellValueFactory(new PropertyValueFactory<>("valorServico"));
     }
 
@@ -122,7 +123,11 @@ public class DialogOrdemServicoController implements Initializable {
 
     private void carregarComboBoxProdutos() {
         /* carrega apenas os produtos  com estoque cuja SITUACAO está em ATIVO para operações */
-        listaServicos = servicoDAO.listar();
+        try {
+            listaServicos = servicoDAO.listar();
+        } catch (DAOException e) {
+            throw new RuntimeException(e);
+        }
         observableListServicos = FXCollections.observableArrayList(listaServicos);
         comboBoxServicos.setItems(observableListServicos);
     }
