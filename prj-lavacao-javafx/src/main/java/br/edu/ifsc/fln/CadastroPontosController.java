@@ -1,5 +1,6 @@
 package br.edu.ifsc.fln;
 
+import br.edu.ifsc.fln.exception.DAOException;
 import br.edu.ifsc.fln.model.dao.ConfiguracoesDAO;
 import br.edu.ifsc.fln.model.database.Database;
 import br.edu.ifsc.fln.model.database.DatabaseFactory;
@@ -34,8 +35,12 @@ public class CadastroPontosController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         configuracoesDAO.setConnection(connection);
-        Configuracoes config = configuracoesDAO.buscar();
-        labelPontos.setText(String.valueOf(config.getPontos()));
+        try {
+            Configuracoes config = configuracoesDAO.buscar();
+            labelPontos.setText(String.valueOf(config.getPontos()));
+        } catch (DAOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
@@ -44,7 +49,11 @@ public class CadastroPontosController implements Initializable {
         config.setPontos(Integer.parseInt(labelPontos.getText()));
         boolean buttonServicofirmarClicked = showDialogCadastroPontos(config);
         if (buttonServicofirmarClicked) {
+            try{
             configuracoesDAO.alterar(config);
+            } catch (DAOException e) {
+                throw new RuntimeException(e);
+            }
             labelPontos.setText(String.valueOf(config.getPontos()));
         }
     }
