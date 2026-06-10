@@ -66,17 +66,17 @@ public class OrdemServico {
         }
     }
 
-//    @Override
-//    public String toString() {
-//        return "OrdemServico{" +
-//                "id=" + id +
-//                ", numero=" + numero +
-//                ", total=" + total +
-//                ", agenda=" + agenda +
-//                ", desconto=" + desconto +
-//                ", status=" + status +
-//                ", veiculo=" + veiculo +
-//                ", itensOS=" + itensOS +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "OrdemServico{" +
+                "id=" + id +
+                ", numero=" + numero +
+                ", total=" + total +
+                ", agenda=" + agenda +
+                ", desconto=" + desconto +
+                ", status=" + status +
+                ", veiculo=" + veiculo +
+                ", itensOS=" + itensOS +
+                '}';
+    }
 }

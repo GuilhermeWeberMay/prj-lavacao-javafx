@@ -12,4 +12,14 @@ public class ItemOS {
     // Classe associativa com as duas classes
     private OrdemServico ordemServico;
     private Servico servico;
+
+    @Override
+    public String toString() {
+        return "ItemOS{" +
+                "id=" + id +
+                ", valorServico=" + valorServico +
+                ", observacoes='" + observacoes + '\'' +
+                ", servico=" + servico +
+                '}';
+    }
 }

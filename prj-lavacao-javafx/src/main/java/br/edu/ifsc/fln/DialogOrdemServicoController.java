@@ -180,6 +180,8 @@ public class DialogOrdemServicoController implements Initializable {
                 itemOS.setValorServico(servico.getValor());
                 ordemServico.add(itemOS);
 
+            System.out.println(ordemServico.toString());
+
                 // Pequena tabela do Dialog
                 observableListItensOs = FXCollections.observableArrayList(ordemServico.getItensOS());
                 tableViewItensDeVenda.setItems(observableListItensOs);

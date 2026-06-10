@@ -1,5 +1,6 @@
 package br.edu.ifsc.fln;
 
+import br.edu.ifsc.fln.exception.DAOException;
 import br.edu.ifsc.fln.model.dao.CorDAO;
 import br.edu.ifsc.fln.model.database.Database;
 import br.edu.ifsc.fln.model.database.DatabaseFactory;
@@ -72,9 +73,11 @@ public class CadastroCorController implements Initializable {
 
     private void carregarTableViewCor() {
         tableColumnCor.setCellValueFactory(new PropertyValueFactory<>("nome"));
-
+        try{
         cores = corDAO.listar();
-
+        }catch (DAOException e) {
+            throw new RuntimeException(e);
+        }
         ObservableList<Cor> observableListCores = FXCollections.observableArrayList(cores);
         tableViewCores.setItems(observableListCores);
     }
@@ -84,7 +87,11 @@ public class CadastroCorController implements Initializable {
         Cor cor = new Cor();
         boolean buttonConfirmarClicked = showDialogCadastroCor(cor);
         if (buttonConfirmarClicked) {
-            corDAO.create(cor);
+            try {
+                corDAO.create(cor);
+            } catch (DAOException e) {
+                throw new RuntimeException(e);
+            }
             carregarTableViewCor();
         }
     }
@@ -93,7 +100,11 @@ public class CadastroCorController implements Initializable {
     void buttonDeleteCor(ActionEvent event) throws IOException {
         Cor cor = tableViewCores.getSelectionModel().getSelectedItem();
         if (cor != null) {
-            corDAO.remover(cor);
+            try {
+                corDAO.remover(cor);
+            }catch (DAOException e) {
+                throw new RuntimeException(e);
+            }
             carregarTableViewCor();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -108,7 +119,11 @@ public class CadastroCorController implements Initializable {
         if (cor != null) {
             boolean buttonCorfirmarClicked = showDialogCadastroCor(cor);
             if (buttonCorfirmarClicked) {
+                try{
                 corDAO.alterar(cor);
+                }catch (DAOException e) {
+                    throw new RuntimeException(e);
+                }
                 carregarTableViewCor();
             }else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
