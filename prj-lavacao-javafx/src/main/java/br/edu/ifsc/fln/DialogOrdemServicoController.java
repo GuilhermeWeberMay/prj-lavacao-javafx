@@ -224,45 +224,39 @@ public class DialogOrdemServicoController implements Initializable {
 
     @FXML
     void handleTableViewMouseClicked(MouseEvent event) {
-//        ItemDeOrdemServico itemDeOrdemServico
-//                = tableViewItensDeOrdemServico.getSelectionModel().getSelectedItem();
-//        if (itemDeOrdemServico == null) {
-//            contextMenuItemAtualizarQtd.setDisable(true);
-//            contextMenuItemRemoverItem.setDisable(true);
-//        } else {
-//            contextMenuItemAtualizarQtd.setDisable(false);
-//            contextMenuItemRemoverItem.setDisable(false);
-//        }
-
+        ItemOS itemDeOrdemServico
+                = tableViewItensDeVenda.getSelectionModel().getSelectedItem();
+        if (itemDeOrdemServico == null) {
+            contextMenuItemAtualizarQtd.setDisable(true);
+            contextMenuItemRemoverItem.setDisable(true);
+        } else {
+            contextMenuItemAtualizarQtd.setDisable(false);
+            contextMenuItemRemoverItem.setDisable(false);
+        }
     }
 
     @FXML
     private void handleContextMenuItemAtualizarQtd() {
-//        ItemDeOrdemServico itemDeOrdemServico
-//                = tableViewItensDeOrdemServico.getSelectionModel().getSelectedItem();
-//        int index = tableViewItensDeOrdemServico.getSelectionModel().getSelectedIndex();
-//
-//        int qtdAtualizada = Integer.parseInt(inputDialog(itemDeOrdemServico.getQuantidade()));
-//        if (itemDeOrdemServico.getProduto().getEstoque().getQuantidade() >= qtdAtualizada) {
-//            itemDeOrdemServico.setQuantidade(qtdAtualizada);
-//            //venda.getItensDeOrdemServico().set(venda.getItensDeOrdemServico().indexOf(itemDeOrdemServico),itemDeOrdemServico);
-//            venda.getItensDeOrdemServico().set(index, itemDeOrdemServico);
-//            itemDeOrdemServico.setValor(itemDeOrdemServico.getProduto().getPreco().multiply(BigDecimal.valueOf(itemDeOrdemServico.getQuantidade())));
-//            tableViewItensDeOrdemServico.refresh();
-//            textFieldValor.setText(String.format("%.2f", venda.getTotal()));
-//        } else {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setHeaderText("Erro no estoque");
-//            alert.setContentText("Não há quantidade suficiente de produtos para venda.");
-//            alert.show();
-//        }
+        ItemOS itemOs
+                = tableViewItensDeVenda.getSelectionModel().getSelectedItem();
+
+        String observacaoAtualizada = inputDialog((itemOs.getObservacoes()));
+        if (!itemOs.getObservacoes().equals(observacaoAtualizada)) {
+            itemOs.setObservacoes(observacaoAtualizada);
+            tableViewItensDeVenda.refresh();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Erro na observação");
+            alert.setContentText("Mensagem vazia.");
+            alert.show();
+        }
     }
 
-    private String inputDialog(int value) {
-        TextInputDialog dialog = new TextInputDialog(Integer.toString(value));
+    private String inputDialog(String ob) {
+        TextInputDialog dialog = new TextInputDialog(ob);
         dialog.setTitle("Entrada de dados.");
-        dialog.setHeaderText("Atualização da quantidade de produtos.");
-        dialog.setContentText("Quantidade: ");
+        dialog.setHeaderText("Atualização de observação.");
+        dialog.setContentText("Observação: ");
 
         // Traditional way to get the response value.
         Optional<String> result = dialog.showAndWait();
@@ -271,14 +265,14 @@ public class DialogOrdemServicoController implements Initializable {
 
     @FXML
     private void handleContextMenuItemRemoverItem() {
-//        ItemOS itemOS
-//                = tableViewItensDeVenda.getSelectionModel().getSelectedItem();
-//        int index = tableViewItensDeOrdemServico.getSelectionModel().getSelectedIndex();
-//        venda.getItensDeOrdemServico().remove(index);
-//        observableListItensDeOrdemServico = FXCollections.observableArrayList(venda.getItensDeOrdemServico());
-//        tableViewItensDeOrdemServico.setItems(observableListItensDeOrdemServico);
-//
-//        textFieldValor.setText(String.format("%.2f", venda.getTotal()));
+        ItemOS itemOS
+                = tableViewItensDeVenda.getSelectionModel().getSelectedItem();
+        //int index = tableViewItensDeVenda.getSelectionModel().getSelectedIndex();
+        itemOS.getOrdemServico().remove(itemOS);
+        observableListItensOs = FXCollections.observableArrayList(itemOS);
+        tableViewItensDeVenda.setItems(observableListItensOs);
+
+        //textFieldValor.setText(String.format("%.2f", itemOS.getValorServico()));
     }
 
     //validar entrada de dados do cadastro
@@ -313,6 +307,5 @@ public class DialogOrdemServicoController implements Initializable {
 //            alert.setContentText(errorMessage);
 //            alert.show();
         return true;
-//        }
     }
 }

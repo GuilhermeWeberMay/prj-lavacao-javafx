@@ -3,7 +3,6 @@ DROP DATABASE IF EXISTS db_lavacao;
 CREATE DATABASE db_lavacao;
 
 USE db_lavacao;
-
 CREATE TABLE IF NOT EXISTS cliente
 (
     id            int          not null auto_increment,
@@ -128,25 +127,22 @@ INSERT INTO configuracoes (pontos_servico)
 VALUES (10);
 
 INSERT INTO servico (descricao, valor, categoria)
-VALUES
--- Lavagem Simples
-('lavagem simples', 35.00, 'PEQUENO'),
-('lavagem simples', 50.00, 'MEDIO'),
-('lavagem simples', 70.00, 'GRANDE'),
-('lavagem simples', 25.00, 'MOTO'),
-('lavagem simples', 45.00, 'PADRAO'),
+VALUES ('Lavagem', 25.00, 'MOTO'),
+       ('Lavagem', 35.00, 'PEQUENO'),
+       ('Lavagem', 45.00, 'PADRAO'),
+       ('Lavagem', 55.00, 'MEDIO'),
+       ('Lavagem', 65.00, 'GRANDE'),
 
-('lavagem com cera', 55.00, 'PEQUENO'),
-('lavagem com cera', 75.00, 'MEDIO'),
-('lavagem com cera', 100.00, 'GRANDE'),
-('lavagem com cera', 40.00, 'MOTO'),
-('lavagem com cera', 65.00, 'PADRAO'),
+       ('Polimento', 5.00, 'MOTO'),
+       ('Polimento', 10.00, 'PEQUENO'),
+       ('Polimento', 15.00, 'PADRAO'),
+       ('Polimento', 20.00, 'MEDIO'),
+       ('Polimento', 25.00, 'GRANDE'),
 
-('lavagem premium', 80.00, 'PEQUENO'),
-('lavagem premium', 110.00, 'MEDIO'),
-('lavagem premium', 150.00, 'GRANDE'),
-('lavagem premium', 60.00, 'MOTO'),
-('lavagem premium', 95.00, 'PADRAO');
+       ('Higenização', 20.00, 'PEQUENO'),
+       ('Higenização', 30.00, 'MEDIO'),
+       ('Higenização', 40.00, 'PADRAO'),
+       ('Higenização', 50.00, 'GRANDE');
 
 CREATE TABLE modelo
 (
@@ -160,7 +156,7 @@ CREATE TABLE modelo
 ) ENGINE = INNODB;
 
 INSERT INTO modelo
-(descricao, categoria, id_marca)
+    (descricao, categoria, id_marca)
 VALUES ('Voyage', 'PEQUENO', 1),
        ('Frontier', 'GRANDE', 2),
        ('Argo', 'PEQUENO', 3),
@@ -168,7 +164,7 @@ VALUES ('Voyage', 'PEQUENO', 1),
        ('Virtus', 'MEDIO', 1);
 
 INSERT INTO modelo
-(descricao, categoria, id_marca)
+    (descricao, categoria, id_marca)
 VALUES
 -- PEQUENO
 ('Gol', 'PEQUENO', 1),
@@ -212,7 +208,7 @@ CREATE TABLE IF NOT EXISTS motor
 ) ENGINE = INNODB;
 
 INSERT INTO motor
-(potencia, tipo_combustivel)
+    (potencia, tipo_combustivel)
 VALUES (82, 'FLEX'),
        (82, 'FLEX'),
        (110, 'FLEX'),
@@ -288,46 +284,44 @@ CREATE TABLE IF NOT EXISTS ordem_servico
 ) ENGINE = InnoDB;
 
 INSERT INTO ordem_servico
-(numero, total, agenda, desconto, status, id_veiculo)
-VALUES (1001, 80.00, '2026-05-10', NULL, 'ABERTA', 1),
-       (1002, 110.00, '2026-05-11', NULL, 'FECHADA', 2),
-       (1003, 150.00, '2026-05-12', NULL, 'FECHADA', 3),
-       (1004, 90.00, '2026-05-13', NULL, 'ABERTA', 4),
-       (1005, 185.00, '2026-05-14', NULL, 'FECHADA', 5),
-       (1006, 70.00, '2026-05-15', NULL, 'ABERTA', 6),
-       (1007, 115.00, '2026-05-16', NULL, 'ABERTA', 7),
-       (1008, 160.00, '2026-05-17', NULL, 'FECHADA', 8),
-       (1009, 100.00, '2026-05-18', NULL, 'ABERTA', 9),
-       (1010, 200.00, '2026-05-19', NULL, 'FECHADA', 10);
-
-select * from ordem_servico where id =1;
+    (numero, total, agenda, desconto, status, id_veiculo)
+VALUES (1001, 25.00, '2026-05-10', NULL, 'ABERTA', 1),
+       (1002, 45.00, '2026-05-11', NULL, 'FECHADA', 2),
+       (1003, 45.00, '2026-05-12', NULL, 'FECHADA', 3),
+       (1004, 35.00, '2026-05-13', NULL, 'ABERTA', 4),
+       (1005, 45.00, '2026-05-14', NULL, 'FECHADA', 5),
+       (1006, 25.00, '2026-05-15', NULL, 'ABERTA', 6),
+       (1007, 35.00, '2026-05-16', NULL, 'ABERTA', 7),
+       (1008, 45.00, '2026-05-17', NULL, 'FECHADA', 8),
+       (1009, 35.00, '2026-05-18', NULL, 'ABERTA', 9),
+       (1010, 45.00, '2026-05-19', NULL, 'FECHADA', 10);
 
 CREATE TABLE IF NOT EXISTS item_os
 (
-    id 				 INT NOT NULL AUTO_INCREMENT,
+    id               INT            NOT NULL AUTO_INCREMENT,
     valor_servico    DECIMAL(10, 2) NOT NULL,
-    observacoes      VARCHAR(300),
+    observacoes      VARCHAR(300)   NULL,
     id_servico       INT            NOT NULL,
     id_ordem_servico INT            NOT NULL,
+
     CONSTRAINT pk_item_os PRIMARY KEY (id),
-    CONSTRAINT fk_ordem_servico FOREIGN KEY (id_ordem_servico)
-        REFERENCES ordem_servico (id),
+
+    CONSTRAINT fk_ordem_servio FOREIGN KEY (id_ordem_servico) REFERENCES ordem_servico (id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
     CONSTRAINT fk_servico FOREIGN KEY (id_servico)
         REFERENCES servico (id)
 ) ENGINE = InnoDB;
 
 INSERT INTO item_os
-(valor_servico, observacoes, id_servico, id_ordem_servico)
-VALUES (80.00, 'Lavagem simples + cera', 1, 1),
-       (110.00, 'Lavagem premium com polimento', 3, 2),
-       (150.00, 'Lavagem completa e proteção', 3, 3),
-       (90.00, 'Lavagem rápida', 1, 4),
-       (185.00, 'Serviço premium com wax', 3, 5),
-       (70.00, 'Lavagem simples', 1, 6),
-       (115.00, 'Lavagem com cera e polimento', 2, 7),
-       (160.00, 'Serviço completo premium', 3, 8),
-       (100.00, 'Lavagem + cera', 2, 9),
-       (200.00, 'Lavagem premium com tratamento especial', 3, 10);
-
-
-select * from ordem_servico;
+    (valor_servico, observacoes, id_servico, id_ordem_servico)
+VALUES (25.00, '', 1, 1),
+       (45.00, '', 3, 2),
+       (45.00, '', 3, 3),
+       (35.00, '', 1, 4),
+       (45.00, '', 3, 5),
+       (25.00, '', 1, 6),
+       (35.00, '', 2, 7),
+       (45.00, '', 3, 8),
+       (35.00, '', 2, 9),
+       (45.00, '', 3, 10);

@@ -90,13 +90,13 @@ public class OrdemServicoDAO {
             stmt.setDouble(2, ordemServico.getTotal());
             stmt.setDate(3, Date.valueOf(ordemServico.getAgenda()));
             stmt.setDouble(4, ordemServico.getDesconto());
-            stmt.setString(5, ordemServico.getStatus().name());
-//            if  (ordemServico.getStatusOrdemServico() != null) {
-//                stmt.setString(6, ordemServico.getStatusOrdemServico().name());
-//            } else {
-//                stmt.setString(6, EStatusOrdemServico.ABERTA.name());
-//            }
-            stmt.setInt(7, ordemServico.getVeiculo().getId());
+            if  (ordemServico.getStatus() != null) {
+                stmt.setString(5, ordemServico.getStatus().name());
+            } else {
+                stmt.setString(5, EStatus.ABERTA.name());
+            }
+            stmt.setInt(6, ordemServico.getVeiculo().getId());
+            stmt.setInt(7, ordemServicoAnterior.getId());
             stmt.execute();
             for (ItemOS iv: ordemServico.getItensOS()) {
                 itemOsDAO.inserir(iv);
@@ -189,7 +189,7 @@ public class OrdemServicoDAO {
     }
 
     public OrdemServico buscar(OrdemServico ordemServico) {
-        String sql = "SELECT * FROM ordemServico WHERE id=?";
+        String sql = "SELECT * FROM ordem_servico WHERE id=?";
         OrdemServico ordemServicoRetorno = new OrdemServico();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);

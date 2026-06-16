@@ -113,7 +113,7 @@ public class ItemOsDAO {
                 Servico servico = new Servico();
                 OrdemServico os = new OrdemServico();
 
-                //itemOS.setId(resultado.getInt("id"));
+                itemOS.setId(resultado.getInt("id"));
                 itemOS.setValorServico(resultado.getDouble("valor_servico"));
                 itemOS.setObservacoes(resultado.getString("observacoes"));
 
