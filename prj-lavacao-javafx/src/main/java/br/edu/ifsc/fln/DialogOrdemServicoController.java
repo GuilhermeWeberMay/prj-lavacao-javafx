@@ -12,6 +12,8 @@ import br.edu.ifsc.fln.model.database.DatabaseFactory;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Connection;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -109,7 +111,7 @@ public class DialogOrdemServicoController implements Initializable {
 
         carregarComboBoxProdutos();
         carregarChoiceBoxSituacao();
-        //setFocusLostHandle();
+        setFocusLostHandle();
         tableColumnProduto.setCellValueFactory(new PropertyValueFactory<>("servico"));
         tableColumnId.setCellValueFactory(new PropertyValueFactory<>("observacoes"));
         tableColumnValor.setCellValueFactory(new PropertyValueFactory<>("valorServico"));
@@ -122,7 +124,6 @@ public class DialogOrdemServicoController implements Initializable {
     }
 
     private void carregarComboBoxProdutos() {
-        /* carrega apenas os produtos  com estoque cuja SITUACAO está em ATIVO para operações */
         try {
             listaServicos = servicoDAO.listar();
         } catch (DAOException e) {
@@ -265,47 +266,50 @@ public class DialogOrdemServicoController implements Initializable {
 
     @FXML
     private void handleContextMenuItemRemoverItem() {
-        ItemOS itemOS
-                = tableViewItensDeVenda.getSelectionModel().getSelectedItem();
-        //int index = tableViewItensDeVenda.getSelectionModel().getSelectedIndex();
-        itemOS.getOrdemServico().remove(itemOS);
-        observableListItensOs = FXCollections.observableArrayList(itemOS);
-        tableViewItensDeVenda.setItems(observableListItensOs);
-
-        //textFieldValor.setText(String.format("%.2f", itemOS.getValorServico()));
+        // Remove o ItemOs e atualiza a pagina
+        ItemOS itemOS = tableViewItensDeVenda.getSelectionModel().getSelectedItem();
+        observableListItensOs.remove(itemOS);
+        tableViewItensDeVenda.refresh();
+        // Calcula novamente o valor da OS
+        double totalAtualizado = 0.0;
+        for (ItemOS item : tableViewItensDeVenda.getItems()) {
+            totalAtualizado += item.getServico().getValor();
+        }
+        textFieldValor.setText(String.valueOf(totalAtualizado));
     }
 
     //validar entrada de dados do cadastro
     private boolean validarEntradaDeDados() {
-//        String errorMessage = "";
-//
-//        if (comboBoxClientes.getSelectionModel().getSelectedItem() == null) {
-//            errorMessage += "Cliente inválido!\n";
-//        }
-//
-//        if (datePickerData.getValue() == null) {
-//            errorMessage += "Data inválida!\n";
-//        }
-//
-//        if (observableListItensDeOrdemServico == null) {
-//            errorMessage += "Itens de venda inválidos!\n";
-//        }
-//
-//        DecimalFormat df = new DecimalFormat("0.00");
-//        try {
-//            textFieldDesconto.setText(df.parse(textFieldDesconto.getText()).toString());
-//        } catch (ParseException ex) {
-//            errorMessage += "A taxa de desconto está incorreta! Use \",\" como ponto decimal.\n";
-//        }
-//
-//        if (errorMessage.length() == 0) {
-//            return true;
-//        } else {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Erro no cadastro");
-//            alert.setHeaderText("Campos inválidos, por favor corrija...");
-//            alert.setContentText(errorMessage);
-//            alert.show();
-        return true;
+        String errorMessage = "";
+
+        if (comboBoxVeiculos.getSelectionModel().getSelectedItem() == null) {
+            errorMessage += "Veículo inválido!\n";
+        }
+
+        if (datePickerAgenda.getValue() == null) {
+            errorMessage += "Data inválida!\n";
+        }
+
+        if (observableListItensOs == null) {
+            errorMessage += "Itens de venda inválidos!\n";
+        }
+
+        DecimalFormat df = new DecimalFormat("0.00");
+        try {
+            textFieldDesconto.setText(df.parse(textFieldDesconto.getText()).toString());
+        } catch (ParseException ex) {
+            errorMessage += "A taxa de desconto está incorreta! Use \",\" como ponto decimal.\n";
+        }
+
+        if (errorMessage.isEmpty()) {
+            return true;
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro no cadastro");
+            alert.setHeaderText("Campos inválidos, por favor corrija...");
+            alert.setContentText(errorMessage);
+            alert.show();
+            return false;
+        }
     }
 }

@@ -17,13 +17,15 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifsc.fln.DialogOrdemServicoController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="830.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifsc.fln.DialogOrdemServicoController">
     <children>
-        <GridPane layoutX="28.0" layoutY="14.0" prefHeight="410.0" prefWidth="554.0">
+        <GridPane layoutX="28.0" layoutY="14.0" prefHeight="410.0" prefWidth="787.0">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="147.0" minWidth="10.0" prefWidth="10.399981689453114" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="486.4000183105469" minWidth="10.0" prefWidth="486.4000183105469" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="550.4000114440918" minWidth="10.0" prefWidth="75.99997177124024" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="705.600048828125" minWidth="10.0" prefWidth="489.5999877929687" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="486.4000183105469" minWidth="7.199951171875" prefWidth="223.20001220703125" />
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints maxHeight="38.0" minHeight="0.0" prefHeight="21.0" vgrow="SOMETIMES" />
@@ -100,9 +102,19 @@
             <TextField fx:id="tfNumeroOrdemServico" GridPane.columnIndex="1" />
             <Label prefHeight="18.0" prefWidth="160.0" text="Numero:" />
                 <DatePicker fx:id="datePickerAgenda" prefHeight="25.0" prefWidth="355.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField fx:id="textFieldObserItemOs" prefHeight="25.0" prefWidth="83.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField fx:id="textFieldObserItemOs" prefHeight="26.0" prefWidth="383.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <Button fx:id="buttonAdicionar" mnemonicParsing="false" onAction="#handleButtonAdicionar" prefHeight="25.0" prefWidth="77.0" text="Adicionar" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <Label text="Observação" GridPane.rowIndex="4" />
+            <Button fx:id="buttonAdicionar1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonAdicionar" prefHeight="26.0" prefWidth="106.0" text="Buscar cliente" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="370.0" />
+               </GridPane.margin>
+            </Button>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Informções do cliente/veículo" textAlignment="CENTER" GridPane.columnIndex="2" />
+            <Label text="Placa:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Label text="Categoria" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label text="Nome" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label text="Telefone" GridPane.columnIndex="2" GridPane.rowIndex="4" />
             </children>
         </GridPane>
         <Group layoutX="296.0" layoutY="290.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
