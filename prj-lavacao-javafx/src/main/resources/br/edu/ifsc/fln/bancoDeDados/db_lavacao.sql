@@ -275,7 +275,7 @@ CREATE TABLE IF NOT EXISTS ordem_servico
     numero     LONG           NOT NULL,
     total      DECIMAL(10, 2) NOT NULL,
     agenda     DATE           NOT NULL,
-    desconto   DECIMAL(3, 1),
+    desconto   DECIMAL(5, 2),
     status     ENUM ('ABERTA', 'FECHADA', 'CANCELADA') DEFAULT ('ABERTA'),
     id_veiculo INT            NOT NULL,
     CONSTRAINT pk_ordem_servico PRIMARY KEY (id),

@@ -2,6 +2,7 @@ package br.edu.ifsc.fln.model.dao;
 
 import br.edu.ifsc.fln.model.domain.*;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -29,7 +30,7 @@ public class OrdemServicoDAO {
             PreparedStatement stmt = connection.prepareStatement(sql);
             connection.setAutoCommit(false);
             stmt.setLong(1, ordemServico.getNumero());
-            stmt.setDouble(2, ordemServico.getTotal());
+            stmt.setDouble(2,ordemServico.getTotal());
             stmt.setDate(3, Date.valueOf(ordemServico.getAgenda()));
             stmt.setDouble(4, ordemServico.getDesconto());
             stmt.setString(5, ordemServico.getStatus().name());
@@ -77,7 +78,6 @@ public class OrdemServicoDAO {
             ItemOsDAO itemOsDAO = new ItemOsDAO();
             itemOsDAO.setConnection(connection);
 
-            //OrdemServico ordemServicoAnterior = buscar(ordemServico.getCdOrdemServico());
             OrdemServico ordemServicoAnterior = buscar(ordemServico);
             List<ItemOS> itensDeOs = itemOsDAO.listarPorOrdemServico(ordemServicoAnterior);
             for (ItemOS iv : itensDeOs) {

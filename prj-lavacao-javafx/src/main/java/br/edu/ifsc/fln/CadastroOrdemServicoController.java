@@ -133,37 +133,6 @@ public class CadastroOrdemServicoController implements Initializable {
         os.setItensOS(itemOS);
         boolean buttonConfirmarClicked = showFXMLAnchorPaneProcessoOrdemServicoDialog(os);
         if (buttonConfirmarClicked) {
-            //O código comentado a seguir (bloco try..catch) evidencia uma má prática de programação, haja vista que o boa parte da lógica de negócio está implementada no controller
-            //PROBLEMA: caso haja necessidade de levar esta aplicação para outro nível (uma aplicação web, por exemplo), todo esse código deverá ser repetido no controller, o que
-            //de fato pode se tornar inconsistente caso uma nova lógica seja necessária, implicando na necessidade de rever todos os controllers das aplicações, mas, o que garante
-            // que todas equipes farão isso?
-            //SOLUÇÃO: levar a lógica de negócio para o OrdemServicoDAO, afinal, estamos tratando de uma venda. É ela que deve resolver o problema
-//            try {
-//                connection.setAutoCommit(false);
-//                vendaDAO.setConnection(connection);
-//                vendaDAO.inserir(venda);
-//                itemDeOrdemServicoDAO.setConnection(connection);
-//                produtoDAO.setConnection(connection);
-//                estoqueDAO.setConnection(connection);
-//                for (ItemDeOrdemServico itemDeOrdemServico: venda.getItensDeOrdemServico()) {
-//                    Servico produto = itemDeOrdemServico.getServico();
-//                    itemDeOrdemServico.setOrdemServico(vendaDAO.buscarUltimaOrdemServico());
-//                    itemDeOrdemServicoDAO.inserir(itemDeOrdemServico);
-//                    produto.getEstoque().setQuantidade(
-//                            produto.getEstoque().getQuantidade() - itemDeOrdemServico.getQuantidade());
-//                    estoqueDAO.atualizar(produto.getEstoque());
-//                }
-//                connection.commit();
-//                carregarTableView();
-//            } catch (SQLException exc) {
-//                try {
-//                    connection.rollback();
-//                } catch (SQLException exc1) {
-//                    Logger.getLogger(FXMLAnchorPaneProcessoOrdemServicoController.class.getName()).log(Level.SEVERE, null, exc1);
-//                }
-//                Logger.getLogger(FXMLAnchorPaneProcessoOrdemServicoController.class.getName()).log(Level.SEVERE, null, exc);
-//            }
-//        }
             ordemServicoDAO.setConnection(connection);
             ordemServicoDAO.inserir(os);
             carregarTableView();
@@ -208,18 +177,15 @@ public class CadastroOrdemServicoController implements Initializable {
                 "/br/edu/ifsc/fln/view/DialogCadastroOrdemServico.fxml"));
         AnchorPane page = (AnchorPane) loader.load();
 
-        //criando um estágio de diálogo  (Stage Dialog)
         Stage dialogStage = new Stage();
         dialogStage.setTitle("Cadastro de vendas");
         Scene scene = new Scene(page);
         dialogStage.setScene(scene);
 
-        //Setando o venda ao controller
         DialogOrdemServicoController controller = loader.getController();
         controller.setDialogStage(dialogStage);
         controller.setOrdemServico(os);
 
-        //Mostra o diálogo e espera até que o usuário o feche
         dialogStage.showAndWait();
 
         return controller.isButtonConfirmarClicked();

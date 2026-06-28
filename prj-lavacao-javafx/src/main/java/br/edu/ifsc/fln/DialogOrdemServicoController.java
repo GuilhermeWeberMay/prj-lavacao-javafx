@@ -145,7 +145,7 @@ public class DialogOrdemServicoController implements Initializable {
                 if (textFieldDesconto.getText() != null && !textFieldDesconto.getText().isEmpty()) {
                     //System.out.println("teste focus lost");
                     ordemServico.setDesconto(Double.parseDouble(textFieldDesconto.getText()));
-                    //textFieldValor.setText(ordemServico.getTotal()/*.toString()*/);
+                    textFieldValor.setText(String.valueOf(ordemServico.calcularServico()));
 
                 }
             }
@@ -178,7 +178,6 @@ public class DialogOrdemServicoController implements Initializable {
         if (comboBoxServicos.getSelectionModel().getSelectedItem() != null) {
             //o comboBox possui dados sintetizados de Produto para evitar carga desnecessária de informação
             servico = comboBoxServicos.getSelectionModel().getSelectedItem();
-            //if (tableColumnProduto.getColumns() != servico) {
                 // Criação do ItemOS
                 itemOS.setServico(servico);
                 itemOS.setObservacoes(textFieldObserItemOs.getText());
@@ -186,19 +185,11 @@ public class DialogOrdemServicoController implements Initializable {
                 itemOS.setValorServico(servico.getValor());
                 ordemServico.add(itemOS);
 
-            System.out.println(ordemServico.toString());
-
                 // Pequena tabela do Dialog
                 observableListItensOs = FXCollections.observableArrayList(ordemServico.getItensOS());
                 tableViewItensDeVenda.setItems(observableListItensOs);
 
                 textFieldValor.setText(String.format("%.2f", ordemServico.getTotal()));
-//            } else {
-//                Alert alert = new Alert(Alert.AlertType.ERROR);
-//                alert.setHeaderText("Problemas na escolha do produto");
-//                alert.setContentText("Não existe quantidade suficiente de produtos para venda.");
-//                alert.show();
-//            }
         }
     }
 
@@ -211,7 +202,6 @@ public class DialogOrdemServicoController implements Initializable {
             ordemServico.setStatus((choiceBoxStatus.getSelectionModel().getSelectedItem()));
             ordemServico.setDesconto(Double.parseDouble(textFieldDesconto.getText()));
             ordemServico.setItensOS(observableListItensOs);
-
 
             buttonConfirmarClicked = true;
             dialogStage.close();
@@ -278,7 +268,6 @@ public class DialogOrdemServicoController implements Initializable {
         textFieldValor.setText(String.valueOf(totalAtualizado));
     }
 
-    //validar entrada de dados do cadastro
     private boolean validarEntradaDeDados() {
         String errorMessage = "";
 
