@@ -1,6 +1,6 @@
-package br.edu.ifsc.fln;
+package br.edu.ifsc.fln.controller;
 
-import br.edu.ifsc.fln.model.domain.Cor;
+import br.edu.ifsc.fln.model.domain.Configuracoes;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 
 @Getter
 @Setter
-public class DialogCadastroCorController implements Initializable {
+public class DialogCadastroPontosController implements Initializable {
 
     @FXML
     private Button btCancelar;
@@ -24,15 +24,15 @@ public class DialogCadastroCorController implements Initializable {
     private Button btConfirmar;
 
     @FXML
-    private TextField textFielCorNome;
+    private TextField textFielPontosQuantidade;
 
     private Stage dialogStage;
     private boolean buttonConfirmarClicked = false;
-    private Cor cor;
+    private Configuracoes configuracoes;
 
-    public void setCor(Cor cor) {
-        this.cor = cor;
-        textFielCorNome.setText(cor.getNome());
+    public void setPontos(Configuracoes configuracoes) {
+        this.configuracoes = configuracoes;
+        textFielPontosQuantidade.setText(String.valueOf(configuracoes.getPontos()));
     }
 
     @Override
@@ -41,28 +41,28 @@ public class DialogCadastroCorController implements Initializable {
     }
 
     @FXML
-    public void handleButtonConfirmar(){
-        if (validarEntradaDeDados()){
-        cor.setNome(textFielCorNome.getText());
+    public void handleButtonConfirmar() {
+        if (validarEntradaDeDados()) {
+            configuracoes.setPontos(Integer.parseInt(textFielPontosQuantidade.getText()));
 
-        buttonConfirmarClicked = true;
-        dialogStage.close();
+            buttonConfirmarClicked = true;
+            dialogStage.close();
         }
     }
 
     @FXML
-    public void handleButtonCancelar(){
+    public void handleButtonCancelar() {
         dialogStage.close();
     }
 
     private boolean validarEntradaDeDados() {
         String errorMessage = "";
-        if (textFielCorNome.getText() == null || textFielCorNome.getText().length() == 0) {
-            errorMessage += "Cor inválida!";
+        if (textFielPontosQuantidade.getText() == null || textFielPontosQuantidade.getText().length() == 0) {
+            errorMessage += "Servico inválida!\n";
         }
         if (errorMessage.length() == 0) {
             return true;
-        }else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erro no cadastro");
             alert.setHeaderText("campos inválidos, por favor, corrija...");

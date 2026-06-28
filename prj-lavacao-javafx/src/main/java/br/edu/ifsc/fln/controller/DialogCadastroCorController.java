@@ -1,6 +1,6 @@
-package br.edu.ifsc.fln;
+package br.edu.ifsc.fln.controller;
 
-import br.edu.ifsc.fln.model.domain.Marca;
+import br.edu.ifsc.fln.model.domain.Cor;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 
 @Getter
 @Setter
-public class DialogCadastroMarcaController implements Initializable {
+public class DialogCadastroCorController implements Initializable {
 
     @FXML
     private Button btCancelar;
@@ -24,15 +24,15 @@ public class DialogCadastroMarcaController implements Initializable {
     private Button btConfirmar;
 
     @FXML
-    private TextField textFielMarcaNome;
+    private TextField textFielCorNome;
 
     private Stage dialogStage;
     private boolean buttonConfirmarClicked = false;
-    private Marca marca;
+    private Cor cor;
 
-    public void setMarca(Marca marca) {
-        this.marca = marca;
-        textFielMarcaNome.setText(marca.getNome());
+    public void setCor(Cor cor) {
+        this.cor = cor;
+        textFielCorNome.setText(cor.getNome());
     }
 
     @Override
@@ -43,7 +43,7 @@ public class DialogCadastroMarcaController implements Initializable {
     @FXML
     public void handleButtonConfirmar(){
         if (validarEntradaDeDados()){
-        marca.setNome(textFielMarcaNome.getText());
+        cor.setNome(textFielCorNome.getText());
 
         buttonConfirmarClicked = true;
         dialogStage.close();
@@ -57,8 +57,8 @@ public class DialogCadastroMarcaController implements Initializable {
 
     private boolean validarEntradaDeDados() {
         String errorMessage = "";
-        if (textFielMarcaNome.getText() == null || textFielMarcaNome.getText().length() == 0) {
-            errorMessage += "Marca inválida!";
+        if (textFielCorNome.getText() == null || textFielCorNome.getText().length() == 0) {
+            errorMessage += "Cor inválida!";
         }
         if (errorMessage.length() == 0) {
             return true;

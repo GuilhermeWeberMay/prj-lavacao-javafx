@@ -1,4 +1,4 @@
-package br.edu.ifsc.fln;
+package br.edu.ifsc.fln.controller;
 
 import br.edu.ifsc.fln.exception.DAOException;
 import br.edu.ifsc.fln.model.dao.CorDAO;

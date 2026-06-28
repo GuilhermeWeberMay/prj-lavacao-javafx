@@ -1,4 +1,4 @@
-package br.edu.ifsc.fln;
+package br.edu.ifsc.fln.controller;
 
 import br.edu.ifsc.fln.exception.DAOException;
 import br.edu.ifsc.fln.model.dao.MarcaDAO;
@@ -21,7 +21,6 @@ import lombok.Setter;
 
 import java.net.URL;
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 

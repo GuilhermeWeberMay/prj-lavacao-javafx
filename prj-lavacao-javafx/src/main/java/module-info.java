@@ -14,4 +14,6 @@ module br.edu.ifsc.fln {
     opens br.edu.ifsc.fln to javafx.fxml;
     opens br.edu.ifsc.fln.model.domain to javafx.base;
     exports br.edu.ifsc.fln;
+    exports br.edu.ifsc.fln.controller;
+    opens br.edu.ifsc.fln.controller to javafx.fxml;
 }

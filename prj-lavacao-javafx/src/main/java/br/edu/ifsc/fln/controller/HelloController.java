@@ -1,4 +1,4 @@
-package br.edu.ifsc.fln;
+package br.edu.ifsc.fln.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

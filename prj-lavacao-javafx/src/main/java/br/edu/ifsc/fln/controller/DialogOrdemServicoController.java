@@ -1,4 +1,4 @@
-package br.edu.ifsc.fln;
+package br.edu.ifsc.fln.controller;
 
 import br.edu.ifsc.fln.exception.DAOException;
 import br.edu.ifsc.fln.model.dao.ServicoDAO;
@@ -9,7 +9,6 @@ import javafx.fxml.Initializable;
 import br.edu.ifsc.fln.model.database.Database;
 import br.edu.ifsc.fln.model.database.DatabaseFactory;
 
-import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Connection;
 import java.text.DecimalFormat;

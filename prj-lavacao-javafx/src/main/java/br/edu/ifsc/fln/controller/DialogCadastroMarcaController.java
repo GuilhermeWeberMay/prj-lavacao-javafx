@@ -1,7 +1,6 @@
-package br.edu.ifsc.fln;
+package br.edu.ifsc.fln.controller;
 
-import br.edu.ifsc.fln.model.domain.Configuracoes;
-import br.edu.ifsc.fln.model.domain.Servico;
+import br.edu.ifsc.fln.model.domain.Marca;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -16,7 +15,7 @@ import java.util.ResourceBundle;
 
 @Getter
 @Setter
-public class DialogCadastroPontosController implements Initializable {
+public class DialogCadastroMarcaController implements Initializable {
 
     @FXML
     private Button btCancelar;
@@ -25,15 +24,15 @@ public class DialogCadastroPontosController implements Initializable {
     private Button btConfirmar;
 
     @FXML
-    private TextField textFielPontosQuantidade;
+    private TextField textFielMarcaNome;
 
     private Stage dialogStage;
     private boolean buttonConfirmarClicked = false;
-    private Configuracoes configuracoes;
+    private Marca marca;
 
-    public void setPontos(Configuracoes configuracoes) {
-        this.configuracoes = configuracoes;
-        textFielPontosQuantidade.setText(String.valueOf(configuracoes.getPontos()));
+    public void setMarca(Marca marca) {
+        this.marca = marca;
+        textFielMarcaNome.setText(marca.getNome());
     }
 
     @Override
@@ -42,28 +41,28 @@ public class DialogCadastroPontosController implements Initializable {
     }
 
     @FXML
-    public void handleButtonConfirmar() {
-        if (validarEntradaDeDados()) {
-            configuracoes.setPontos(Integer.parseInt(textFielPontosQuantidade.getText()));
+    public void handleButtonConfirmar(){
+        if (validarEntradaDeDados()){
+        marca.setNome(textFielMarcaNome.getText());
 
-            buttonConfirmarClicked = true;
-            dialogStage.close();
+        buttonConfirmarClicked = true;
+        dialogStage.close();
         }
     }
 
     @FXML
-    public void handleButtonCancelar() {
+    public void handleButtonCancelar(){
         dialogStage.close();
     }
 
     private boolean validarEntradaDeDados() {
         String errorMessage = "";
-        if (textFielPontosQuantidade.getText() == null || textFielPontosQuantidade.getText().length() == 0) {
-            errorMessage += "Servico inválida!\n";
+        if (textFielMarcaNome.getText() == null || textFielMarcaNome.getText().length() == 0) {
+            errorMessage += "Marca inválida!";
         }
         if (errorMessage.length() == 0) {
             return true;
-        } else {
+        }else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erro no cadastro");
             alert.setHeaderText("campos inválidos, por favor, corrija...");
