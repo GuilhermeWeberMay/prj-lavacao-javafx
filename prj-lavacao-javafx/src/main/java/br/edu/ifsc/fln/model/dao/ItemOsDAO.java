@@ -25,7 +25,7 @@ public class ItemOsDAO {
         this.connection = connection;
     }
 
-    public boolean inserir(ItemOS itemOS) {
+    public boolean inserir(ItemOS itemOS) throws DAOException {
         String sql = "INSERT INTO item_os(valor_servico, observacoes, id_servico, id_ordem_servico) VALUES(?,?,?,?)";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -46,7 +46,7 @@ public class ItemOsDAO {
         return true;
     }
 
-    public boolean remover(ItemOS itemDeVenda) {
+    public boolean remover(ItemOS itemDeVenda) throws DAOException {
         String sql = "DELETE FROM item_os WHERE id=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -59,7 +59,7 @@ public class ItemOsDAO {
         }
     }
 
-    public List<ItemOS> listar() {
+    public List<ItemOS> listar() throws DAOException {
         String sql = "SELECT * FROM item_os";
         List<ItemOS> retorno = new ArrayList<>();
         try {
@@ -101,7 +101,7 @@ public class ItemOsDAO {
         return retorno;
     }
 
-    public List<ItemOS> listarPorOrdemServico(OrdemServico ordemServico) {
+    public List<ItemOS> listarPorOrdemServico(OrdemServico ordemServico) throws DAOException {
         String sql = "SELECT * FROM item_os WHERE id_ordem_servico=?";
         List<ItemOS> retorno = new ArrayList<>();
         try {
@@ -126,7 +126,7 @@ public class ItemOsDAO {
                 try {
                     servico = servicoDAO.buscar(servico.getId());
                 } catch (DAOException e) {
-                    throw new RuntimeException(e);
+                    Logger.getLogger(ItemOsDAO.class.getName()).log(Level.SEVERE, null, e);
                 }
                 OrdemServicoDAO ordemServicoDAO = new OrdemServicoDAO();
                 ordemServicoDAO.setConnection(connection);
@@ -143,7 +143,7 @@ public class ItemOsDAO {
         return retorno;
     }
 
-    public ItemOS buscar(ItemOS itemOs) {
+    public ItemOS buscar(ItemOS itemOs) throws DAOException {
         String sql = "SELECT * FROM item_os WHERE id=?";
         ItemOS retorno = new ItemOS();
         try {

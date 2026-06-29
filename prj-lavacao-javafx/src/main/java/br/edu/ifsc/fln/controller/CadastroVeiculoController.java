@@ -1,9 +1,11 @@
 package br.edu.ifsc.fln.controller;
 
+import br.edu.ifsc.fln.exception.DAOException;
 import br.edu.ifsc.fln.model.dao.VeiculoDAO;
 import br.edu.ifsc.fln.model.database.Database;
 import br.edu.ifsc.fln.model.database.DatabaseFactory;
 import br.edu.ifsc.fln.model.domain.Veiculo;
+import br.edu.ifsc.fln.utils.AlertDialog;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -114,9 +116,11 @@ public class CadastroVeiculoController implements Initializable {
 
             return new SimpleStringProperty(corVeiculo);
         });
-
-        veiculos = veiculoDAO.listagem();
-
+        try {
+            veiculos = veiculoDAO.listagem();
+        } catch (DAOException e) {
+            AlertDialog.exceptionMessage(e);
+        }
         observableListVeiculos = FXCollections.observableArrayList(veiculos);
         tableViewVeiculo.setItems(observableListVeiculos);
     }
@@ -154,7 +158,11 @@ public class CadastroVeiculoController implements Initializable {
         Veiculo veiculo = new Veiculo();
         boolean buttonConfirmarClicked = showDialogCadastroVeiculo(veiculo);
         if (buttonConfirmarClicked) {
-            veiculoDAO.inserir(veiculo);
+            try {
+                veiculoDAO.inserir(veiculo);
+            } catch (DAOException e) {
+                AlertDialog.exceptionMessage(e);
+            }
             carregarTableView();
         }
 
@@ -164,7 +172,11 @@ public class CadastroVeiculoController implements Initializable {
     void buttonDeleteVeiculo() {
         Veiculo veiculo = tableViewVeiculo.getSelectionModel().getSelectedItem();
         if (veiculo != null) {
-            veiculoDAO.remover(veiculo);
+            try {
+                veiculoDAO.remover(veiculo);
+            } catch (DAOException e) {
+                AlertDialog.exceptionMessage(e);
+            }
             carregarTableView();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -180,7 +192,11 @@ public class CadastroVeiculoController implements Initializable {
         if (veiculo != null) {
             boolean buttonConfirmarClicked = showDialogCadastroVeiculo(veiculo);
             if (buttonConfirmarClicked) {
-                veiculoDAO.alterar(veiculo);
+                try {
+                    veiculoDAO.alterar(veiculo);
+                } catch (DAOException e) {
+                    AlertDialog.exceptionMessage(e);
+                }
                 carregarTableView();
             }
         } else {

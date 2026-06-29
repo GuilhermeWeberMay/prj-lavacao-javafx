@@ -1,5 +1,6 @@
 package br.edu.ifsc.fln.model.dao;
 
+import br.edu.ifsc.fln.exception.DAOException;
 import br.edu.ifsc.fln.model.domain.*;
 
 import java.math.BigDecimal;
@@ -24,7 +25,7 @@ public class OrdemServicoDAO {
         this.connection = connection;
     }
 
-    public boolean inserir(OrdemServico ordemServico) {
+    public void inserir(OrdemServico ordemServico) {
         String sql = "INSERT INTO ordem_servico(numero, total, agenda, desconto, status, id_veiculo) VALUES(?,?,?,?,?,?)";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -40,13 +41,17 @@ public class OrdemServicoDAO {
             ItemOsDAO itemOsDAO = new ItemOsDAO();
             itemOsDAO.setConnection(connection);
 
-            for (ItemOS itemOs : ordemServico.getItensOS()) {
-                itemOs.setOrdemServico(this.buscarUltimaOrdemServico());
-                itemOsDAO.inserir(itemOs);
+            try {
+                for (ItemOS itemOs : ordemServico.getItensOS()) {
+                    itemOs.setOrdemServico(this.buscarUltimaOrdemServico());
+                    itemOsDAO.inserir(itemOs);
+                }
+            } catch (DAOException ex) {
+                Logger.getLogger(OrdemServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
             connection.commit();
             connection.setAutoCommit(true);
-            return true;
+            //return true;
         } catch (SQLException ex) {
             try {
                 connection.rollback();
@@ -54,25 +59,28 @@ public class OrdemServicoDAO {
                 Logger.getLogger(OrdemServicoDAO.class.getName()).log(Level.SEVERE, null, ex1);
             }
             Logger.getLogger(OrdemServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            //return false;
         } catch (Exception ex) {
             Logger.getLogger(OrdemServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            //return false;
         }
     }
 
-    public boolean alterar(OrdemServico ordemServico) {
+    public void alterar(OrdemServico ordemServico) throws DAOException {
         String sql = "UPDATE ordem_servico SET numero=?, total=?, agenda=?, desconto=?, status=?, id_veiculo=? WHERE id=?";
         try {
             //antes de atualizar a nova ordemServico, a anterior terá seus itens de ordemServico removidos
             connection.setAutoCommit(false);
             ItemOsDAO itemOsDAO = new ItemOsDAO();
             itemOsDAO.setConnection(connection);
-
             OrdemServico ordemServicoAnterior = buscar(ordemServico);
-            List<ItemOS> itensDeOs = itemOsDAO.listarPorOrdemServico(ordemServicoAnterior);
-            for (ItemOS iv : itensDeOs) {
-                itemOsDAO.remover(iv);
+            try {
+                List<ItemOS> itensDeOs = itemOsDAO.listarPorOrdemServico(ordemServicoAnterior);
+                for (ItemOS iv : itensDeOs) {
+                    itemOsDAO.remover(iv);
+                }
+            } catch (DAOException ex) {
+                Logger.getLogger(ItemOsDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
             //atualiza os dados da ordemServico
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -88,11 +96,15 @@ public class OrdemServicoDAO {
             stmt.setInt(6, ordemServico.getVeiculo().getId());
             stmt.setInt(7, ordemServicoAnterior.getId());
             stmt.execute();
-            for (ItemOS iv : ordemServico.getItensOS()) {
-                itemOsDAO.inserir(iv);
+            try {
+                for (ItemOS iv : ordemServico.getItensOS()) {
+                    itemOsDAO.inserir(iv);
+                }
+            } catch (DAOException ex) {
+                Logger.getLogger(ItemOsDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
             connection.commit();
-            return true;
+            //return true;
         } catch (SQLException ex) {
             try {
                 connection.rollback();
@@ -100,14 +112,14 @@ public class OrdemServicoDAO {
                 Logger.getLogger(OrdemServicoDAO.class.getName()).log(Level.SEVERE, null, exc1);
             }
             Logger.getLogger(OrdemServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            //return false;
         } catch (Exception ex) {
             Logger.getLogger(OrdemServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            //return false;
         }
     }
 
-    public boolean remover(OrdemServico ordemServico) {
+    public void remover(OrdemServico ordemServico) throws DAOException {
         String sql = "DELETE FROM ordem_servico WHERE id=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -129,17 +141,17 @@ public class OrdemServicoDAO {
                 }
                 Logger.getLogger(OrdemServicoDAO.class.getName()).log(Level.SEVERE, null, exc);
             }
-            return true;
+            //return true;
         } catch (SQLException ex) {
             Logger.getLogger(OrdemServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            //return false;
         } catch (Exception ex) {
             Logger.getLogger(OrdemServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            //return false;
         }
     }
 
-    public List<OrdemServico> listar() {
+    public List<OrdemServico> listar() throws DAOException {
         String sql = "SELECT * FROM ordem_servico";
         List<OrdemServico> retorno = new ArrayList<>();
         try {
@@ -166,8 +178,11 @@ public class OrdemServicoDAO {
                 //Obtendo os dados completos dos Itens de OrdemServico associados à OrdemServico
                 ItemOsDAO itemOsDAO = new ItemOsDAO();
                 itemOsDAO.setConnection(connection);
-                itensOS = itemOsDAO.listarPorOrdemServico(ordemServico);
-
+                try {
+                    itensOS = itemOsDAO.listarPorOrdemServico(ordemServico);
+                } catch (DAOException ex) {
+                    Logger.getLogger(ItemOsDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 ordemServico.setVeiculo(veiculo);
                 ordemServico.setItensOS(itensOS);
                 retorno.add(ordemServico);
@@ -178,7 +193,7 @@ public class OrdemServicoDAO {
         return retorno;
     }
 
-    public OrdemServico buscar(OrdemServico ordemServico) {
+    public OrdemServico buscar(OrdemServico ordemServico) throws DAOException {
         String sql = "SELECT * FROM ordem_servico WHERE id=?";
         OrdemServico ordemServicoRetorno = new OrdemServico();
         try {
@@ -202,7 +217,7 @@ public class OrdemServicoDAO {
         return ordemServicoRetorno;
     }
 
-    public OrdemServico buscar(int id) {
+    public OrdemServico buscar(int id) throws DAOException {
         /*
             Método necessário para evitar que a instância de retorno seja 
             igual a instância a ser atualizada.
@@ -230,7 +245,7 @@ public class OrdemServicoDAO {
         return ordemServicoRetorno;
     }
 
-    public OrdemServico buscarUltimaOrdemServico() {
+    public OrdemServico buscarUltimaOrdemServico() throws DAOException {
         String sql = "SELECT max(id) as max FROM ordem_servico";
 
         OrdemServico retorno = new OrdemServico();

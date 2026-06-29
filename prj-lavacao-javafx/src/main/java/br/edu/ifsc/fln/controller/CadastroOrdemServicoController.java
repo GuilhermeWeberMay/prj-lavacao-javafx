@@ -1,5 +1,6 @@
 package br.edu.ifsc.fln.controller;
 
+import br.edu.ifsc.fln.exception.DAOException;
 import br.edu.ifsc.fln.model.dao.ItemOsDAO;
 import br.edu.ifsc.fln.model.dao.OrdemServicoDAO;
 import br.edu.ifsc.fln.model.dao.ServicoDAO;
@@ -101,8 +102,11 @@ public class CadastroOrdemServicoController implements Initializable {
         tableColumnStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         tableColumnVeiculo.setCellValueFactory(new PropertyValueFactory<>("veiculo"));
 
-        listaOrdemServicos = ordemServicoDAO.listar();
-
+        try {
+            listaOrdemServicos = ordemServicoDAO.listar();
+        } catch (DAOException ex) {
+            AlertDialog.exceptionMessage(ex);
+        }
         observableListOrdemServicos = FXCollections.observableArrayList(listaOrdemServicos);
         tableViewOs.setItems(observableListOrdemServicos);
     }
@@ -145,7 +149,11 @@ public class CadastroOrdemServicoController implements Initializable {
         if (venda != null) {
             boolean buttonConfirmarClicked = showFXMLAnchorPaneProcessoOrdemServicoDialog(venda);
             if (buttonConfirmarClicked) {
-                ordemServicoDAO.alterar(venda);
+                try {
+                    ordemServicoDAO.alterar(venda);
+                } catch (DAOException e) {
+                    AlertDialog.exceptionMessage(e);
+                }
                 carregarTableView();
             }
         } else {
@@ -161,7 +169,11 @@ public class CadastroOrdemServicoController implements Initializable {
         if (os != null) {
             if (AlertDialog.confirmarExclusao("Tem certeza que deseja excluir a venda " + os.getNumero())) {
                 ordemServicoDAO.setConnection(connection);
-                ordemServicoDAO.remover(os);
+                try {
+                    ordemServicoDAO.remover(os);
+                } catch (DAOException e) {
+                    AlertDialog.exceptionMessage(e);
+                }
                 carregarTableView();
             }
         } else {

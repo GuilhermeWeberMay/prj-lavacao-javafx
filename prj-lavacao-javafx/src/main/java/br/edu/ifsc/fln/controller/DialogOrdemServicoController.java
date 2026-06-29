@@ -4,6 +4,7 @@ import br.edu.ifsc.fln.exception.DAOException;
 import br.edu.ifsc.fln.model.dao.ServicoDAO;
 import br.edu.ifsc.fln.model.dao.VeiculoDAO;
 import br.edu.ifsc.fln.model.domain.*;
+import br.edu.ifsc.fln.utils.AlertDialog;
 import javafx.fxml.Initializable;
 
 import br.edu.ifsc.fln.model.database.Database;
@@ -117,9 +118,13 @@ public class DialogOrdemServicoController implements Initializable {
     }
 
     private void carregarComboBoxVeiculos() {
-        listaVeiculos = veiculoDAO.listarSimples();
-        observableListVeiculos = FXCollections.observableArrayList(listaVeiculos);
-        comboBoxVeiculos.setItems(observableListVeiculos);
+        try {
+            listaVeiculos = veiculoDAO.listarSimples();
+            observableListVeiculos = FXCollections.observableArrayList(listaVeiculos);
+            comboBoxVeiculos.setItems(observableListVeiculos);
+        } catch (DAOException ex) {
+            AlertDialog.exceptionMessage(ex);
+        }
     }
 
     private void carregarComboBoxProdutos() {

@@ -24,7 +24,7 @@ public class VeiculoDAO {
         this.connection = connection;
     }
 
-    public boolean inserir(Veiculo veiculo) {
+    public void inserir(Veiculo veiculo) throws DAOException {
         final String sql = "INSERT INTO veiculo(placa, observacao, id_cor, id_modelo, id_cliente) VALUES(?,?,?,?,?);";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -35,14 +35,14 @@ public class VeiculoDAO {
             stmt.setInt(4, veiculo.getModelo().getId());
             stmt.setInt(5, veiculo.getCliente().getId());
             stmt.execute();
-            return true;
+            //return true;
         } catch (SQLException ex) {
             Logger.getLogger(VeiculoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            //return false;
         }
     }
 
-    public boolean alterar(Veiculo veiculo) {
+    public void alterar(Veiculo veiculo) throws DAOException {
         String sql = "UPDATE veiculo SET placa=?, observacao=?, id_cor=?, id_modelo=?, id_cliente=? WHERE id=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -53,23 +53,23 @@ public class VeiculoDAO {
             stmt.setInt(5, veiculo.getCliente().getId());
             stmt.setInt(6, veiculo.getId());
             stmt.execute();
-            return true;
+            //return true;
         } catch (SQLException ex) {
             Logger.getLogger(VeiculoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            //return false;
         }
     }
 
-    public boolean remover(Veiculo veiculo) {
+    public void remover(Veiculo veiculo) throws DAOException {
         String sql = "DELETE FROM veiculo WHERE id=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, veiculo.getId());
             stmt.execute();
-            return true;
+            //return true;
         } catch (SQLException ex) {
             Logger.getLogger(VeiculoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            //return false;
         }
     }
 
@@ -105,7 +105,7 @@ public class VeiculoDAO {
         return retorno;
     }
 
-    public List<Veiculo> listagem() {
+    public List<Veiculo> listagem() throws DAOException {
         String sql =
                 "SELECT v.id as id_veiculo, v.placa as placa, v.observacao as observacoes, " +
                         "cor.id as id_cor, cor.nome as nome_cor, " +
@@ -137,7 +137,7 @@ public class VeiculoDAO {
         return retorno;
     }
 
-    public List<Veiculo> listarPorCategoria(Marca marca) {
+    public List<Veiculo> listarPorCategoria(Marca marca) throws DAOException {
         String sql =
                 "SELECT p.id as veiculo_id, p.nome as veiculo_nome, p.descricao as veiculo_descricao, p.preco as veiculo_preco, "
                         + "c.id as categoria_id, c.descricao as categoria_descricao "
@@ -157,7 +157,7 @@ public class VeiculoDAO {
         return retorno;
     }
 
-    public Veiculo buscar(int id) {
+    public Veiculo buscar(int id) throws DAOException {
         String sql =
                 "SELECT v.id as id_veiculo, v.placa as placa, v.observacao as observacoes, " +
                         "cor.id as id_cor, cor.nome as nome_cor, " +
@@ -189,7 +189,7 @@ public class VeiculoDAO {
         return retorno;
     }
 
-    public List<Veiculo> listarSimples() {
+    public List<Veiculo> listarSimples() throws DAOException {
         String sql =
                 "select id as id_veiculo, placa, observacao as observacoes, id_cor, id_modelo, id_cliente from veiculo;";
         List<Veiculo> retorno = new ArrayList<>();
