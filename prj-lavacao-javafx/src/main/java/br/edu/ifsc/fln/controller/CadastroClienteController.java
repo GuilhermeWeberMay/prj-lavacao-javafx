@@ -1,5 +1,6 @@
 package br.edu.ifsc.fln.controller;
 
+import br.edu.ifsc.fln.exception.DAOException;
 import br.edu.ifsc.fln.model.dao.ClienteDAO;
 import br.edu.ifsc.fln.model.database.Database;
 import br.edu.ifsc.fln.model.database.DatabaseFactory;
@@ -96,8 +97,11 @@ public class CadastroClienteController implements Initializable {
         tableColumnTIpo.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue()
                         instanceof PessoaFisica ? "Pessoa Fisica" : "Pessoa Juridica"));
-
-        clientes = clienteDAO.listar();
+        try {
+            clientes = clienteDAO.listar();
+        }catch (DAOException ex){
+            AlertDialog.exceptionMessage(ex);
+        }
 
         observableClientes = FXCollections.observableArrayList(clientes);
         tableViewCliente.setItems(observableClientes);
@@ -136,7 +140,11 @@ public class CadastroClienteController implements Initializable {
         if (cliente != null) {
             boolean btConfirmarClicked = showDialogCadastroCliente(cliente);
             if (btConfirmarClicked) {
-                clienteDAO.inserir(cliente);
+                try {
+                    clienteDAO.inserir(cliente);
+                } catch (DAOException e) {
+                    AlertDialog.exceptionMessage(e);
+                }
                 carregarTableViweCliente();
             }
         }
@@ -167,7 +175,11 @@ public class CadastroClienteController implements Initializable {
         Cliente cliente = tableViewCliente.getSelectionModel().getSelectedItem();
         if (cliente != null) {
             if (AlertDialog.confirmarExclusao("Tem certeza que deseja excluir o cliente " + cliente.getNome())) {
-                clienteDAO.remover(cliente);
+                try {
+                    clienteDAO.remover(cliente);
+                } catch (DAOException e) {
+                    AlertDialog.exceptionMessage(e);
+                }
                 carregarTableViweCliente();
             }
         } else {
@@ -183,7 +195,11 @@ public class CadastroClienteController implements Initializable {
         if (cliente != null) {
             boolean btConfirmarClicked = showDialogCadastroCliente(cliente);
             if (btConfirmarClicked) {
-                clienteDAO.alterar(cliente);
+                try {
+                    clienteDAO.alterar(cliente);
+                } catch (DAOException e) {
+                    AlertDialog.exceptionMessage(e);
+                }
                 carregarTableViweCliente();
             }
         } else {

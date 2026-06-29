@@ -1,5 +1,6 @@
 package br.edu.ifsc.fln.model.dao;
 
+import br.edu.ifsc.fln.exception.DAOException;
 import br.edu.ifsc.fln.model.domain.Cliente;
 import br.edu.ifsc.fln.model.domain.PessoaFisica;
 import br.edu.ifsc.fln.model.domain.PessoaJuridica;
@@ -22,7 +23,7 @@ public class ClienteDAO {
         this.connection = connection;
     }
 
-    public boolean inserir(Cliente cliente) {
+    public void inserir(Cliente cliente) throws DAOException {
         String sql = "INSERT INTO cliente(nome, celular, email, data_cadastro) VALUES(?, ?, ?, ?)";
         String sqlPF = "INSERT INTO pessoa_fisica(cpf, data_nascimento, id_cliente) VALUES(?, ?, ?)";
         String sqlPJ = "INSERT INTO pessoa_juridica(cnpj, inscricao_estadual, id_cliente) VALUES(?, ?, ?)";
@@ -42,19 +43,18 @@ public class ClienteDAO {
             //armazena os dados da subclasse
             if (cliente instanceof PessoaFisica) {
                 stmt = connection.prepareStatement(sqlPF);
-                stmt.setString(1, ((PessoaFisica)cliente).getCpf());
-                stmt.setDate(2, Date.valueOf(((PessoaFisica)cliente).getDataNascimento()));
+                stmt.setString(1, ((PessoaFisica) cliente).getCpf());
+                stmt.setDate(2, Date.valueOf(((PessoaFisica) cliente).getDataNascimento()));
                 stmt.setInt(3, idCliente);
                 stmt.execute();
             } else {
                 stmt = connection.prepareStatement(sqlPJ);
-                stmt.setString(1, ((PessoaJuridica)cliente).getCnpj());
-                stmt.setString(2, ((PessoaJuridica)cliente).getInscricaoEstadual());
+                stmt.setString(1, ((PessoaJuridica) cliente).getCnpj());
+                stmt.setString(2, ((PessoaJuridica) cliente).getInscricaoEstadual());
                 stmt.setInt(3, idCliente);
                 stmt.execute();
             }
             connection.commit();
-            return true;
         } catch (SQLException ex) {
             Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
 
@@ -65,7 +65,6 @@ public class ClienteDAO {
                 System.out.println("falha na operação roolback...");
                 throw new RuntimeException(e);
             }
-            return false;
         } finally {
             try {
                 connection.setAutoCommit(true);
@@ -75,7 +74,7 @@ public class ClienteDAO {
         }
     }
 
-    public boolean alterar(Cliente cliente) {
+    public void alterar(Cliente cliente) throws DAOException {
         String sql = "UPDATE cliente SET nome=?, celular=?, email=?, data_cadastro=? WHERE id=?";
         String sqlFN = "UPDATE pessoa_juridica SET cnpj=?, inscricao_estadual=? WHERE id_cliente = ?";
         String sqlFI = "UPDATE pessoa_fisica SET cpf=?, data_nascimento=? WHERE id_cliente = ?";
@@ -89,25 +88,23 @@ public class ClienteDAO {
             stmt.execute();
             if (cliente instanceof PessoaFisica) {
                 stmt = connection.prepareStatement(sqlFN);
-                stmt.setString(1, ((PessoaFisica)cliente).getCpf());
+                stmt.setString(1, ((PessoaFisica) cliente).getCpf());
                 stmt.setDate(2, Date.valueOf(((PessoaFisica) cliente).getDataNascimento()));
                 stmt.setInt(3, cliente.getId());
                 stmt.execute();
             } else {
                 stmt = connection.prepareStatement(sqlFI);
-                stmt.setString(1, ((PessoaJuridica)cliente).getCnpj());
-                stmt.setString(2, ((PessoaJuridica)cliente).getInscricaoEstadual());
+                stmt.setString(1, ((PessoaJuridica) cliente).getCnpj());
+                stmt.setString(2, ((PessoaJuridica) cliente).getInscricaoEstadual());
                 stmt.setInt(3, cliente.getId());
                 stmt.execute();
             }
-            return true;
         } catch (SQLException ex) {
             Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
         }
     }
 
-    public boolean remover(Cliente cliente) {
+    public boolean remover(Cliente cliente) throws DAOException {
         String sql = "DELETE FROM cliente WHERE id=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -120,7 +117,7 @@ public class ClienteDAO {
         }
     }
 
-    public List<Cliente> listar() {
+    public List<Cliente> listar() throws DAOException {
         String sql = "SELECT * FROM cliente c "
                 + "LEFT JOIN pessoa_fisica pf on pf.id_cliente = c.id "
                 + "LEFT JOIN pessoa_juridica pj on pj.id_cliente = c.id;";
@@ -138,8 +135,8 @@ public class ClienteDAO {
         return retorno;
     }
 
-    public List<Cliente> listarClienteEstoque(){
-        String sql =  "SELECT * FROM cliente;";
+    public List<Cliente> listarClienteEstoque() throws DAOException {
+        String sql = "SELECT * FROM cliente;";
         List<Cliente> retorno = new ArrayList<>();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -151,13 +148,10 @@ public class ClienteDAO {
         } catch (SQLException ex) {
             Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-//        } catch (DAOException ex) {
-//            throw new DAOException("Falha na pesquisa!", ex);
-//        }
         return retorno;
     }
 
-    public Cliente buscar(Cliente cliente) {
+    public Cliente buscar(Cliente cliente) throws DAOException {
         String sql = "SELECT * FROM cliente c "
                 + "LEFT JOIN pessoa_fisica pf on pf.id_cliente = c.id "
                 + "LEFT JOIN pessoa_juridica pj on pj.id_cliente = c.id WHERE id=?";
@@ -175,7 +169,7 @@ public class ClienteDAO {
         return retorno;
     }
 
-    public Cliente buscar(int id) {
+    public Cliente buscar(int id) throws DAOException {
         String sql = "SELECT * FROM cliente c "
                 + "LEFT JOIN pessoa_fisica pf on pf.id_cliente = c.id "
                 + "LEFT JOIN pessoa_juridica pj on pj.id_cliente = c.id WHERE id=?";
@@ -198,13 +192,13 @@ public class ClienteDAO {
         if (rs.getString("cnpj") == null || rs.getString("cnpj").length() <= 0) {
             //é um cliente pessoa fisica
             cliente = new PessoaFisica();
-            ((PessoaFisica)cliente).setCpf(rs.getString("cpf"));
-            ((PessoaFisica)cliente).setDataNascimento(rs.getDate("data_nascimento").toLocalDate());
+            ((PessoaFisica) cliente).setCpf(rs.getString("cpf"));
+            ((PessoaFisica) cliente).setDataNascimento(rs.getDate("data_nascimento").toLocalDate());
         } else {
             //é um cliente pessoa juridica
             cliente = new PessoaJuridica();
-            ((PessoaJuridica)cliente).setCnpj(rs.getString("cnpj"));
-            ((PessoaJuridica)cliente).setInscricaoEstadual(rs.getString("inscricao_estadual"));
+            ((PessoaJuridica) cliente).setCnpj(rs.getString("cnpj"));
+            ((PessoaJuridica) cliente).setInscricaoEstadual(rs.getString("inscricao_estadual"));
         }
         cliente.setId(rs.getInt("id"));
         cliente.setNome(rs.getString("nome"));

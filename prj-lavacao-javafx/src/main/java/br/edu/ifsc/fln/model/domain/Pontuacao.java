@@ -17,13 +17,15 @@ public class Pontuacao {
     public int saldo() {
         return quantidade;
     }
+
     public void subtrair(int quantidade) throws ExceptionLavacao {
-        if (quantidade <= this.quantidade){
+        if (quantidade <= this.quantidade) {
             this.quantidade -= quantidade;
-        }else {
+        } else {
             throw new ExceptionLavacao("Você não tem todos esses pontos");
         }
     }
+
     public void adicionar(int quantidade) {
         this.quantidade += quantidade;
     }

@@ -110,7 +110,7 @@ public class CadastroOrdemServicoController implements Initializable {
     public void selecionarItemTableView(OrdemServico os) {
         if (os != null) {
             labelNumeroOs.setText(Long.toString(os.getNumero()));
-            labelTotalOs.setText("R$"+String.format("%.2f",os.getTotal()));
+            labelTotalOs.setText("R$" + String.format("%.2f", os.getTotal()));
             labelAgendaOs.setText(
                     os.getAgenda().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             labelDescontoOs.setText((String.format("%.2f", os.getDesconto())) + "%");

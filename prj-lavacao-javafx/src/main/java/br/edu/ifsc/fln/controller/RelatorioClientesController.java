@@ -6,15 +6,20 @@
 package br.edu.ifsc.fln.controller;
 
 
+import br.edu.ifsc.fln.exception.DAOException;
 import br.edu.ifsc.fln.model.dao.ClienteDAO;
 import br.edu.ifsc.fln.model.database.Database;
 import br.edu.ifsc.fln.model.database.DatabaseFactory;
 import br.edu.ifsc.fln.model.domain.Cliente;
+
 import java.net.URL;
 import java.sql.Connection;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import br.edu.ifsc.fln.utils.AlertDialog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -30,11 +35,6 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
-/**
- * FXML Controller class
- *
- * @author mpisching
- */
 public class RelatorioClientesController implements Initializable {
 
     @FXML
@@ -59,9 +59,6 @@ public class RelatorioClientesController implements Initializable {
     private final Connection connection = database.conectar();
     private final ClienteDAO clienteDAO = new ClienteDAO();
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         clienteDAO.setConnection(connection);
@@ -69,13 +66,13 @@ public class RelatorioClientesController implements Initializable {
     }
 
     private void carregarTableView() {
-        //try {
-            listaClientes = clienteDAO.listarClienteEstoque();
-//        } catch (DAOException ex) {
-//            Logger.getLogger(FXMLAnchorPaneRelatorioQuantidadeClientesController.class.getName()).log(Level.SEVERE, null, ex);
-//            AlertDialog.exceptionMessage(ex);
-//            return;
-//        }
+        try {
+        listaClientes = clienteDAO.listarClienteEstoque();
+        } catch (DAOException ex) {
+            Logger.getLogger(RelatorioClientesController.class.getName()).log(Level.SEVERE, null, ex);
+            AlertDialog.exceptionMessage(ex);
+            return;
+        }
 
         tableColumnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         tableColumnCelular.setCellValueFactory(new PropertyValueFactory<>("celular"));
@@ -87,7 +84,7 @@ public class RelatorioClientesController implements Initializable {
     @FXML
     public void handleImprimir() throws JRException {
         URL url = getClass().getResource("/br/edu/ifsc/fln/reports/relatorioClientes.jasper");
-        JasperReport jasperReport = (JasperReport)JRLoader.loadObject(url);
+        JasperReport jasperReport = (JasperReport) JRLoader.loadObject(url);
 
         //null: caso não existam filtros
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, connection);

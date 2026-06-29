@@ -14,18 +14,18 @@ import java.util.logging.Logger;
 public class ModeloDAO {
     private Connection connection;
 
-    public Connection getConnection(){
+    public Connection getConnection() {
         return connection;
     }
 
-    public void setConnection(Connection connection){
+    public void setConnection(Connection connection) {
         this.connection = connection;
     }
 
-    public boolean create(Modelo modelo){
+    public void create(Modelo modelo) throws DAOException {
         String sql = "INSERT INTO modelo (descricao, id_marca, categoria) VALUES (?, ?, ?);";
         String sqlMotor = "INSERT INTO motor(potencia, tipo_combustivel, id_modelo) values ( ?, ?, ?);";
-        try{
+        try {
             PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, modelo.getDescricao());
             stmt.setInt(2, modelo.getMarca().getId());
@@ -43,14 +43,14 @@ public class ModeloDAO {
             stmt.setString(2, modelo.getMotor().getTipoCombustivel().name());
             stmt.setInt(3, idModelo);
             stmt.execute();
-            return true;
+            //return true;
         } catch (SQLException ex) {
             Logger.getLogger(ModeloDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            //return false;
         }
     }
 
-    public boolean alterar(Modelo modelo) {
+    public void alterar(Modelo modelo) throws DAOException {
         String sql = "UPDATE modelo SET descricao=?, id_marca=?, categoria=? WHERE id=?";
         String sqlMotor = "UPDATE motor SET potencia=?, tipo_combustivel=? where id_modelo=?;";
         try {
@@ -67,31 +67,31 @@ public class ModeloDAO {
             stmt.setInt(3, modelo.getId());
             stmt.execute();
 
-            return true;
+            //return true;
         } catch (SQLException ex) {
             Logger.getLogger(ModeloDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            //return false;
         }
     }
 
-    public boolean remover(Modelo modelo) {
+    public void remover(Modelo modelo) throws DAOException {
         String sql = "DELETE FROM modelo WHERE id=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, modelo.getId());
             stmt.execute();
-            return true;
+            //return true;
         } catch (SQLException ex) {
             Logger.getLogger(ModeloDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            //return false;
         }
     }
 
-    public List<Modelo> listar() {
-        String sql =  "SELECT m.id as modelo_id, m.descricao as modelo_descricao, m.categoria as modelo_categoria, "
+    public List<Modelo> listar() throws DAOException {
+        String sql = "SELECT m.id as modelo_id, m.descricao as modelo_descricao, m.categoria as modelo_categoria, "
                 + "ma.id as marca_id, ma.nome as marca_nome "
                 + "FROM modelo m INNER JOIN marca ma ON ma.id = m.id_marca;";
-       // String sql = "SELECT * FROM PRODUTO";
+        // String sql = "SELECT * FROM PRODUTO";
         List<Modelo> retorno = new ArrayList<>();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -106,7 +106,7 @@ public class ModeloDAO {
         return retorno;
     }
 
-    public List<Modelo> listarPorMarca(Marca marca) {
+    public List<Modelo> listarPorMarca(Marca marca) throws DAOException {
         String sql = "SELECT * FROM modelo WHERE id_marca = ?;";
         List<Modelo> retorno = new ArrayList<>();
         try {
@@ -124,7 +124,7 @@ public class ModeloDAO {
         return retorno;
     }
 
-    public Modelo buscar(Modelo modelo) {
+    public Modelo buscar(Modelo modelo) throws DAOException {
         String sql = "SELECT * FROM modelo WHERE id = ?;";
         Modelo retorno = new Modelo();
         try {
@@ -152,8 +152,8 @@ public class ModeloDAO {
             marca.setId(rs.getInt("marca_id"));
             MarcaDAO marcaDAO = new MarcaDAO();
             marcaDAO.setConnection(connection);
-            try{
-            marca = marcaDAO.buscar(marca);
+            try {
+                marca = marcaDAO.buscar(marca);
             } catch (DAOException e) {
                 throw new RuntimeException(e);
             }
@@ -165,7 +165,6 @@ public class ModeloDAO {
 
     private Modelo populateVO(ResultSet rs) throws SQLException {
         Modelo modelo = new Modelo();
-//        modelo.setMarca(marca);
 
         modelo.setId(rs.getInt("modelo_id"));
         modelo.setDescricao(rs.getString("modelo_descricao"));
@@ -174,8 +173,8 @@ public class ModeloDAO {
         marca.setId(rs.getInt("marca_id"));
         MarcaDAO marcaDAO = new MarcaDAO();
         marcaDAO.setConnection(connection);
-        try{
-        marca = marcaDAO.buscar(marca);
+        try {
+            marca = marcaDAO.buscar(marca);
         } catch (DAOException e) {
             throw new RuntimeException(e);
         }

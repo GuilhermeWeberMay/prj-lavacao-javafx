@@ -177,18 +177,18 @@ public class DialogOrdemServicoController implements Initializable {
         if (comboBoxServicos.getSelectionModel().getSelectedItem() != null) {
             //o comboBox possui dados sintetizados de Produto para evitar carga desnecessária de informação
             servico = comboBoxServicos.getSelectionModel().getSelectedItem();
-                // Criação do ItemOS
-                itemOS.setServico(servico);
-                itemOS.setObservacoes(textFieldObserItemOs.getText());
-                itemOS.setOrdemServico(ordemServico);
-                itemOS.setValorServico(servico.getValor());
-                ordemServico.add(itemOS);
+            // Criação do ItemOS
+            itemOS.setServico(servico);
+            itemOS.setObservacoes(textFieldObserItemOs.getText());
+            itemOS.setOrdemServico(ordemServico);
+            itemOS.setValorServico(servico.getValor());
+            ordemServico.add(itemOS);
 
-                // Pequena tabela do Dialog
-                observableListItensOs = FXCollections.observableArrayList(ordemServico.getItensOS());
-                tableViewItensDeVenda.setItems(observableListItensOs);
+            // Pequena tabela do Dialog
+            observableListItensOs = FXCollections.observableArrayList(ordemServico.getItensOS());
+            tableViewItensDeVenda.setItems(observableListItensOs);
 
-                textFieldValor.setText(String.format("%.2f", ordemServico.getTotal()));
+            textFieldValor.setText(String.format("%.2f", ordemServico.getTotal()));
         }
     }
 

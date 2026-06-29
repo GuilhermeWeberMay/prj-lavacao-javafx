@@ -14,18 +14,18 @@ import java.util.List;
 @NoArgsConstructor
 public class OrdemServico {
     private int id;
-    private long  numero;
-    private double  total;
+    private long numero;
+    private double total;
     private LocalDate agenda;
     private double desconto;
     private EStatus status;
     private Veiculo veiculo;
-    private List<ItemOS> itensOS =  new ArrayList<>();
+    private List<ItemOS> itensOS = new ArrayList<>();
 
     public double getTotal() throws ExceptionLavacao {
-        if (total < 0){
+        if (total < 0) {
             throw new ExceptionLavacao("Não há valor total pois não há serviço vinculado");
-        }else {
+        } else {
             total = 0.0;
             for (ItemOS itemOS : itensOS) {
                 total += itemOS.getServico().getValor();
@@ -35,9 +35,9 @@ public class OrdemServico {
     }
 
     public List<ItemOS> getItensOS() throws ExceptionLavacao {
-        if (itensOS.isEmpty()){
+        if (itensOS.isEmpty()) {
             throw new ExceptionLavacao("Não há serviços na lista para serem calculados");
-        }else {
+        } else {
             return itensOS;
         }
     }
@@ -45,23 +45,23 @@ public class OrdemServico {
     public double calcularServico() throws ExceptionLavacao {
         if (itensOS.isEmpty()) {
             throw new ExceptionLavacao("Não há serviços na lista para serem calculados");
-        }else{
+        } else {
             return total -= total * (getDesconto() / 100);
         }
     }
 
-    public void add(ItemOS itemOS) throws ExceptionLavacao{
-        if(itensOS.contains(itemOS)){
+    public void add(ItemOS itemOS) throws ExceptionLavacao {
+        if (itensOS.contains(itemOS)) {
             throw new ExceptionLavacao("Esse serviço já está na ordem de serviço");
-        }else {
+        } else {
             itensOS.add(itemOS);
         }
     }
 
-    public void remove(ItemOS itemOS) throws  ExceptionLavacao{
-        if(!itensOS.contains(itemOS)){
+    public void remove(ItemOS itemOS) throws ExceptionLavacao {
+        if (!itensOS.contains(itemOS)) {
             throw new ExceptionLavacao("Esse serviço não está na ordem de serviço");
-        }else {
+        } else {
             itensOS.add(itemOS);
         }
     }

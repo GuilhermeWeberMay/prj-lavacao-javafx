@@ -3,12 +3,14 @@ package br.edu.ifsc.fln.controller;
 import br.edu.ifsc.fln.model.dao.OrdemServicoDAO;
 import br.edu.ifsc.fln.model.database.Database;
 import br.edu.ifsc.fln.model.database.DatabaseFactory;
+
 import java.net.URL;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.ResourceBundle;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,6 +19,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+
 public class GraficosLavagensMesController implements Initializable {
 
     @FXML
@@ -43,14 +46,14 @@ public class GraficosLavagensMesController implements Initializable {
         ordemServicoDAO.setConnection(connection);
         //prepara os dados para o eixo vertical
         Map<Integer, ArrayList> dados = ordemServicoDAO.listarQuantidadeVendasPorMes();
-        for (Map.Entry<Integer, ArrayList> dadosItem: dados.entrySet()) {
+        for (Map.Entry<Integer, ArrayList> dadosItem : dados.entrySet()) {
             XYChart.Series<String, Integer> series = new XYChart.Series<>();
             series.setName(dadosItem.getKey().toString());
             for (int i = 0; i < dadosItem.getValue().size(); i += 2) {
                 String mes;
                 Integer quantidade;
-                mes = retornaNomeMes((int)dadosItem.getValue().get(i));
-                quantidade = (Integer)dadosItem.getValue().get(i + 1);
+                mes = retornaNomeMes((int) dadosItem.getValue().get(i));
+                quantidade = (Integer) dadosItem.getValue().get(i + 1);
                 series.getData().add(new XYChart.Data<>(mes, quantidade));
             }
             barChart.getData().add(series);
@@ -59,19 +62,32 @@ public class GraficosLavagensMesController implements Initializable {
 
     private String retornaNomeMes(int mes) {
         switch (mes) {
-            case 1: return "Jan";
-            case 2: return "Fev";
-            case 3: return "Mar";
-            case 4: return "Abr";
-            case 5: return "Mai";
-            case 6: return "Jun";
-            case 7: return "Jul";
-            case 8: return "Ago";
-            case 9: return "Set";
-            case 10: return "Out";
-            case 11: return "Nov";
-            case 12: return "Dez";
-            default: return null;
+            case 1:
+                return "Jan";
+            case 2:
+                return "Fev";
+            case 3:
+                return "Mar";
+            case 4:
+                return "Abr";
+            case 5:
+                return "Mai";
+            case 6:
+                return "Jun";
+            case 7:
+                return "Jul";
+            case 8:
+                return "Ago";
+            case 9:
+                return "Set";
+            case 10:
+                return "Out";
+            case 11:
+                return "Nov";
+            case 12:
+                return "Dez";
+            default:
+                return null;
         }
     }
 

@@ -21,12 +21,12 @@ public abstract class Cliente {
     List<Veiculo> veiculos = new ArrayList<>();
     private Pontuacao pontuacao = new Pontuacao(0); // Todo cliente começara com 0 pontos
 
-    public void add(Veiculo veiculo){
+    public void add(Veiculo veiculo) {
         this.veiculos.add(veiculo);
         veiculo.setCliente(this);
     }
 
-    public void remove(Veiculo veiculo){
+    public void remove(Veiculo veiculo) {
         this.veiculos.remove(veiculo);
         veiculo.setCliente(null);
     }

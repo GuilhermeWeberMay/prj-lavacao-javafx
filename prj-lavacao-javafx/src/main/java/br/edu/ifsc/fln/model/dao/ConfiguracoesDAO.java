@@ -38,7 +38,7 @@ public class ConfiguracoesDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            throw new DAOException("Não foi possível listar a potuação ",ex);
+            throw new DAOException("Não foi possível listar a potuação ", ex);
         }
         return retorno;
     }
@@ -51,7 +51,7 @@ public class ConfiguracoesDAO {
             stmt.execute();
         } catch (SQLException ex) {
             Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            throw new DAOException("Não foi possível alterar a pontuação ",ex);
+            throw new DAOException("Não foi possível alterar a pontuação ", ex);
         }
     }
 
@@ -67,7 +67,7 @@ public class ConfiguracoesDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            throw new DAOException("Não foi possível alterar a pontuação ",ex);
+            throw new DAOException("Não foi possível alterar a pontuação ", ex);
         }
         return retorno;
     }

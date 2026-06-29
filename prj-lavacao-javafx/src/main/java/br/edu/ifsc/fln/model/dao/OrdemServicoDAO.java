@@ -30,25 +30,17 @@ public class OrdemServicoDAO {
             PreparedStatement stmt = connection.prepareStatement(sql);
             connection.setAutoCommit(false);
             stmt.setLong(1, ordemServico.getNumero());
-            stmt.setDouble(2,ordemServico.getTotal());
+            stmt.setDouble(2, ordemServico.getTotal());
             stmt.setDate(3, Date.valueOf(ordemServico.getAgenda()));
             stmt.setDouble(4, ordemServico.getDesconto());
             stmt.setString(5, ordemServico.getStatus().name());
-//            if  (ordemServico.getStatusOrdemServico() != null) {
-//                stmt.setString(6, ordemServico.getStatusOrdemServico().name());
-//            } else {
-//                //TODO apresentar situação clara de inconsistência de dados
-//                //tratamento de exceções e a necessidade de uso de commit e rollback
-//                //stmt.setString(6, "teste");
-//                //stmt.setString(6, EStatusOrdemServico.ABERTA.name());
-//            }
             stmt.setInt(6, ordemServico.getVeiculo().getId());
             stmt.execute();
 
             ItemOsDAO itemOsDAO = new ItemOsDAO();
             itemOsDAO.setConnection(connection);
 
-            for (ItemOS itemOs: ordemServico.getItensOS()) {
+            for (ItemOS itemOs : ordemServico.getItensOS()) {
                 itemOs.setOrdemServico(this.buscarUltimaOrdemServico());
                 itemOsDAO.inserir(itemOs);
             }
@@ -73,7 +65,6 @@ public class OrdemServicoDAO {
         String sql = "UPDATE ordem_servico SET numero=?, total=?, agenda=?, desconto=?, status=?, id_veiculo=? WHERE id=?";
         try {
             //antes de atualizar a nova ordemServico, a anterior terá seus itens de ordemServico removidos
-            // e o estoque dos produtos da ordemServico sofrerão um estorno
             connection.setAutoCommit(false);
             ItemOsDAO itemOsDAO = new ItemOsDAO();
             itemOsDAO.setConnection(connection);
@@ -81,7 +72,6 @@ public class OrdemServicoDAO {
             OrdemServico ordemServicoAnterior = buscar(ordemServico);
             List<ItemOS> itensDeOs = itemOsDAO.listarPorOrdemServico(ordemServicoAnterior);
             for (ItemOS iv : itensDeOs) {
-                //Produto p = iv.getProduto(); //isto não da certo ...
                 itemOsDAO.remover(iv);
             }
             //atualiza os dados da ordemServico
@@ -90,7 +80,7 @@ public class OrdemServicoDAO {
             stmt.setDouble(2, ordemServico.getTotal());
             stmt.setDate(3, Date.valueOf(ordemServico.getAgenda()));
             stmt.setDouble(4, ordemServico.getDesconto());
-            if  (ordemServico.getStatus() != null) {
+            if (ordemServico.getStatus() != null) {
                 stmt.setString(5, ordemServico.getStatus().name());
             } else {
                 stmt.setString(5, EStatus.ABERTA.name());
@@ -98,7 +88,7 @@ public class OrdemServicoDAO {
             stmt.setInt(6, ordemServico.getVeiculo().getId());
             stmt.setInt(7, ordemServicoAnterior.getId());
             stmt.execute();
-            for (ItemOS iv: ordemServico.getItensOS()) {
+            for (ItemOS iv : ordemServico.getItensOS()) {
                 itemOsDAO.inserir(iv);
             }
             connection.commit();
@@ -260,10 +250,10 @@ public class OrdemServicoDAO {
 
     public Map<Integer, ArrayList> listarQuantidadeVendasPorMes() {
         String sql = """
-                        select count(id) as count, extract(year from agenda) as ano,
-                                         extract(month from agenda) as mes from ordem_servico group by ano,
-                                        mes order by ano, mes;
-                       """;
+                 select count(id) as count, extract(year from agenda) as ano,
+                                  extract(month from agenda) as mes from ordem_servico group by ano,
+                                 mes order by ano, mes;
+                """;
         Map<Integer, ArrayList> retorno = new HashMap();
 
         try {
@@ -272,12 +262,11 @@ public class OrdemServicoDAO {
 
             while (resultado.next()) {
                 ArrayList linha = new ArrayList();
-                if (!retorno.containsKey(resultado.getInt("ano")))
-                {
+                if (!retorno.containsKey(resultado.getInt("ano"))) {
                     linha.add(resultado.getInt("mes"));
                     linha.add(resultado.getInt("count"));
                     retorno.put(resultado.getInt("ano"), linha);
-                }else{
+                } else {
                     ArrayList linhaNova = retorno.get(resultado.getInt("ano"));
                     linhaNova.add(resultado.getInt("mes"));
                     linhaNova.add(resultado.getInt("count"));

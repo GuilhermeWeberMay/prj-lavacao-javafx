@@ -50,8 +50,8 @@ public class CadastroPontosController implements Initializable {
         config.setPontos(Integer.parseInt(labelPontos.getText()));
         boolean buttonServicofirmarClicked = showDialogCadastroPontos(config);
         if (buttonServicofirmarClicked) {
-            try{
-            configuracoesDAO.alterar(config);
+            try {
+                configuracoesDAO.alterar(config);
             } catch (DAOException e) {
                 AlertDialog.exceptionMessage(e);
             }

@@ -40,17 +40,17 @@ public class DialogCadastroCorController implements Initializable {
     }
 
     @FXML
-    public void handleButtonConfirmar(){
-        if (validarEntradaDeDados()){
-        cor.setNome(textFielCorNome.getText());
+    public void handleButtonConfirmar() {
+        if (validarEntradaDeDados()) {
+            cor.setNome(textFielCorNome.getText());
 
-        buttonConfirmarClicked = true;
-        dialogStage.close();
+            buttonConfirmarClicked = true;
+            dialogStage.close();
         }
     }
 
     @FXML
-    public void handleButtonCancelar(){
+    public void handleButtonCancelar() {
         dialogStage.close();
     }
 
@@ -61,7 +61,7 @@ public class DialogCadastroCorController implements Initializable {
         }
         if (errorMessage.length() == 0) {
             return true;
-        }else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erro no cadastro");
             alert.setHeaderText("campos inválidos, por favor, corrija...");

@@ -24,6 +24,6 @@ public class Veiculo {
 
     @Override
     public String toString() {
-        return placa + " - "+ cliente.getNome();
+        return placa + " - " + cliente.getNome();
     }
 }

@@ -89,7 +89,7 @@ public class DialogCadastroServicoController implements Initializable {
     }
 
     public void carregarChoiceBoxCategoria() {
-        choiceBoxCategoria.setItems( FXCollections.observableArrayList( ECategoria.values()));
+        choiceBoxCategoria.setItems(FXCollections.observableArrayList(ECategoria.values()));
     }
 }
 

@@ -1,10 +1,12 @@
 package br.edu.ifsc.fln.controller;
 
+import br.edu.ifsc.fln.exception.DAOException;
 import br.edu.ifsc.fln.model.dao.ModeloDAO;
 import br.edu.ifsc.fln.model.database.Database;
 import br.edu.ifsc.fln.model.database.DatabaseFactory;
 import br.edu.ifsc.fln.model.domain.Marca;
 import br.edu.ifsc.fln.model.domain.Modelo;
+import br.edu.ifsc.fln.utils.AlertDialog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -36,7 +38,7 @@ public class CadastroModeloController implements Initializable {
     private final Database database = DatabaseFactory.getDatabase("mysql");
     private final Connection connection = database.conectar();
     private final ModeloDAO modeloDAO = new ModeloDAO();
-    
+
 
     @FXML
     private AnchorPane anchorPaneCadastroModelo;
@@ -76,7 +78,11 @@ public class CadastroModeloController implements Initializable {
         Modelo modelo = new Modelo();
         boolean buttonConfirmarClicked = showFXMLAnchorPaneCadastrosModelosDialog(modelo);
         if (buttonConfirmarClicked) {
-            modeloDAO.create(modelo);
+            try {
+                modeloDAO.create(modelo);
+            } catch (DAOException e) {
+                AlertDialog.exceptionMessage(e);
+            }
             carregarTableView();
         }
 
@@ -86,7 +92,11 @@ public class CadastroModeloController implements Initializable {
     void buttonDeleteModelo(ActionEvent event) {
         Modelo modelo = tableViewModelos.getSelectionModel().getSelectedItem();
         if (modelo != null) {
-            modeloDAO.remover(modelo);
+            try {
+                modeloDAO.remover(modelo);
+            } catch (DAOException e) {
+                AlertDialog.exceptionMessage(e);
+            }
             carregarTableView();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -97,12 +107,16 @@ public class CadastroModeloController implements Initializable {
     }
 
     @FXML
-    void buttonUpdateModelo(ActionEvent event) throws  IOException {
+    void buttonUpdateModelo(ActionEvent event) throws IOException {
         Modelo modelo = tableViewModelos.getSelectionModel().getSelectedItem();
         if (modelo != null) {
             boolean buttonConfirmarClicked = showFXMLAnchorPaneCadastrosModelosDialog(modelo);
             if (buttonConfirmarClicked) {
-                modeloDAO.alterar(modelo);
+                try {
+                    modeloDAO.alterar(modelo);
+                }catch (DAOException e){
+                    AlertDialog.exceptionMessage(e);
+                }
                 carregarTableView();
             }
         } else {
@@ -112,7 +126,7 @@ public class CadastroModeloController implements Initializable {
         }
 
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         modeloDAO.setConnection(connection);
@@ -129,8 +143,11 @@ public class CadastroModeloController implements Initializable {
         tableColumnMarca.setCellValueFactory(new PropertyValueFactory<>("marca"));
         tableColumnCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
 
-
-        listaModelos = modeloDAO.listar();
+        try {
+            listaModelos = modeloDAO.listar();
+        } catch (DAOException e) {
+            AlertDialog.exceptionMessage(e);
+        }
 
         observableListModelos = FXCollections.observableArrayList(listaModelos);
         tableViewModelos.setItems(observableListModelos);
@@ -151,7 +168,7 @@ public class CadastroModeloController implements Initializable {
             labelCategoriaModelo.setText("");
         }
     }
-    
+
     public boolean showFXMLAnchorPaneCadastrosModelosDialog(Modelo modelo) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/br/edu/ifsc/fln/view/DialogCadastroModelo.fxml"));

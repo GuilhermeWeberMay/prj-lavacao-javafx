@@ -56,6 +56,6 @@ public class DatabaseMySQL implements Database {
         } catch (SQLException ex) {
             Logger.getLogger(DatabasePostgreSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }  
-    
+    }
+
 }

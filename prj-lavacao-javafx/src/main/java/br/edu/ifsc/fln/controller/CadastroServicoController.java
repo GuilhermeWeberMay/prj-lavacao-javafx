@@ -88,7 +88,7 @@ public class CadastroServicoController implements Initializable {
         if (servico != null) {
             labelIdServico.setText(String.valueOf(servico.getId()));
             labelDescServico.setText(servico.getDescricao());
-            labelValorServico.setText("R$"+String.format("%.2f",servico.getValor()));
+            labelValorServico.setText("R$" + String.format("%.2f", servico.getValor()));
             labelCategoriaServico.setText(String.valueOf(servico.getCategoria().getDescricao()));
         } else {
             labelIdServico.setText("");
@@ -169,7 +169,7 @@ public class CadastroServicoController implements Initializable {
                     servicoDAO.alterar(servico);
                 } catch (DAOException e) {
                     AlertDialog.exceptionMessage(e);
-            }
+                }
                 carregarTableViewServico();
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);

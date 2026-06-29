@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class PessoaFisica extends Cliente{
+public class PessoaFisica extends Cliente {
     private String cpf;
     private LocalDate dataNascimento;
 

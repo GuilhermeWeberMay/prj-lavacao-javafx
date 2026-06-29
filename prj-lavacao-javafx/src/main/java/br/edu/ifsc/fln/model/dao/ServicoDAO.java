@@ -34,7 +34,7 @@ public class ServicoDAO {
             stmt.execute();
         } catch (SQLException ex) {
             Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            throw new DAOException("Não foi possivel cadastrar o serviço "+ex);
+            throw new DAOException("Não foi possivel cadastrar o serviço " + ex);
         }
     }
 
@@ -49,7 +49,7 @@ public class ServicoDAO {
             stmt.execute();
         } catch (SQLException ex) {
             Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            throw new DAOException("Não foi possivel alterar o serviço "+ex);
+            throw new DAOException("Não foi possivel alterar o serviço " + ex);
         }
     }
 
@@ -62,7 +62,7 @@ public class ServicoDAO {
 
         } catch (SQLException ex) {
             Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            throw new DAOException("Não foi possivel deletar o serviço "+ex);
+            throw new DAOException("Não foi possivel deletar o serviço " + ex);
         }
     }
 
@@ -82,7 +82,7 @@ public class ServicoDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            throw new DAOException("Não foi possivel listar o serviço "+ex);
+            throw new DAOException("Não foi possivel listar o serviço " + ex);
         }
         return retorno;
     }
@@ -91,9 +91,9 @@ public class ServicoDAO {
         try {
             Servico retorno = buscar(servico.getId());
             return retorno;
-        }catch (DAOException ex) {
+        } catch (DAOException ex) {
             Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            throw new DAOException("Não foi possivel cadastrar o serviço "+ex);
+            throw new DAOException("Não foi possivel cadastrar o serviço " + ex);
         }
     }
 
@@ -112,7 +112,7 @@ public class ServicoDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            throw new DAOException("Não foi possivel buscar o serviço "+ex);
+            throw new DAOException("Não foi possivel buscar o serviço " + ex);
         }
         return retorno;
     }
@@ -134,7 +134,7 @@ public class ServicoDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(ServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            throw new DAOException("Não foi possivel listar o serviço "+ex);
+            throw new DAOException("Não foi possivel listar o serviço " + ex);
         }
         return retorno;
     }

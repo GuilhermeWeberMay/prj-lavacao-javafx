@@ -32,7 +32,7 @@ public class MarcaDAO {
             stmt.execute();
         } catch (SQLException ex) {
             Logger.getLogger(MarcaDAO.class.getName()).log(Level.SEVERE, null, ex);
-            throw new DAOException("Não foi possivel registar a marca",ex);
+            throw new DAOException("Não foi possivel registar a marca", ex);
         }
     }
 
@@ -45,11 +45,11 @@ public class MarcaDAO {
             stmt.execute();
         } catch (SQLException ex) {
             Logger.getLogger(MarcaDAO.class.getName()).log(Level.SEVERE, null, ex);
-            throw new DAOException("Não foi possivel alterar a marca",ex);
+            throw new DAOException("Não foi possivel alterar a marca", ex);
         }
     }
 
-    public void remover(Marca marca) throws DAOException{
+    public void remover(Marca marca) throws DAOException {
         String sql = "DELETE FROM marca WHERE id=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -57,7 +57,7 @@ public class MarcaDAO {
             stmt.execute();
         } catch (SQLException ex) {
             Logger.getLogger(MarcaDAO.class.getName()).log(Level.SEVERE, null, ex);
-            throw new DAOException("Não foi possivel deletar a marca",ex);
+            throw new DAOException("Não foi possivel deletar a marca", ex);
         }
     }
 
@@ -75,7 +75,7 @@ public class MarcaDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(MarcaDAO.class.getName()).log(Level.SEVERE, null, ex);
-            throw new DAOException("Não foi possivel listar as marcas",ex);
+            throw new DAOException("Não foi possivel listar as marcas", ex);
         }
         return retorno;
     }
@@ -98,7 +98,7 @@ public class MarcaDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(MarcaDAO.class.getName()).log(Level.SEVERE, null, ex);
-            throw new DAOException("Não foi possivel buscar a marca",ex);
+            throw new DAOException("Não foi possivel buscar a marca", ex);
         }
         return retorno;
     }

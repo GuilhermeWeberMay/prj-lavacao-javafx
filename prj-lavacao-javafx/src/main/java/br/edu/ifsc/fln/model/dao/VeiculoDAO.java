@@ -1,5 +1,6 @@
 package br.edu.ifsc.fln.model.dao;
 
+import br.edu.ifsc.fln.exception.DAOException;
 import br.edu.ifsc.fln.model.domain.*;
 
 import java.sql.Connection;
@@ -139,8 +140,8 @@ public class VeiculoDAO {
     public List<Veiculo> listarPorCategoria(Marca marca) {
         String sql =
                 "SELECT p.id as veiculo_id, p.nome as veiculo_nome, p.descricao as veiculo_descricao, p.preco as veiculo_preco, "
-                + "c.id as categoria_id, c.descricao as categoria_descricao "
-                + "FROM veiculo p INNER JOIN categoria c ON c.id = p.id_categoria WHERE c.id = ?;";
+                        + "c.id as categoria_id, c.descricao as categoria_descricao "
+                        + "FROM veiculo p INNER JOIN categoria c ON c.id = p.id_categoria WHERE c.id = ?;";
         List<Veiculo> retorno = new ArrayList<>();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -222,8 +223,12 @@ public class VeiculoDAO {
         int idCliente = rs.getInt("id_cliente");
         ClienteDAO clienteDAO = new ClienteDAO();
         clienteDAO.setConnection(connection);
-        Cliente cliente = clienteDAO.buscar(idCliente);
-        veiculo.setCliente(cliente);
+        try {
+            Cliente cliente = clienteDAO.buscar(idCliente);
+            veiculo.setCliente(cliente);
+        } catch (DAOException e) {
+            Logger.getLogger(VeiculoDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
         return veiculo;
     }
 
@@ -253,11 +258,11 @@ public class VeiculoDAO {
         if (rs.getString("cnpj") == null) {
             cliente = new PessoaFisica();
             ((PessoaFisica) cliente).setCpf(rs.getString("cpf"));
-            ((PessoaFisica)cliente).setDataNascimento(rs.getDate("data_nasc").toLocalDate());
+            ((PessoaFisica) cliente).setDataNascimento(rs.getDate("data_nasc").toLocalDate());
         } else {
             cliente = new PessoaJuridica();
-            ((PessoaJuridica)cliente).setCnpj(rs.getString("cnpj"));
-            ((PessoaJuridica)cliente).setInscricaoEstadual(rs.getString("inscricao_estadual"));
+            ((PessoaJuridica) cliente).setCnpj(rs.getString("cnpj"));
+            ((PessoaJuridica) cliente).setInscricaoEstadual(rs.getString("inscricao_estadual"));
         }
         cliente.setId(rs.getInt("id_cliente"));
         cliente.setNome(rs.getString("nome_cliente"));

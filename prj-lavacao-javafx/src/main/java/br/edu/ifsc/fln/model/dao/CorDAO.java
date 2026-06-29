@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 public class CorDAO {
     private Connection connection;
 
@@ -30,7 +31,7 @@ public class CorDAO {
             stmt.execute();
         } catch (SQLException ex) {
             Logger.getLogger(CorDAO.class.getName()).log(Level.SEVERE, null, ex);
-            throw new DAOException("Não foi possível cadastrar cor ",ex);
+            throw new DAOException("Não foi possível cadastrar cor ", ex);
         }
     }
 
@@ -43,20 +44,19 @@ public class CorDAO {
             stmt.execute();
         } catch (SQLException ex) {
             Logger.getLogger(CorDAO.class.getName()).log(Level.SEVERE, null, ex);
-            throw new DAOException("Não foi possível alterar cor ",ex);
+            throw new DAOException("Não foi possível alterar cor ", ex);
         }
     }
 
-    public boolean remover(Cor cor) throws DAOException {
+    public void remover(Cor cor) throws DAOException {
         String sql = "DELETE FROM cor WHERE id=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, cor.getId());
             stmt.execute();
-            return true;
         } catch (SQLException ex) {
             Logger.getLogger(CorDAO.class.getName()).log(Level.SEVERE, null, ex);
-            throw new DAOException("Não foi possível deletar a cor ",ex);
+            throw new DAOException("Não foi possível deletar a cor ", ex);
         }
     }
 
@@ -74,7 +74,7 @@ public class CorDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(CorDAO.class.getName()).log(Level.SEVERE, null, ex);
-            throw new DAOException("Não foi possível buscar a cor ",ex);
+            throw new DAOException("Não foi possível buscar a cor ", ex);
         }
         return retorno;
     }
@@ -97,7 +97,7 @@ public class CorDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(CorDAO.class.getName()).log(Level.SEVERE, null, ex);
-            throw new DAOException("Não foi possível buscar a cor ",ex);
+            throw new DAOException("Não foi possível buscar a cor ", ex);
         }
         return retorno;
     }
