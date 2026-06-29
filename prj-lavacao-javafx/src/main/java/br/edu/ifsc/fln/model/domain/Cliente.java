@@ -19,6 +19,7 @@ public abstract class Cliente {
     // Notação do Lombok para ele não implementar o método setter - regra de negócio
     @Setter(AccessLevel.NONE)
     List<Veiculo> veiculos = new ArrayList<>();
+    private Pontuacao pontuacao = new Pontuacao(0); // Todo cliente começara com 0 pontos
 
     public void add(Veiculo veiculo){
         this.veiculos.add(veiculo);

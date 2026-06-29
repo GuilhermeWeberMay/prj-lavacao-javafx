@@ -3,6 +3,7 @@ DROP DATABASE IF EXISTS db_lavacao;
 CREATE DATABASE db_lavacao;
 
 USE db_lavacao;
+
 CREATE TABLE IF NOT EXISTS cliente
 (
     id            int          not null auto_increment,
@@ -12,6 +13,15 @@ CREATE TABLE IF NOT EXISTS cliente
     data_cadastro date         not null,
     CONSTRAINT pk_cliente primary key (id)
 ) Engine InnoDB;
+
+CREATE TABLE IF NOT EXISTS pontuacao
+(
+    id         int not null,
+    quantidade int not null,
+    CONSTRAINT pk_potuacao PRIMARY KEY (id),
+    CONSTRAINT fk_pontuacao_cliente FOREIGN KEY (id) REFERENCES cliente (id)
+        ON DELETE CASCADE
+) ENGINE InnoDB;
 
 CREATE TABLE IF NOT EXISTS pessoa_fisica
 (
