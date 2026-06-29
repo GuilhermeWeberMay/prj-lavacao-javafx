@@ -5,6 +5,7 @@ import br.edu.ifsc.fln.model.dao.CorDAO;
 import br.edu.ifsc.fln.model.database.Database;
 import br.edu.ifsc.fln.model.database.DatabaseFactory;
 import br.edu.ifsc.fln.model.domain.Cor;
+import br.edu.ifsc.fln.utils.AlertDialog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -73,10 +74,10 @@ public class CadastroCorController implements Initializable {
 
     private void carregarTableViewCor() {
         tableColumnCor.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        try{
-        cores = corDAO.listar();
-        }catch (DAOException e) {
-            throw new RuntimeException(e);
+        try {
+            cores = corDAO.listar();
+        } catch (DAOException e) {
+            AlertDialog.exceptionMessage(e);
         }
         ObservableList<Cor> observableListCores = FXCollections.observableArrayList(cores);
         tableViewCores.setItems(observableListCores);
@@ -90,7 +91,7 @@ public class CadastroCorController implements Initializable {
             try {
                 corDAO.create(cor);
             } catch (DAOException e) {
-                throw new RuntimeException(e);
+                AlertDialog.exceptionMessage(e);
             }
             carregarTableViewCor();
         }
@@ -102,8 +103,8 @@ public class CadastroCorController implements Initializable {
         if (cor != null) {
             try {
                 corDAO.remover(cor);
-            }catch (DAOException e) {
-                throw new RuntimeException(e);
+            } catch (DAOException e) {
+                AlertDialog.exceptionMessage(e);
             }
             carregarTableViewCor();
         } else {
@@ -119,13 +120,13 @@ public class CadastroCorController implements Initializable {
         if (cor != null) {
             boolean buttonCorfirmarClicked = showDialogCadastroCor(cor);
             if (buttonCorfirmarClicked) {
-                try{
-                corDAO.alterar(cor);
-                }catch (DAOException e) {
-                    throw new RuntimeException(e);
+                try {
+                    corDAO.alterar(cor);
+                } catch (DAOException e) {
+                    AlertDialog.exceptionMessage(e);
                 }
                 carregarTableViewCor();
-            }else {
+            } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText(" Por favor escolha uma cor na tabela! ");
                 alert.showAndWait();

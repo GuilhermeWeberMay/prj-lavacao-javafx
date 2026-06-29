@@ -8,6 +8,7 @@ import br.edu.ifsc.fln.model.database.DatabaseFactory;
 import br.edu.ifsc.fln.model.domain.Configuracoes;
 import br.edu.ifsc.fln.model.domain.ECategoria;
 import br.edu.ifsc.fln.model.domain.Servico;
+import br.edu.ifsc.fln.utils.AlertDialog;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -135,7 +136,7 @@ public class CadastroServicoController implements Initializable {
             try {
                 servicoDAO.create(servico);
             } catch (DAOException e) {
-                throw new RuntimeException(e);
+                AlertDialog.exceptionMessage(e);
             }
             carregarTableViewServico();
         }
@@ -148,7 +149,7 @@ public class CadastroServicoController implements Initializable {
             try {
                 servicoDAO.remover(servico);
             } catch (DAOException e) {
-                throw new RuntimeException(e);
+                AlertDialog.exceptionMessage(e);
             }
             carregarTableViewServico();
         } else {
@@ -167,7 +168,7 @@ public class CadastroServicoController implements Initializable {
                 try {
                     servicoDAO.alterar(servico);
                 } catch (DAOException e) {
-                throw new RuntimeException(e);
+                    AlertDialog.exceptionMessage(e);
             }
                 carregarTableViewServico();
             } else {

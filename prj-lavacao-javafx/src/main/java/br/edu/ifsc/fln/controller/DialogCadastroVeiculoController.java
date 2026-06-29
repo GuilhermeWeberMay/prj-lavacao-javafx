@@ -10,6 +10,7 @@ import br.edu.ifsc.fln.model.domain.Cliente;
 import br.edu.ifsc.fln.model.domain.Cor;
 import br.edu.ifsc.fln.model.domain.Modelo;
 import br.edu.ifsc.fln.model.domain.Veiculo;
+import br.edu.ifsc.fln.utils.AlertDialog;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
@@ -94,12 +95,12 @@ public class DialogCadastroVeiculoController implements Initializable {
             List<Cor> cores = corDAO.listar();
             List<Modelo> modelos = modeloDAO.listar();
 
-            //Adicionando os tipos de enum aos itens do ChoiceBox
+            //Carregando as informações para os choice box
             cbClienteVeiculo.getItems().addAll(clientes);
             cbCorVeiculo.getItems().addAll(cores);
             cbModeloVeiculo.getItems().addAll(modelos);
         } catch (DAOException e) {
-            throw new RuntimeException(e);
+            AlertDialog.exceptionMessage(e);
         }
     }
 }

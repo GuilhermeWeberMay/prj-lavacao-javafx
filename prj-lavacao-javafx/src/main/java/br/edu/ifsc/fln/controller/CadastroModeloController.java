@@ -130,7 +130,7 @@ public class CadastroModeloController implements Initializable {
         tableColumnCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
 
 
-        listaModelos = modeloDAO.listar(); // Melhorar a instrução SQL
+        listaModelos = modeloDAO.listar();
 
         observableListModelos = FXCollections.observableArrayList(listaModelos);
         tableViewModelos.setItems(observableListModelos);

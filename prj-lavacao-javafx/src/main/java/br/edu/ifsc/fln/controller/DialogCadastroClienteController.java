@@ -76,14 +76,10 @@ public class DialogCadastroClienteController {
     public void handleRbPessoaFisica() {
         this.textFielClienteCnpj.setDisable(true);
         this.textFielClienteInscEstadual.setDisable(true);
-//        this.textFielClienteCpf.setDisable(true);
-//        this.dpClienteDataNascimento.setDisable(true);
     }
 
     @FXML
     public void handleRbPessoaJuridica() {
-//        this.textFielClienteCnpj.setDisable(true);
-//        this.textFielClienteInscEstadual.setDisable(true);
         this.textFielClienteCpf.setDisable(true);
         this.dpClienteDataNascimento.setDisable(true);
     }
@@ -95,7 +91,6 @@ public class DialogCadastroClienteController {
             this.textFielClienteCelular.setText(this.cliente.getCelular());
             this.textFielClienteEmail.setText(this.cliente.getEmail());
             this.dpClienteDataCadastro.setValue(this.cliente.getDataCadastro());
-            //this.dpClienteDataCadastro.setDisable(true);
         }
         if (cliente instanceof PessoaFisica) {
             handleRbPessoaFisica();
@@ -119,11 +114,11 @@ public class DialogCadastroClienteController {
             errorMessage += "Telefone inválido.\n";
         }
 
-        if (this.textFielClienteEmail.getText() == null || this.textFielClienteEmail.getText().isEmpty() /*|| !this.textFielClienteEmail.getText().contains("@")*/) {
+        if (this.textFielClienteEmail.getText() == null || this.textFielClienteEmail.getText().isEmpty() || !this.textFielClienteEmail.getText().contains("@")) {
             errorMessage += "Email inválido.\n";
         }
 
-        if (this.dpClienteDataCadastro.getValue() == null /*|| !this.textFielClienteEmail.getText().contains("@")*/) {
+        if (this.dpClienteDataCadastro.getValue() == null) {
             errorMessage += "Data inválida.\n";
         }
 

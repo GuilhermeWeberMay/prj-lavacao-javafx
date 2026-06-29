@@ -300,4 +300,10 @@ public class DialogOrdemServicoController implements Initializable {
             return false;
         }
     }
+
+
+    @FXML
+    void handleButtonBuscarCliente() {
+
+    }
 }

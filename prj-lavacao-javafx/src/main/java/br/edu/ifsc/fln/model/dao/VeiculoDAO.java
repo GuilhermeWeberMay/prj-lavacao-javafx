@@ -269,10 +269,6 @@ public class VeiculoDAO {
         veiculo.setModelo(modelo);
         veiculo.setCor(cor);
         veiculo.setCliente(cliente);
-//        int idCliente = rs.getInt("cliente_id");
-//        ClienteDAO clienteDAO = new ClienteDAO();
-//        Cliente cliente = clienteDAO.buscar(idCliente);
-//        veiculo.setCliente(cliente);
         return veiculo;
     }
 }

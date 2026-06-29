@@ -5,6 +5,7 @@ import br.edu.ifsc.fln.model.dao.ConfiguracoesDAO;
 import br.edu.ifsc.fln.model.database.Database;
 import br.edu.ifsc.fln.model.database.DatabaseFactory;
 import br.edu.ifsc.fln.model.domain.Configuracoes;
+import br.edu.ifsc.fln.utils.AlertDialog;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,7 +40,7 @@ public class CadastroPontosController implements Initializable {
             Configuracoes config = configuracoesDAO.buscar();
             labelPontos.setText(String.valueOf(config.getPontos()));
         } catch (DAOException e) {
-            throw new RuntimeException(e);
+            AlertDialog.exceptionMessage(e);
         }
     }
 
@@ -52,7 +53,7 @@ public class CadastroPontosController implements Initializable {
             try{
             configuracoesDAO.alterar(config);
             } catch (DAOException e) {
-                throw new RuntimeException(e);
+                AlertDialog.exceptionMessage(e);
             }
             labelPontos.setText(String.valueOf(config.getPontos()));
         }

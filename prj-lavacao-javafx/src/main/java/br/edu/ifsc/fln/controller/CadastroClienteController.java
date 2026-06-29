@@ -110,7 +110,7 @@ public class CadastroClienteController implements Initializable {
             labelCelularCliente.setText(cliente.getCelular());
             labelEmailCliente.setText(cliente.getEmail());
             labelDataCadastroCliente.setText(
-                cliente.getDataCadastro().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+                    cliente.getDataCadastro().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             if (cliente instanceof PessoaFisica) {
                 labelDocumentoCliente.setText(((PessoaFisica) cliente).getCpf());
                 labelDataInsCliente.setText(String.valueOf(((PessoaFisica) cliente).getDataNascimento()));
@@ -146,7 +146,7 @@ public class CadastroClienteController implements Initializable {
         List<String> opcoes = new ArrayList<>();
         opcoes.add("Pessoa Fisica");
         opcoes.add("Pessoa Juridica");
-        ChoiceDialog<String> dialog = new ChoiceDialog<>(opcoes.getFirst(),opcoes);
+        ChoiceDialog<String> dialog = new ChoiceDialog<>(opcoes.getFirst(), opcoes);
         dialog.setTitle("Dialogo de opções");
         dialog.setHeaderText("Selecione um tipo de cliente");
         dialog.setContentText("Tipo de cliente: ");
@@ -154,7 +154,7 @@ public class CadastroClienteController implements Initializable {
         if (escolha.isPresent()) {
             if (escolha.get().equalsIgnoreCase("Pessoa Fisica"))
                 return new PessoaFisica();
-             else
+            else
                 return new PessoaJuridica();
 
         } else {

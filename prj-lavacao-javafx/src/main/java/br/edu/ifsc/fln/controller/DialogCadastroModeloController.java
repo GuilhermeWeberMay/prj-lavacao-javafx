@@ -9,6 +9,7 @@ import br.edu.ifsc.fln.model.domain.ECategoria;
 import br.edu.ifsc.fln.model.domain.ETipoCombustivel;
 import br.edu.ifsc.fln.model.domain.Marca;
 import br.edu.ifsc.fln.model.domain.Modelo;
+import br.edu.ifsc.fln.utils.AlertDialog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -54,8 +55,10 @@ public class DialogCadastroModeloController implements Initializable {
     @FXML
     private TextField textFielModeloPotencia;
 
-//    private List<Marca> listaMarcas;
-//    private ObservableList<Marca> observableListMarcas;
+    private List<Marca> listaMarcas;
+    private ObservableList<Marca> observableListMarcas;
+    private List<Modelo> listaModelos;
+    private ObservableList<Modelo> observableListModelos;
 
     //atributos para manipulação de banco de dados
     private final Database database = DatabaseFactory.getDatabase("mysql");
@@ -73,57 +76,28 @@ public class DialogCadastroModeloController implements Initializable {
         carregarChoiceBoxCombustivel();
     }
 
-//    private void setFocusLostHandle() {
-//        tfDescricao.focusedProperty().addListener((ov, oldV, newV) -> {
-//            if (!newV) { // focus lost
-//                if (tfDescricao.getText() == null || tfDescricao.getText().isEmpty()) {
-//                    //System.out.println("teste focus lost");
-//                    tfDescricao.requestFocus();
-//                }
-//            }
-//        });
-//    }
-
-//This works fine too:    
-//root.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-//    focusState(newValue);
-//});
-//
-//private void focusState(boolean value) {
-//    if (value) {
-//        System.out.println("Focus Gained");
-//    }
-//    else {
-//        System.out.println("Focus Lost");
-//    }
-//} 
-
-    private List<Marca> listaMarcas;
-    private ObservableList<Marca> observableListMarcas;
-    private List<Modelo> listaModelos;
-    private ObservableList<Modelo> observableListModelos;
-
     public void carregarComboBoxMarcas() {
-        try{
-        listaMarcas = marcaDAO.listar();
+        try {
+            listaMarcas = marcaDAO.listar();
         } catch (DAOException e) {
-            throw new RuntimeException(e);
+            AlertDialog.exceptionMessage(e);
         }
         observableListMarcas =
                 FXCollections.observableArrayList(listaMarcas);
         cbMarca.setItems(observableListMarcas);
     }
+
     public void carregarChoiceBoxCategoria() {
-        cbCategoria.setItems( FXCollections.observableArrayList(ECategoria.values()));
+        cbCategoria.setItems(FXCollections.observableArrayList(ECategoria.values()));
     }
-    public void carregarChoiceBoxCombustivel(){
+
+    public void carregarChoiceBoxCombustivel() {
         cbTipoCombustivel.setItems(FXCollections.observableArrayList(ETipoCombustivel.values()));
     }
 
     public Stage getDialogStage() {
         return dialogStage;
     }
-
 
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
@@ -137,7 +111,6 @@ public class DialogCadastroModeloController implements Initializable {
         this.modelo = modelo;
         textFielModeloDesc.setText(modelo.getDescricao());
         cbMarca.getSelectionModel().select(modelo.getMarca());
-        //cbCategoria.getSelectionModel().select(modelo.getCategoria().name());
     }
 
     //validar entrada de dados do cadastro
